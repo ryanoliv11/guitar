@@ -1,0 +1,2025 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guitar Hacks — Calendário de Estudos</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0d0d0f;
+    --surface: #161618;
+    --surface2: #1e1e21;
+    --border: rgba(255,255,255,0.07);
+    --border-hover: rgba(255,255,255,0.14);
+    --text: #f0ede6;
+    --muted: #7a7872;
+    --accent: #e8c547;
+    --accent-dim: rgba(232,197,71,0.12);
+    --accent-dim2: rgba(232,197,71,0.06);
+    --red: #e85454;
+    --teal: #4ecdc4;
+    --teal-dim: rgba(78,205,196,0.1);
+    --purple: #b48bff;
+    --purple-dim: rgba(180,139,255,0.1);
+    --today: #e8c547;
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+  }
+  body { background:var(--bg); color:var(--text); font-family:var(--font-body); font-size:15px; line-height:1.6; }
+  header { border-bottom:1px solid var(--border); padding:2.5rem 3rem 2rem; display:flex; align-items:flex-end; justify-content:space-between; gap:2rem; flex-wrap:wrap; }
+  .header-left h1 { font-family:var(--font-display); font-size:clamp(3rem,8vw,6rem); letter-spacing:0.04em; color:var(--accent); line-height:0.9; margin-bottom:0.4rem; }
+  .header-left p { font-family:var(--font-mono); font-size:12px; color:var(--muted); letter-spacing:0.1em; text-transform:uppercase; }
+  .header-right { text-align:right; flex-shrink:0; }
+  .month-badge { font-family:var(--font-display); font-size:1.5rem; letter-spacing:0.08em; color:var(--text); display:block; margin-bottom:4px; }
+  .year-tag { font-family:var(--font-mono); font-size:11px; color:var(--muted); letter-spacing:0.12em; border:1px solid var(--border); border-radius:4px; padding:2px 8px; display:inline-block; }
+  .legend-bar { padding:1rem 3rem; border-bottom:1px solid var(--border); display:flex; gap:2rem; flex-wrap:wrap; align-items:center; }
+  .legend-label { font-family:var(--font-mono); font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-right:0.5rem; }
+  .legend-items { display:flex; gap:1.5rem; flex-wrap:wrap; }
+  .legend-item { display:flex; align-items:center; gap:7px; font-size:12px; color:var(--muted); }
+  .legend-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+  .stats-row { display:grid; grid-template-columns:repeat(4,1fr); border-bottom:1px solid var(--border); }
+  .stat-cell { padding:1.25rem 2rem; border-right:1px solid var(--border); }
+  .stat-cell:last-child { border-right:none; }
+  .stat-num { font-family:var(--font-display); font-size:2.2rem; color:var(--accent); line-height:1; margin-bottom:4px; letter-spacing:0.04em; }
+  .stat-label { font-size:12px; color:var(--muted); font-family:var(--font-mono); text-transform:uppercase; letter-spacing:0.08em; }
+  main { padding:2rem 3rem 4rem; }
+  .weekdays-header { display:grid; grid-template-columns:repeat(7,1fr); gap:6px; margin-bottom:6px; }
+  .weekday { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.12em; text-align:center; padding:8px 0; }
+  .weekday.sunday { color:var(--red); opacity:0.7; }
+  .calendar-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:6px; }
+  .day-cell { border:1px solid var(--border); border-radius:8px; padding:12px 10px; min-height:110px; display:flex; flex-direction:column; gap:8px; transition:border-color 0.2s,background 0.2s; position:relative; overflow:hidden; }
+  .day-cell.empty { background:transparent; border-color:transparent; }
+  .day-cell.has-content { background:var(--surface2); }
+  .day-cell.has-content:hover { background:var(--surface); border-color:var(--accent-dim); }
+  .day-cell.is-special { border-color:rgba(78,205,196,0.2); background:var(--teal-dim); }
+  .day-cell.is-special:hover { border-color:rgba(78,205,196,0.4); }
+  .day-cell.is-extra { border-color:rgba(180,139,255,0.2); background:var(--purple-dim); }
+  .day-cell.is-extra:hover { border-color:rgba(180,139,255,0.4); }
+  .day-cell.is-free { border-color:rgba(232,197,71,0.15); background:var(--accent-dim2); }
+  .day-cell.is-free:hover { border-color:rgba(232,197,71,0.3); }
+  .day-cell.is-plateau { border-color:rgba(232,84,84,0.2); background:rgba(232,84,84,0.07); }
+  .day-cell.is-plateau:hover { border-color:rgba(232,84,84,0.4); }
+  .day-cell.is-today { border-color:var(--accent); background:rgba(232,197,71,0.08); box-shadow:0 0 0 1px var(--accent); }
+  .day-num { font-family:var(--font-mono); font-size:11px; font-weight:500; color:var(--muted); letter-spacing:0.06em; display:flex; align-items:center; gap:6px; }
+  .day-cell.has-content .day-num,
+  .day-cell.is-special .day-num,
+  .day-cell.is-extra .day-num,
+  .day-cell.is-free .day-num,
+  .day-cell.is-plateau .day-num,
+  .day-cell.is-today .day-num { color:var(--text); opacity:0.5; }
+  .today-badge { font-family:var(--font-mono); font-size:8px; letter-spacing:0.12em; text-transform:uppercase; background:var(--accent); color:#0d0d0f; padding:2px 6px; border-radius:3px; font-weight:500; opacity:1; }
+  .day-tag { display:flex; align-items:flex-start; gap:5px; font-size:11px; font-weight:400; color:var(--muted); line-height:1.35; flex-grow:1; }
+  .day-tag::before { content:''; display:inline-block; width:5px; height:5px; border-radius:50%; flex-shrink:0; margin-top:4px; background:var(--muted); }
+  .day-cell.has-content .day-tag { color:var(--text); opacity:0.8; }
+  .day-cell.has-content .day-tag::before { background:var(--accent); }
+  .day-cell.is-special .day-tag { color:var(--teal); opacity:1; }
+  .day-cell.is-special .day-tag::before { background:var(--teal); }
+  .day-cell.is-extra .day-tag { color:var(--purple); opacity:0.9; }
+  .day-cell.is-extra .day-tag::before { background:var(--purple); }
+  .day-cell.is-free .day-tag { color:var(--accent); opacity:0.9; }
+  .day-cell.is-free .day-tag::before { background:var(--accent); }
+  .day-cell.is-plateau .day-tag { color:var(--red); opacity:0.9; }
+  .day-cell.is-plateau .day-tag::before { background:var(--red); }
+  .day-cell.is-today .day-tag { color:var(--accent); opacity:0.8; font-style:italic; }
+  .day-cell.is-today .day-tag::before { background:var(--accent); }
+  .pill { font-family:var(--font-mono); font-size:9px; letter-spacing:0.08em; text-transform:uppercase; padding:2px 7px; border-radius:20px; align-self:flex-end; margin-top:auto; }
+  .pill-notes { background:var(--accent-dim); color:var(--accent); border:1px solid rgba(232,197,71,0.2); }
+  .pill-spider { background:var(--teal-dim); color:var(--teal); border:1px solid rgba(78,205,196,0.2); }
+  .pill-free { background:var(--accent-dim); color:var(--accent); border:1px solid rgba(232,197,71,0.3); }
+  .pill-extra { background:var(--purple-dim); color:var(--purple); border:1px solid rgba(180,139,255,0.2); }
+  .pill-plateau { background:rgba(232,84,84,0.1); color:var(--red); border:1px solid rgba(232,84,84,0.2); }
+  .exercises-section { margin-top:3rem; padding-top:2rem; border-top:1px solid var(--border); }
+  .section-title { font-family:var(--font-display); font-size:1.8rem; letter-spacing:0.06em; color:var(--text); margin-bottom:1.5rem; }
+  .exercises-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; }
+  .exercise-card { border:1px solid var(--border); border-radius:10px; padding:1.25rem 1.25rem 1rem; background:var(--surface2); display:flex; flex-direction:column; gap:8px; }
+  .ex-num { font-family:var(--font-display); font-size:2rem; color:var(--accent); line-height:1; letter-spacing:0.04em; }
+  .ex-name { font-size:14px; font-weight:500; color:var(--text); }
+  .ex-desc { font-size:12px; color:var(--muted); line-height:1.5; flex-grow:1; }
+  .ex-bar { height:3px; border-radius:2px; background:var(--border); margin-top:4px; overflow:hidden; }
+  .ex-bar-fill { height:100%; border-radius:2px; background:var(--accent); }
+  footer { padding:1.5rem 3rem; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
+  footer p { font-family:var(--font-mono); font-size:11px; color:var(--muted); letter-spacing:0.08em; text-transform:uppercase; }
+  .progress-wrap { display:flex; align-items:center; gap:10px; font-family:var(--font-mono); font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; }
+  .progress-bar { width:120px; height:3px; background:var(--border); border-radius:2px; overflow:hidden; }
+  .progress-fill { height:100%; background:var(--accent); border-radius:2px; width:0%; }
+
+  /* ── WORKOUT TRACKER ── */
+  .tracker-section { padding:2rem 3rem 4rem; border-top:1px solid var(--border); }
+  .tracker-header { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-bottom:2rem; }
+  .tracker-header .section-title { margin-bottom:0; }
+  .tracker-subtitle { font-family:var(--font-mono); font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-top:4px; }
+
+  .tracker-form { background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:1.5rem; display:grid; grid-template-columns:1fr 2fr 1fr auto; gap:10px; align-items:end; margin-bottom:1.5rem; }
+  .form-field { display:flex; flex-direction:column; gap:6px; }
+  .form-label { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; }
+  .form-input { background:var(--surface); border:1px solid var(--border); border-radius:7px; color:var(--text); font-family:var(--font-body); font-size:13px; padding:9px 12px; outline:none; transition:border-color 0.2s; width:100%; }
+  .form-input:focus { border-color:rgba(232,197,71,0.5); }
+  .form-select { background:var(--surface); border:1px solid var(--border); border-radius:7px; color:var(--text); font-family:var(--font-body); font-size:13px; padding:9px 12px; outline:none; cursor:pointer; width:100%; -webkit-appearance:none; }
+  .form-select:focus { border-color:rgba(232,197,71,0.5); }
+  .btn-add { background:var(--accent); color:#0d0d0f; border:none; border-radius:7px; font-family:var(--font-mono); font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; padding:10px 18px; cursor:pointer; white-space:nowrap; transition:opacity 0.15s; height:38px; }
+  .btn-add:hover { opacity:0.85; }
+
+  .tracker-table-wrap { overflow-x:auto; border-radius:10px; border:1px solid var(--border); }
+  .tracker-table { width:100%; border-collapse:collapse; }
+  .tracker-table thead tr { border-bottom:1px solid var(--border); }
+  .tracker-table th { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.12em; padding:12px 16px; text-align:left; background:var(--surface2); }
+  .tracker-table th:last-child { text-align:center; }
+  .tracker-table tbody tr { border-bottom:1px solid var(--border); transition:background 0.15s; }
+  .tracker-table tbody tr:last-child { border-bottom:none; }
+  .tracker-table tbody tr:hover { background:var(--surface2); }
+  .tracker-table td { padding:12px 16px; font-size:13px; vertical-align:middle; }
+  .td-date { font-family:var(--font-mono); font-size:11px; color:var(--muted); white-space:nowrap; }
+  .td-ex { color:var(--text); }
+  .td-bpm { font-family:var(--font-display); font-size:1.3rem; color:var(--accent); letter-spacing:0.04em; }
+  .td-bpm span { font-family:var(--font-mono); font-size:9px; color:var(--muted); margin-left:2px; text-transform:uppercase; }
+  .td-actions { text-align:center; }
+  .btn-del { background:none; border:1px solid var(--border); border-radius:5px; color:var(--muted); font-size:13px; width:28px; height:28px; cursor:pointer; transition:border-color 0.15s, color 0.15s; display:inline-flex; align-items:center; justify-content:center; }
+  .btn-del:hover { border-color:var(--red); color:var(--red); }
+  .ex-tag { display:inline-block; font-family:var(--font-mono); font-size:9px; text-transform:uppercase; letter-spacing:0.08em; padding:2px 7px; border-radius:20px; margin-left:8px; vertical-align:middle; }
+  .tag-notes { background:var(--accent-dim); color:var(--accent); }
+  .tag-spider { background:var(--teal-dim); color:var(--teal); }
+  .tag-extra { background:var(--purple-dim); color:var(--purple); }
+  .tag-plateau { background:rgba(232,84,84,0.1); color:var(--red); }
+  .tag-free { background:rgba(232,197,71,0.06); color:var(--accent); border:1px solid rgba(232,197,71,0.15); }
+
+  .tracker-empty { padding:3rem; text-align:center; color:var(--muted); font-size:13px; font-family:var(--font-mono); letter-spacing:0.08em; text-transform:uppercase; }
+  .tracker-empty strong { display:block; font-family:var(--font-display); font-size:2rem; color:var(--border-hover); letter-spacing:0.1em; margin-bottom:0.5rem; }
+
+  .bpm-chart { margin-bottom:1.5rem; background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:1.5rem; }
+  .chart-title { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.12em; margin-bottom:1rem; }
+  .chart-bars { display:flex; gap:6px; align-items:flex-end; height:80px; }
+  .chart-bar-wrap { flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; min-width:0; }
+  .chart-bar { width:100%; border-radius:4px 4px 0 0; background:var(--accent); opacity:0.7; transition:opacity 0.2s; min-height:4px; }
+  .chart-bar:hover { opacity:1; }
+  .chart-bar-label { font-family:var(--font-mono); font-size:8px; color:var(--muted); text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; width:100%; }
+  .chart-bar-val { font-family:var(--font-mono); font-size:8px; color:var(--accent); }
+
+  .variations-panel { background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:1.5rem; margin-bottom:1.5rem; }
+  .var-title { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.12em; margin-bottom:1rem; }
+  .var-grid { display:flex; flex-wrap:wrap; gap:8px; }
+  .var-chip { font-family:var(--font-mono); font-size:10px; color:var(--muted); border:1px solid var(--border); border-radius:20px; padding:4px 12px; letter-spacing:0.06em; cursor:default; transition:border-color 0.15s, color 0.15s; }
+  .var-chip:hover { border-color:rgba(232,197,71,0.3); color:var(--accent); }
+
+  @media(max-width:768px) {
+    .tracker-section { padding:1.5rem; }
+    .tracker-form { grid-template-columns:1fr 1fr; }
+    .btn-add { grid-column:1/-1; }
+  }
+  @media (max-width:768px) {
+    header { padding:1.5rem; }
+    .header-right { text-align:left; }
+    main { padding:1.5rem; }
+    .legend-bar { padding:1rem 1.5rem; }
+    .stats-row { grid-template-columns:repeat(2,1fr); }
+    .stat-cell { padding:1rem 1.5rem; }
+    footer { padding:1rem 1.5rem; }
+    .day-cell { min-height:80px; padding:8px 6px; }
+    .day-tag { font-size:9px; }
+    .weekdays-header, .calendar-grid { gap:4px; }
+  }
+
+  
+  /* ══ FUNDAMENTOS ══ */
+  .fund-section { padding:2rem 3rem 4rem; border-top:1px solid var(--border); }
+  .fund-top-bar { display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-bottom:1.25rem; }
+  .fund-sec-title { font-family:var(--font-display); font-size:1.8rem; letter-spacing:0.06em; color:var(--text); line-height:1; }
+  .fund-sec-sub { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-top:4px; }
+  .fund-legend { display:flex; gap:1.5rem; flex-wrap:wrap; margin-bottom:1.5rem; }
+  .fund-leg-item { display:flex; align-items:center; gap:6px; font-size:11px; color:var(--muted); font-family:var(--font-mono); }
+  .fund-leg-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+  .fund-prog-wrap { margin-bottom:2rem; }
+  .fund-prog-labels { display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px; }
+  .fund-prog-track { height:4px; background:var(--border); border-radius:2px; overflow:hidden; }
+  .fund-prog-fill { height:100%; background:var(--accent); border-radius:2px; transition:width 0.6s; }
+
+  /* Card */
+  .fund-grid { display:flex; flex-direction:column; gap:8px; }
+  .fund-card { border:1px solid var(--border); border-radius:12px; background:var(--surface2); overflow:hidden; transition:border-color 0.2s; }
+  .fund-card.st-aprendendo { border-left:3px solid var(--red); }
+  .fund-card.st-praticando { border-left:3px solid var(--accent); }
+  .fund-card.st-consolidado { border-left:3px solid var(--teal); }
+  .fund-card.st-dominado { border-left:3px solid var(--muted); opacity:0.7; }
+  .fund-card-top { display:grid; grid-template-columns:2.8rem 1fr auto; align-items:center; gap:1rem; padding:1rem 1.25rem; cursor:pointer; user-select:none; }
+  .fund-card-top:hover { background:rgba(255,255,255,0.02); }
+  .fund-ex-num { font-family:var(--font-display); font-size:1.9rem; color:var(--accent); letter-spacing:0.04em; line-height:1; text-align:center; }
+  .fund-card.st-aprendendo .fund-ex-num { color:var(--red); }
+  .fund-card.st-consolidado .fund-ex-num { color:var(--teal); }
+  .fund-card.st-dominado .fund-ex-num { color:var(--muted); }
+  .fund-ex-info { min-width:0; }
+  .fund-ex-name { font-size:13px; font-weight:500; color:var(--text); margin-bottom:2px; }
+  .fund-ex-tags { display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
+  .fund-ex-desc { font-size:11px; color:var(--muted); }
+  .fund-card-right { display:flex; align-items:center; gap:10px; flex-shrink:0; }
+  .fund-bpm-badge { text-align:right; }
+  .fund-bpm-val { font-family:var(--font-display); font-size:1.1rem; color:var(--accent); letter-spacing:0.04em; line-height:1; white-space:nowrap; }
+  .fund-bpm-val.empty { font-family:var(--font-mono); font-size:9px; color:var(--muted); }
+  .fund-bpm-sub { font-family:var(--font-mono); font-size:8px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-top:2px; }
+  .fund-pill { font-family:var(--font-mono); font-size:9px; text-transform:uppercase; letter-spacing:0.08em; padding:3px 9px; border-radius:20px; white-space:nowrap; }
+  .fund-pill.st-aprendendo { background:rgba(232,84,84,0.1); color:var(--red); border:1px solid rgba(232,84,84,0.2); }
+  .fund-pill.st-praticando { background:var(--accent-dim); color:var(--accent); border:1px solid rgba(232,197,71,0.2); }
+  .fund-pill.st-consolidado { background:var(--teal-dim); color:var(--teal); border:1px solid rgba(78,205,196,0.2); }
+  .fund-pill.st-dominado { background:rgba(255,255,255,0.04); color:var(--muted); border:1px solid var(--border); }
+  .fund-chevron { font-size:10px; color:var(--muted); transition:transform 0.2s; }
+  .fund-card.open .fund-chevron { transform:rotate(180deg); }
+
+  /* Body */
+  .fund-card-body { display:none; border-top:1px solid var(--border); }
+  .fund-card.open .fund-card-body { display:block; }
+
+  /* Image + form layout */
+  .fund-body-inner { display:grid; grid-template-columns:280px 1fr; gap:0; }
+  .fund-img-col { border-right:1px solid var(--border); padding:1rem; background:var(--surface); }
+  .fund-img-wrap { border-radius:8px; overflow:hidden; border:1px solid var(--border); cursor:pointer; position:relative; }
+  .fund-img-wrap img { width:100%; display:block; opacity:0.9; transition:opacity 0.2s; }
+  .fund-img-wrap:hover img { opacity:1; }
+  .fund-img-hint { font-family:var(--font-mono); font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; text-align:center; margin-top:8px; }
+  .fund-img-missing { background:var(--surface2); border:1px dashed var(--border); border-radius:8px; padding:2rem 1rem; text-align:center; }
+  .fund-img-missing p { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; line-height:1.8; }
+  .fund-img-missing strong { display:block; font-family:var(--font-display); font-size:1.5rem; color:var(--border-hover); letter-spacing:0.1em; margin-bottom:6px; }
+
+  /* Form col */
+  .fund-form-col { padding:1.25rem; display:flex; flex-direction:column; gap:1rem; }
+  .fund-fields { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
+  .fund-field { display:flex; flex-direction:column; gap:5px; }
+  .fund-field.wide { grid-column:1/-1; }
+  .fund-field label { font-family:var(--font-mono); font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; }
+  .fund-input { background:var(--surface); border:1px solid var(--border); border-radius:6px; color:var(--text); font-family:var(--font-body); font-size:13px; padding:8px 10px; outline:none; width:100%; transition:border-color 0.15s; }
+  .fund-input:focus { border-color:rgba(232,197,71,0.4); }
+  .fund-select { background:var(--surface); border:1px solid var(--border); border-radius:6px; color:var(--text); font-family:var(--font-body); font-size:13px; padding:8px 10px; outline:none; width:100%; cursor:pointer; -webkit-appearance:none; transition:border-color 0.15s; }
+  .fund-select:focus { border-color:rgba(232,197,71,0.4); }
+  .fund-textarea { background:var(--surface); border:1px solid var(--border); border-radius:6px; color:var(--text); font-family:var(--font-body); font-size:12px; padding:8px 10px; outline:none; width:100%; resize:vertical; min-height:56px; line-height:1.5; transition:border-color 0.15s; }
+  .fund-textarea:focus { border-color:rgba(232,197,71,0.4); }
+  .fund-row-btns { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .fund-save-btn { background:var(--accent); color:#0d0d0f; border:none; border-radius:6px; font-family:var(--font-mono); font-size:10px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; padding:8px 18px; cursor:pointer; transition:opacity 0.15s; }
+  .fund-save-btn:hover { opacity:0.85; }
+  .fund-flash { font-family:var(--font-mono); font-size:10px; color:var(--teal); text-transform:uppercase; letter-spacing:0.1em; opacity:0; transition:opacity 0.3s; }
+
+  /* History */
+  .fund-history { border-top:1px solid var(--border); padding:1rem 1.25rem; }
+  .fund-history-title { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:1rem; display:flex; align-items:center; justify-content:space-between; }
+  .fund-history-clear { font-family:var(--font-mono); font-size:9px; color:var(--muted); background:none; border:1px solid var(--border); border-radius:4px; padding:2px 8px; cursor:pointer; text-transform:uppercase; letter-spacing:0.08em; }
+  .fund-history-clear:hover { color:var(--red); border-color:rgba(232,84,84,0.3); }
+  .fund-history-empty { font-family:var(--font-mono); font-size:11px; color:var(--muted); font-style:italic; }
+
+  /* Mini chart */
+  .fund-chart { margin-bottom:1rem; }
+  .fund-chart-bars { display:flex; gap:4px; align-items:flex-end; height:60px; }
+  .fund-chart-bar-wrap { flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; min-width:0; }
+  .fund-chart-bar { width:100%; border-radius:3px 3px 0 0; min-height:4px; transition:opacity 0.2s; }
+  .fund-chart-bar.bar-max { background:var(--accent); opacity:0.8; }
+  .fund-chart-bar.bar-min { background:var(--teal); opacity:0.6; }
+  .fund-chart-date { font-family:var(--font-mono); font-size:7px; color:var(--muted); text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; width:100%; }
+  .fund-chart-val { font-family:var(--font-mono); font-size:7px; color:var(--muted); }
+  .fund-chart-legend { display:flex; gap:12px; margin-bottom:8px; }
+  .fund-chart-leg-item { display:flex; align-items:center; gap:4px; font-family:var(--font-mono); font-size:9px; color:var(--muted); }
+  .fund-chart-leg-dot { width:6px; height:6px; border-radius:1px; }
+
+  /* History table */
+  .fund-hist-table { width:100%; border-collapse:collapse; }
+  .fund-hist-table th { font-family:var(--font-mono); font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; padding:6px 8px; text-align:left; border-bottom:1px solid var(--border); }
+  .fund-hist-table td { font-size:12px; padding:8px 8px; border-bottom:1px solid rgba(255,255,255,0.03); vertical-align:middle; }
+  .fund-hist-table tr:last-child td { border-bottom:none; }
+  .fund-hist-table tr:hover td { background:rgba(255,255,255,0.02); }
+  .hist-date { font-family:var(--font-mono); font-size:10px; color:var(--muted); white-space:nowrap; }
+  .hist-bpm { font-family:var(--font-display); font-size:1rem; color:var(--accent); letter-spacing:0.04em; }
+  .hist-bpm small { font-family:var(--font-mono); font-size:8px; color:var(--muted); }
+  .hist-note { font-size:11px; color:var(--muted); max-width:220px; }
+  .hist-del { background:none; border:1px solid var(--border); border-radius:4px; color:var(--muted); font-size:11px; width:24px; height:24px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; }
+  .hist-del:hover { border-color:var(--red); color:var(--red); }
+
+  /* Lightbox */
+  .fund-lightbox { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.92); z-index:1000; align-items:center; justify-content:center; padding:2rem; }
+  .fund-lightbox.open { display:flex; }
+  .fund-lightbox img { max-width:100%; max-height:90vh; border-radius:8px; object-fit:contain; }
+  .fund-lightbox-close { position:fixed; top:1.5rem; right:1.5rem; background:rgba(255,255,255,0.1); border:none; color:#fff; font-size:1.5rem; width:40px; height:40px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+
+  @media (max-width:900px) {
+    .fund-body-inner { grid-template-columns:1fr; }
+    .fund-img-col { border-right:none; border-bottom:1px solid var(--border); }
+    .fund-fields { grid-template-columns:1fr 1fr; }
+    .fund-section { padding:1.5rem; }
+    .fund-card-top { grid-template-columns:2.2rem 1fr; }
+    .fund-card-right { flex-wrap:wrap; margin-top:4px; }
+  }
+
+
+  /* ══ MUSICAL TRACKER ══ */
+  .mus-section { padding:2rem 3rem 4rem; border-top:1px solid var(--border); }
+  .mus-top-bar { display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-bottom:1.25rem; }
+  .mus-sec-title { font-family:var(--font-display); font-size:1.8rem; letter-spacing:0.06em; color:var(--purple); line-height:1; }
+  .mus-sec-sub { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-top:4px; }
+  .mus-prog-wrap { margin-bottom:2rem; }
+  .mus-prog-labels { display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px; }
+  .mus-prog-track { height:4px; background:var(--border); border-radius:2px; overflow:hidden; }
+  .mus-prog-fill { height:100%; background:var(--purple); border-radius:2px; transition:width 0.6s; }
+
+  /* Cards */
+  .mus-grid { display:flex; flex-direction:column; gap:8px; }
+  .mus-card { border:1px solid var(--border); border-radius:12px; background:var(--surface2); overflow:hidden; transition:border-color 0.2s; }
+  .mus-card:hover { border-color:var(--border-hover); }
+  .mus-card.st-aprendendo { border-left:3px solid var(--red); }
+  .mus-card.st-praticando { border-left:3px solid var(--purple); }
+  .mus-card.st-consolidado { border-left:3px solid var(--teal); }
+  .mus-card.st-dominado { border-left:3px solid var(--muted); opacity:0.7; }
+  .mus-card-top { display:grid; grid-template-columns:2.8rem 1fr auto; align-items:center; gap:1rem; padding:1rem 1.25rem; cursor:pointer; user-select:none; }
+  .mus-card-top:hover { background:rgba(255,255,255,0.02); }
+  .mus-ex-num { font-family:var(--font-display); font-size:1.9rem; color:var(--purple); letter-spacing:0.04em; line-height:1; text-align:center; }
+  .mus-card.st-aprendendo .mus-ex-num { color:var(--red); }
+  .mus-card.st-consolidado .mus-ex-num { color:var(--teal); }
+  .mus-card.st-dominado .mus-ex-num { color:var(--muted); }
+  .mus-ex-info { min-width:0; }
+  .mus-ex-name { font-size:13px; font-weight:500; color:var(--text); margin-bottom:2px; }
+  .mus-ex-desc { font-size:11px; color:var(--muted); }
+  .mus-card-right { display:flex; align-items:center; gap:10px; flex-shrink:0; }
+  .mus-bpm-badge { text-align:right; }
+  .mus-bpm-val { font-family:var(--font-display); font-size:1.1rem; color:var(--purple); letter-spacing:0.04em; line-height:1; white-space:nowrap; }
+  .mus-bpm-val.empty { font-family:var(--font-mono); font-size:9px; color:var(--muted); }
+  .mus-bpm-sub { font-family:var(--font-mono); font-size:8px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-top:2px; }
+  .mus-pill { font-family:var(--font-mono); font-size:9px; text-transform:uppercase; letter-spacing:0.08em; padding:3px 9px; border-radius:20px; white-space:nowrap; }
+  .mus-pill.st-aprendendo { background:rgba(232,84,84,0.1); color:var(--red); border:1px solid rgba(232,84,84,0.2); }
+  .mus-pill.st-praticando { background:var(--purple-dim); color:var(--purple); border:1px solid rgba(180,139,255,0.2); }
+  .mus-pill.st-consolidado { background:var(--teal-dim); color:var(--teal); border:1px solid rgba(78,205,196,0.2); }
+  .mus-pill.st-dominado { background:rgba(255,255,255,0.04); color:var(--muted); border:1px solid var(--border); }
+  .mus-chevron { font-size:10px; color:var(--muted); transition:transform 0.2s; }
+  .mus-card.open .mus-chevron { transform:rotate(180deg); }
+  .mus-card-body { display:none; border-top:1px solid var(--border); }
+  .mus-card.open .mus-card-body { display:block; }
+
+  /* Image + form */
+  .mus-body-inner { display:grid; grid-template-columns:280px 1fr; }
+  .mus-img-col { border-right:1px solid var(--border); padding:1rem; background:var(--surface); }
+  .mus-img-wrap { border-radius:8px; overflow:hidden; border:1px solid var(--border); cursor:pointer; }
+  .mus-img-wrap img { width:100%; display:block; opacity:0.9; transition:opacity 0.2s; }
+  .mus-img-wrap:hover img { opacity:1; }
+  .mus-img-hint { font-family:var(--font-mono); font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; text-align:center; margin-top:8px; }
+  .mus-img-missing { background:var(--surface2); border:1px dashed var(--border); border-radius:8px; padding:2rem 1rem; text-align:center; }
+  .mus-img-missing strong { display:block; font-family:var(--font-display); font-size:1.5rem; color:var(--border-hover); margin-bottom:6px; }
+  .mus-img-missing p { font-family:var(--font-mono); font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; line-height:1.8; }
+  .mus-form-col { padding:1.25rem; display:flex; flex-direction:column; gap:1rem; }
+
+  /* Sub-arpejos */
+  .mus-arpejo-grid { display:flex; flex-direction:column; gap:8px; margin-bottom:4px; }
+  .mus-arpejo-card { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:0.9rem 1rem; }
+  .mus-arpejo-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+  .mus-arpejo-name { font-size:12px; font-weight:500; color:var(--text); }
+  .mus-arpejo-bpm-badge { font-family:var(--font-display); font-size:1rem; color:var(--purple); letter-spacing:0.04em; }
+  .mus-arpejo-bpm-badge.empty { font-family:var(--font-mono); font-size:9px; color:var(--muted); }
+  .mus-arpejo-fields { display:grid; grid-template-columns:1fr 1fr 1fr auto; gap:8px; align-items:end; }
+  .mus-arpejo-field { display:flex; flex-direction:column; gap:4px; }
+  .mus-arpejo-field label { font-family:var(--font-mono); font-size:8px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; }
+  .mus-input { background:var(--surface2); border:1px solid var(--border); border-radius:5px; color:var(--text); font-family:var(--font-body); font-size:12px; padding:6px 8px; outline:none; width:100%; transition:border-color 0.15s; }
+  .mus-input:focus { border-color:rgba(180,139,255,0.4); }
+  .mus-select { background:var(--surface2); border:1px solid var(--border); border-radius:5px; color:var(--text); font-family:var(--font-body); font-size:12px; padding:6px 8px; outline:none; width:100%; cursor:pointer; -webkit-appearance:none; transition:border-color 0.15s; }
+  .mus-select:focus { border-color:rgba(180,139,255,0.4); }
+  .mus-arpejo-save { background:var(--purple); color:#fff; border:none; border-radius:5px; font-family:var(--font-mono); font-size:9px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; padding:7px 12px; cursor:pointer; white-space:nowrap; height:32px; transition:opacity 0.15s; }
+  .mus-arpejo-save:hover { opacity:0.85; }
+  .mus-arpejo-flash { font-family:var(--font-mono); font-size:9px; color:var(--teal); text-transform:uppercase; letter-spacing:0.08em; opacity:0; transition:opacity 0.3s; display:block; margin-top:4px; height:14px; }
+  .mus-arpejo-history { margin-top:10px; border-top:1px solid var(--border); padding-top:8px; }
+  .mus-arpejo-hist-title { font-family:var(--font-mono); font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px; display:flex; align-items:center; justify-content:space-between; }
+  .mus-arpejo-hist-empty { font-family:var(--font-mono); font-size:10px; color:var(--muted); font-style:italic; }
+
+  /* Simple form for non-arpejo exercises */
+  .mus-simple-fields { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
+  .mus-simple-field { display:flex; flex-direction:column; gap:5px; }
+  .mus-simple-field.wide { grid-column:1/-1; }
+  .mus-simple-field label { font-family:var(--font-mono); font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; }
+  .mus-simple-textarea { background:var(--surface); border:1px solid var(--border); border-radius:6px; color:var(--text); font-family:var(--font-body); font-size:12px; padding:8px 10px; outline:none; width:100%; resize:vertical; min-height:52px; line-height:1.5; transition:border-color 0.15s; }
+  .mus-simple-textarea:focus { border-color:rgba(180,139,255,0.4); }
+  .mus-save-btn { background:var(--purple); color:#fff; border:none; border-radius:6px; font-family:var(--font-mono); font-size:10px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; padding:8px 18px; cursor:pointer; transition:opacity 0.15s; }
+  .mus-save-btn:hover { opacity:0.85; }
+  .mus-flash { font-family:var(--font-mono); font-size:10px; color:var(--teal); text-transform:uppercase; letter-spacing:0.1em; opacity:0; transition:opacity 0.3s; }
+  .mus-row-btns { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:4px; }
+
+  /* History shared */
+  .mus-history { border-top:1px solid var(--border); padding:1rem 1.25rem; }
+  .mus-history-title { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:1rem; display:flex; align-items:center; justify-content:space-between; }
+  .mus-history-clear { font-family:var(--font-mono); font-size:9px; color:var(--muted); background:none; border:1px solid var(--border); border-radius:4px; padding:2px 8px; cursor:pointer; text-transform:uppercase; letter-spacing:0.08em; }
+  .mus-history-clear:hover { color:var(--red); border-color:rgba(232,84,84,0.3); }
+  .mus-hist-empty { font-family:var(--font-mono); font-size:11px; color:var(--muted); font-style:italic; }
+  .mus-hist-table { width:100%; border-collapse:collapse; }
+  .mus-hist-table th { font-family:var(--font-mono); font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; padding:6px 8px; text-align:left; border-bottom:1px solid var(--border); }
+  .mus-hist-table td { font-size:12px; padding:8px 8px; border-bottom:1px solid rgba(255,255,255,0.03); vertical-align:middle; }
+  .mus-hist-table tr:last-child td { border-bottom:none; }
+  .mus-hist-table tr:hover td { background:rgba(255,255,255,0.02); }
+  .mhist-date { font-family:var(--font-mono); font-size:10px; color:var(--muted); white-space:nowrap; }
+  .mhist-bpm { font-family:var(--font-display); font-size:1rem; color:var(--purple); letter-spacing:0.04em; }
+  .mhist-bpm small { font-family:var(--font-mono); font-size:8px; color:var(--muted); }
+  .mhist-note { font-size:11px; color:var(--muted); max-width:200px; }
+  .mhist-del { background:none; border:1px solid var(--border); border-radius:4px; color:var(--muted); font-size:11px; width:24px; height:24px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; }
+  .mhist-del:hover { border-color:var(--red); color:var(--red); }
+
+  /* Mini chart for simple exercises */
+  .mus-chart { margin-bottom:1rem; }
+  .mus-chart-bars { display:flex; gap:4px; align-items:flex-end; height:52px; }
+  .mus-chart-bar-wrap { flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; min-width:0; }
+  .mus-chart-bar { width:100%; border-radius:3px 3px 0 0; min-height:4px; }
+  .mus-chart-bar.bar-max { background:var(--purple); opacity:0.8; }
+  .mus-chart-bar.bar-min { background:var(--teal); opacity:0.6; }
+  .mus-chart-date { font-family:var(--font-mono); font-size:7px; color:var(--muted); text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; width:100%; }
+  .mus-chart-val { font-family:var(--font-mono); font-size:7px; color:var(--muted); }
+  .mus-chart-legend { display:flex; gap:12px; margin-bottom:6px; }
+  .mus-chart-leg-item { display:flex; align-items:center; gap:4px; font-family:var(--font-mono); font-size:9px; color:var(--muted); }
+  .mus-chart-leg-dot { width:6px; height:6px; border-radius:1px; }
+
+  @media (max-width:900px) {
+    .mus-section { padding:1.5rem; }
+    .mus-body-inner { grid-template-columns:1fr; }
+    .mus-img-col { border-right:none; border-bottom:1px solid var(--border); }
+    .mus-simple-fields { grid-template-columns:1fr 1fr; }
+    .mus-arpejo-fields { grid-template-columns:1fr 1fr; }
+    .mus-arpejo-save { grid-column:1/-1; }
+  }
+
+
+  /* ══ MUSICAL 10MIN + 15MIN ══ */
+  .mus2-section { padding:2rem 3rem 4rem; border-top:1px solid var(--border); }
+  .mus2-top-bar { display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-bottom:0.5rem; }
+  .mus2-sec-title { font-family:var(--font-display); font-size:1.8rem; letter-spacing:0.06em; line-height:1; }
+  .mus2-sec-title.c10 { color:#7ecff5; }
+  .mus2-sec-title.c15 { color:#ff9f7a; }
+  .mus2-sec-sub { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-top:4px; }
+  .mus2-notice { background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:8px; padding:0.75rem 1rem; margin-bottom:1.5rem; font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; }
+  .mus2-notice span { color:var(--text); }
+  .mus2-prog-wrap { margin-bottom:2rem; }
+  .mus2-prog-labels { display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px; }
+  .mus2-prog-track { height:4px; background:var(--border); border-radius:2px; overflow:hidden; }
+  .mus2-prog-fill { height:100%; border-radius:2px; transition:width 0.6s; }
+  .mus2-prog-fill.c10 { background:#7ecff5; }
+  .mus2-prog-fill.c15 { background:#ff9f7a; }
+  .mus2-grid { display:flex; flex-direction:column; gap:8px; }
+  .mus2-card { border:1px solid var(--border); border-radius:12px; background:var(--surface2); overflow:hidden; transition:border-color 0.2s; }
+  .mus2-card:hover { border-color:var(--border-hover); }
+  .mus2-card.st-aprendendo { border-left:3px solid var(--red); }
+  .mus2-card.st-praticando.c10 { border-left:3px solid #7ecff5; }
+  .mus2-card.st-praticando.c15 { border-left:3px solid #ff9f7a; }
+  .mus2-card.st-consolidado { border-left:3px solid var(--teal); }
+  .mus2-card.st-dominado { border-left:3px solid var(--muted); opacity:0.7; }
+  .mus2-card-top { display:grid; grid-template-columns:2.8rem 1fr auto; align-items:center; gap:1rem; padding:1rem 1.25rem; cursor:pointer; user-select:none; }
+  .mus2-card-top:hover { background:rgba(255,255,255,0.02); }
+  .mus2-ex-num { font-family:var(--font-display); font-size:1.9rem; letter-spacing:0.04em; line-height:1; text-align:center; }
+  .mus2-ex-num.c10 { color:#7ecff5; }
+  .mus2-ex-num.c15 { color:#ff9f7a; }
+  .mus2-card.st-aprendendo .mus2-ex-num { color:var(--red); }
+  .mus2-card.st-consolidado .mus2-ex-num { color:var(--teal); }
+  .mus2-card.st-dominado .mus2-ex-num { color:var(--muted); }
+  .mus2-ex-info { min-width:0; }
+  .mus2-ex-name { font-size:13px; font-weight:500; color:var(--text); margin-bottom:2px; }
+  .mus2-ex-desc { font-size:11px; color:var(--muted); }
+  .mus2-card-right { display:flex; align-items:center; gap:10px; flex-shrink:0; }
+  .mus2-bpm-val { font-family:var(--font-display); font-size:1.1rem; letter-spacing:0.04em; line-height:1; white-space:nowrap; }
+  .mus2-bpm-val.c10 { color:#7ecff5; }
+  .mus2-bpm-val.c15 { color:#ff9f7a; }
+  .mus2-bpm-val.empty { font-family:var(--font-mono); font-size:9px; color:var(--muted); }
+  .mus2-bpm-sub { font-family:var(--font-mono); font-size:8px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-top:2px; }
+  .mus2-pill { font-family:var(--font-mono); font-size:9px; text-transform:uppercase; letter-spacing:0.08em; padding:3px 9px; border-radius:20px; white-space:nowrap; }
+  .mus2-pill.st-aprendendo { background:rgba(232,84,84,0.1); color:var(--red); border:1px solid rgba(232,84,84,0.2); }
+  .mus2-pill.st-praticando.c10 { background:rgba(126,207,245,0.1); color:#7ecff5; border:1px solid rgba(126,207,245,0.25); }
+  .mus2-pill.st-praticando.c15 { background:rgba(255,159,122,0.1); color:#ff9f7a; border:1px solid rgba(255,159,122,0.25); }
+  .mus2-pill.st-consolidado { background:var(--teal-dim); color:var(--teal); border:1px solid rgba(78,205,196,0.2); }
+  .mus2-pill.st-dominado { background:rgba(255,255,255,0.04); color:var(--muted); border:1px solid var(--border); }
+  .mus2-chevron { font-size:10px; color:var(--muted); transition:transform 0.2s; }
+  .mus2-card.open .mus2-chevron { transform:rotate(180deg); }
+  .mus2-card-body { display:none; border-top:1px solid var(--border); }
+  .mus2-card.open .mus2-card-body { display:block; }
+  .mus2-body-inner { display:grid; grid-template-columns:280px 1fr; }
+  .mus2-img-col { border-right:1px solid var(--border); padding:1rem; background:var(--surface); }
+  .mus2-img-wrap { border-radius:8px; overflow:hidden; border:1px solid var(--border); cursor:pointer; }
+  .mus2-img-wrap img { width:100%; display:block; opacity:0.9; transition:opacity 0.2s; }
+  .mus2-img-wrap:hover img { opacity:1; }
+  .mus2-img-hint { font-family:var(--font-mono); font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; text-align:center; margin-top:8px; }
+  .mus2-img-missing { background:var(--surface2); border:1px dashed var(--border); border-radius:8px; padding:2rem 1rem; text-align:center; }
+  .mus2-img-missing strong { display:block; font-family:var(--font-display); font-size:1.5rem; color:var(--border-hover); margin-bottom:6px; }
+  .mus2-img-missing p { font-family:var(--font-mono); font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; line-height:1.8; }
+  .mus2-form-col { padding:1.25rem; display:flex; flex-direction:column; gap:1rem; }
+  .mus2-fields { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:10px; }
+  .mus2-field { display:flex; flex-direction:column; gap:5px; }
+  .mus2-field.wide { grid-column:1/-1; }
+  .mus2-field label { font-family:var(--font-mono); font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; }
+  .mus2-input { background:var(--surface); border:1px solid var(--border); border-radius:6px; color:var(--text); font-family:var(--font-body); font-size:13px; padding:8px 10px; outline:none; width:100%; transition:border-color 0.15s; }
+  .mus2-input:focus { border-color:rgba(126,207,245,0.4); }
+  .mus2-select { background:var(--surface); border:1px solid var(--border); border-radius:6px; color:var(--text); font-family:var(--font-body); font-size:13px; padding:8px 10px; outline:none; width:100%; cursor:pointer; -webkit-appearance:none; transition:border-color 0.15s; }
+  .mus2-select:focus { border-color:rgba(126,207,245,0.4); }
+  .mus2-textarea { background:var(--surface); border:1px solid var(--border); border-radius:6px; color:var(--text); font-family:var(--font-body); font-size:12px; padding:8px 10px; outline:none; width:100%; resize:vertical; min-height:52px; line-height:1.5; transition:border-color 0.15s; }
+  .mus2-textarea:focus { border-color:rgba(126,207,245,0.4); }
+  .mus2-row-btns { display:flex; align-items:center; gap:10px; }
+  .mus2-save-btn { border:none; border-radius:6px; font-family:var(--font-mono); font-size:10px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; padding:8px 18px; cursor:pointer; transition:opacity 0.15s; }
+  .mus2-save-btn.c10 { background:#7ecff5; color:#0d0d0f; }
+  .mus2-save-btn.c15 { background:#ff9f7a; color:#0d0d0f; }
+  .mus2-save-btn:hover { opacity:0.85; }
+  .mus2-flash { font-family:var(--font-mono); font-size:10px; color:var(--teal); text-transform:uppercase; letter-spacing:0.1em; opacity:0; transition:opacity 0.3s; }
+  .mus2-history { border-top:1px solid var(--border); padding:1rem 1.25rem; }
+  .mus2-history-title { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:1rem; display:flex; align-items:center; justify-content:space-between; }
+  .mus2-history-clear { font-family:var(--font-mono); font-size:9px; color:var(--muted); background:none; border:1px solid var(--border); border-radius:4px; padding:2px 8px; cursor:pointer; text-transform:uppercase; letter-spacing:0.08em; }
+  .mus2-history-clear:hover { color:var(--red); border-color:rgba(232,84,84,0.3); }
+  .mus2-hist-empty { font-family:var(--font-mono); font-size:11px; color:var(--muted); font-style:italic; }
+  .mus2-hist-table { width:100%; border-collapse:collapse; }
+  .mus2-hist-table th { font-family:var(--font-mono); font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; padding:6px 8px; text-align:left; border-bottom:1px solid var(--border); }
+  .mus2-hist-table td { font-size:12px; padding:8px 8px; border-bottom:1px solid rgba(255,255,255,0.03); vertical-align:middle; }
+  .mus2-hist-table tr:last-child td { border-bottom:none; }
+  .mus2-hist-table tr:hover td { background:rgba(255,255,255,0.02); }
+  .m2hist-date { font-family:var(--font-mono); font-size:10px; color:var(--muted); white-space:nowrap; }
+  .m2hist-bpm { font-family:var(--font-display); font-size:1rem; letter-spacing:0.04em; }
+  .m2hist-bpm.c10 { color:#7ecff5; }
+  .m2hist-bpm.c15 { color:#ff9f7a; }
+  .m2hist-bpm small { font-family:var(--font-mono); font-size:8px; color:var(--muted); }
+  .m2hist-note { font-size:11px; color:var(--muted); max-width:200px; }
+  .m2hist-del { background:none; border:1px solid var(--border); border-radius:4px; color:var(--muted); font-size:11px; width:24px; height:24px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; }
+  .m2hist-del:hover { border-color:var(--red); color:var(--red); }
+  .mus2-chart { margin-bottom:1rem; }
+  .mus2-chart-bars { display:flex; gap:4px; align-items:flex-end; height:52px; }
+  .mus2-chart-bar-wrap { flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; min-width:0; }
+  .mus2-chart-bar { width:100%; border-radius:3px 3px 0 0; min-height:4px; }
+  .mus2-chart-bar.c10 { background:#7ecff5; opacity:0.8; }
+  .mus2-chart-bar.c15 { background:#ff9f7a; opacity:0.8; }
+  .mus2-chart-bar.bar-min { background:var(--teal); opacity:0.55; }
+  .mus2-chart-date { font-family:var(--font-mono); font-size:7px; color:var(--muted); text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; width:100%; }
+  .mus2-chart-val { font-family:var(--font-mono); font-size:7px; color:var(--muted); }
+  .mus2-chart-legend { display:flex; gap:12px; margin-bottom:6px; }
+  .mus2-chart-leg-item { display:flex; align-items:center; gap:4px; font-family:var(--font-mono); font-size:9px; color:var(--muted); }
+  .mus2-chart-leg-dot { width:6px; height:6px; border-radius:1px; }
+  @media (max-width:900px) {
+    .mus2-section { padding:1.5rem; }
+    .mus2-body-inner { grid-template-columns:1fr; }
+    .mus2-img-col { border-right:none; border-bottom:1px solid var(--border); }
+    .mus2-fields { grid-template-columns:1fr 1fr; }
+  }
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <h1>Guitar<br>Hacks</h1>
+    <p>Calendário de estudos — programa de treino</p>
+  </div>
+  <div class="header-right">
+    <span class="month-badge">Mai / Jun / Jul</span>
+    <span class="year-tag">2026</span>
+  </div>
+</header>
+
+<div class="legend-bar">
+  <span class="legend-label">Legenda</span>
+  <div class="legend-items">
+    <div class="legend-item"><span class="legend-dot" style="background:#e8c547"></span>Exercício de notas</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#4ecdc4"></span>Aranha / Especial</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#b48bff"></span>Extras</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#e8c547;opacity:0.5"></span>Treino livre</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#e85454"></span>Out of Plateau</div>
+  </div>
+</div>
+
+<div class="stats-row">
+  <div class="stat-cell">
+    <div class="stat-num">29</div>
+    <div class="stat-label">Dias de treino</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-num">4</div>
+    <div class="stat-label">Semanas completas</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-num">10<span style="font-size:1.2rem">min</span></div>
+    <div class="stat-label">Aranha por sessão</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-num" id="days-elapsed">0</div>
+    <div class="stat-label">Dias concluídos</div>
+  </div>
+</div>
+
+<main>
+
+  <div class="weekdays-header">
+    <div class="weekday">Seg</div>
+    <div class="weekday">Ter</div>
+    <div class="weekday">Qua</div>
+    <div class="weekday">Qui</div>
+    <div class="weekday">Sex</div>
+    <div class="weekday">Sáb</div>
+    <div class="weekday sunday">Dom</div>
+  </div>
+
+  <div class="calendar-grid">
+
+    <!-- Semana 1: células vazias (Seg–Sáb antes de 24 Mai) -->
+    <div class="day-cell empty"></div>
+    <div class="day-cell empty"></div>
+    <div class="day-cell empty"></div>
+    <div class="day-cell empty"></div>
+    <div class="day-cell empty"></div>
+    <div class="day-cell empty"></div>
+
+    <!-- 24 Mai (Dom) — HOJE, início -->
+    <div class="day-cell is-today">
+      <span class="day-num">24 Mai <span class="today-badge">HOJE</span></span>
+      <span class="day-tag">Início do programa</span>
+    </div>
+
+    <!-- Semana 2: 25–31 Mai -->
+    <div class="day-cell has-content" data-date="2026-05-25">
+      <span class="day-num">25</span>
+      <span class="day-tag">1 nota por corda</span>
+      <span class="pill pill-notes">1N</span>
+    </div>
+    <div class="day-cell has-content" data-date="2026-05-26">
+      <span class="day-num">26</span>
+      <span class="day-tag">2 notas por corda</span>
+      <span class="pill pill-notes">2N</span>
+    </div>
+    <div class="day-cell has-content" data-date="2026-05-27">
+      <span class="day-num">27</span>
+      <span class="day-tag">3 notas por corda</span>
+      <span class="pill pill-notes">3N</span>
+    </div>
+    <div class="day-cell has-content" data-date="2026-05-28">
+      <span class="day-num">28</span>
+      <span class="day-tag">4 notas por corda</span>
+      <span class="pill pill-notes">4N</span>
+    </div>
+    <div class="day-cell is-special" data-date="2026-05-29">
+      <span class="day-num">29</span>
+      <span class="day-tag">Aranha 10min + Extra 1 ("L") + Extra 2 (+1)</span>
+      <span class="pill pill-spider">Aranha</span>
+    </div>
+    <div class="day-cell has-content" data-date="2026-05-30">
+      <span class="day-num">30</span>
+      <span class="day-tag">1 nota por corda</span>
+      <span class="pill pill-notes">1N</span>
+    </div>
+    <div class="day-cell has-content" data-date="2026-05-31">
+      <span class="day-num">31 Mai</span>
+      <span class="day-tag">2 notas por corda</span>
+      <span class="pill pill-notes">2N</span>
+    </div>
+
+    <!-- Semana 3: 01–07 Jun -->
+    <div class="day-cell has-content" data-date="2026-06-01">
+      <span class="day-num">01 Jun</span>
+      <span class="day-tag">3 notas por corda</span>
+      <span class="pill pill-notes">3N</span>
+    </div>
+    <div class="day-cell has-content" data-date="2026-06-02">
+      <span class="day-num">02</span>
+      <span class="day-tag">4 notas por corda</span>
+      <span class="pill pill-notes">4N</span>
+    </div>
+    <div class="day-cell is-special" data-date="2026-06-03">
+      <span class="day-num">03</span>
+      <span class="day-tag">Aranha 10min + Extras 3, 4 e 5</span>
+      <span class="pill pill-spider">Aranha</span>
+    </div>
+    <div class="day-cell is-free" data-date="2026-06-04">
+      <span class="day-num">04</span>
+      <span class="day-tag">Treino livre</span>
+      <span class="pill pill-free">Livre</span>
+    </div>
+    <div class="day-cell has-content" data-date="2026-06-05">
+      <span class="day-num">05</span>
+      <span class="day-tag">1 nota por corda</span>
+      <span class="pill pill-notes">1N</span>
+    </div>
+    <div class="day-cell has-content" data-date="2026-06-06">
+      <span class="day-num">06</span>
+      <span class="day-tag">2 notas por corda</span>
+      <span class="pill pill-notes">2N</span>
+    </div>
+    <div class="day-cell has-content" data-date="2026-06-07">
+      <span class="day-num">07</span>
+      <span class="day-tag">3 notas por corda</span>
+      <span class="pill pill-notes">3N</span>
+    </div>
+
+    <!-- Semana 4: 08–14 Jun -->
+    <div class="day-cell has-content" data-date="2026-06-08">
+      <span class="day-num">08</span>
+      <span class="day-tag">4 notas por corda</span>
+      <span class="pill pill-notes">4N</span>
+    </div>
+    <div class="day-cell is-plateau" data-date="2026-06-09">
+      <span class="day-num">09</span>
+      <span class="day-tag">Out of Plateau / Out of the Box</span>
+      <span class="pill pill-plateau">Plateau</span>
+    </div>
+    <div class="day-cell has-content" data-date="2026-06-10">
+      <span class="day-num">10</span>
+      <span class="day-tag">1 nota por corda</span>
+      <span class="pill pill-notes">1N</span>
+    </div>
+    <div class="day-cell has-content" data-date="2026-06-11">
+      <span class="day-num">11</span>
+      <span class="day-tag">2 notas por corda</span>
+      <span class="pill pill-notes">2N</span>
+    </div>
+    <div class="day-cell has-content" data-date="2026-06-12">
+      <span class="day-num">12</span>
+      <span class="day-tag">3 notas por corda</span>
+      <span class="pill pill-notes">3N</span>
+    </div>
+    <div class="day-cell has-content" data-date="2026-06-13">
+      <span class="day-num">13</span>
+      <span class="day-tag">4 notas por corda</span>
+      <span class="pill pill-notes">4N</span>
+    </div>
+    <div class="day-cell is-extra" data-date="2026-06-14">
+      <span class="day-num">14</span>
+      <span class="day-tag">Extra 1 ("L") + Extra 2 (+1)</span>
+      <span class="pill pill-extra">Extras</span>
+    </div>
+
+    <!-- Semana 5: 15–21 Jun -->
+    <div class="day-cell has-content" data-date="2026-06-15">
+      <span class="day-num">15</span>
+      <span class="day-tag">1 nota por corda</span>
+      <span class="pill pill-notes">1N</span>
+    </div>
+    <div class="day-cell has-content" data-date="2026-06-16">
+      <span class="day-num">16</span>
+      <span class="day-tag">2 notas por corda</span>
+      <span class="pill pill-notes">2N</span>
+    </div>
+    <div class="day-cell has-content" data-date="2026-06-17">
+      <span class="day-num">17</span>
+      <span class="day-tag">3 notas por corda</span>
+      <span class="pill pill-notes">3N</span>
+    </div>
+    <div class="day-cell has-content" data-date="2026-06-18">
+      <span class="day-num">18</span>
+      <span class="day-tag">4 notas por corda</span>
+      <span class="pill pill-notes">4N</span>
+    </div>
+    <div class="day-cell is-extra" data-date="2026-06-19">
+      <span class="day-num">19</span>
+      <span class="day-tag">Extras 3, 4 e 5</span>
+      <span class="pill pill-extra">Extras</span>
+    </div>
+    <div class="day-cell is-free" data-date="2026-06-20">
+      <span class="day-num">20</span>
+      <span class="day-tag">Treino livre</span>
+      <span class="pill pill-free">Livre</span>
+    </div>
+    <div class="day-cell is-plateau" data-date="2026-06-21">
+      <span class="day-num">21</span>
+      <span class="day-tag">Out of the Plateau</span>
+      <span class="pill pill-plateau">Plateau</span>
+    </div>
+
+    <!-- Semana 6: 22 Jun + vazios -->
+    <div class="day-cell is-plateau" data-date="2026-06-22">
+      <span class="day-num">22 Jun</span>
+      <span class="day-tag">Out of the Plateau (extras)</span>
+      <span class="pill pill-plateau">Plateau</span>
+    </div>
+    <div class="day-cell empty"></div>
+    <div class="day-cell empty"></div>
+    <div class="day-cell empty"></div>
+    <div class="day-cell empty"></div>
+    <div class="day-cell empty"></div>
+    <div class="day-cell empty"></div>
+
+  </div>
+
+  <!-- Exercises reference -->
+  <div class="exercises-section">
+    <div class="section-title">Tipos de Exercício</div>
+    <div class="exercises-grid">
+
+      <div class="exercise-card">
+        <span class="ex-num">01</span>
+        <span class="ex-name">1 nota por corda</span>
+        <span class="ex-desc">Exercício básico de warmup. Foco em clareza de som e posicionamento dos dedos em cada corda individualmente.</span>
+        <div class="ex-bar"><div class="ex-bar-fill" style="width:25%"></div></div>
+      </div>
+
+      <div class="exercise-card">
+        <span class="ex-num">02</span>
+        <span class="ex-name">2 notas por corda</span>
+        <span class="ex-desc">Progressão do exercício base. Trabalha a transição suave entre notas na mesma corda com fluidez de movimento.</span>
+        <div class="ex-bar"><div class="ex-bar-fill" style="width:50%"></div></div>
+      </div>
+
+      <div class="exercise-card">
+        <span class="ex-num">03</span>
+        <span class="ex-name">3 notas por corda</span>
+        <span class="ex-desc">Aumenta a densidade de notas. Exige maior controle de dedilhado e sincronização entre mãos.</span>
+        <div class="ex-bar"><div class="ex-bar-fill" style="width:65%"></div></div>
+      </div>
+
+      <div class="exercise-card">
+        <span class="ex-num">04</span>
+        <span class="ex-name">4 notas por corda</span>
+        <span class="ex-desc">Nível avançado do ciclo. Máxima densidade no exercício de notas por corda, exigindo controle total do fraseado.</span>
+        <div class="ex-bar"><div class="ex-bar-fill" style="width:85%"></div></div>
+      </div>
+
+      <div class="exercise-card" style="border-color:rgba(78,205,196,0.2)">
+        <span class="ex-num" style="color:var(--teal)">05</span>
+        <span class="ex-name">Aranha (Spider)</span>
+        <span class="ex-desc">10 minutos obrigatórios. Treino de independência dos dedos em padrões cruzados pelas 6 cordas. Inclui variações Extra 1 ("L") e Extra 2 (+1).</span>
+        <div class="ex-bar"><div class="ex-bar-fill" style="width:70%;background:var(--teal)"></div></div>
+      </div>
+
+      <div class="exercise-card" style="border-color:rgba(180,139,255,0.2)">
+        <span class="ex-num" style="color:var(--purple)">06</span>
+        <span class="ex-name">Extras 3, 4 e 5</span>
+        <span class="ex-desc">Variações adicionais do programa. Exercícios complementares para desenvolver habilidades específicas além do ciclo principal.</span>
+        <div class="ex-bar"><div class="ex-bar-fill" style="width:60%;background:var(--purple)"></div></div>
+      </div>
+
+      <div class="exercise-card" style="border-color:rgba(232,84,84,0.2)">
+        <span class="ex-num" style="color:var(--red)">07</span>
+        <span class="ex-name">Out of Plateau</span>
+        <span class="ex-desc">Sessão estratégica para superar platôs de evolução. "Out of the Box" para estimular novas conexões musicais e quebrar padrões limitantes.</span>
+        <div class="ex-bar"><div class="ex-bar-fill" style="width:90%;background:var(--red)"></div></div>
+      </div>
+
+      <div class="exercise-card" style="border-color:rgba(232,197,71,0.2)">
+        <span class="ex-num" style="color:var(--accent)">08</span>
+        <span class="ex-name">Treino Livre / Revisão</span>
+        <span class="ex-desc">Espaço para exploração espontânea ou revisão do conteúdo acumulado. Consolidação do repertório e percepção individual do progresso.</span>
+        <div class="ex-bar"><div class="ex-bar-fill" style="width:45%"></div></div>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<!-- ══ WORKOUT TRACKER ══ -->
+<section class="tracker-section">
+
+  <div class="tracker-header">
+    <div>
+      <div class="section-title" style="font-family:var(--font-display);font-size:1.8rem;letter-spacing:0.06em;color:var(--text)">Controle de Velocidade</div>
+      <div class="tracker-subtitle">Guitar Hacks Workout — Data · Exercício · BPM</div>
+    </div>
+    <button onclick="exportCSV()" style="background:transparent;color:var(--muted);border:1px solid var(--border);border-radius:7px;font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;padding:8px 14px;cursor:pointer;">↓ Exportar CSV</button>
+  </div>
+
+  <div class="variations-panel">
+    <div class="var-title">Dicas de variações — clique para copiar para o campo de exercício</div>
+    <div class="var-grid" id="var-chips"></div>
+  </div>
+
+  <div class="bpm-chart" id="bpm-chart-wrap" style="display:none">
+    <div class="chart-title">Evolução de BPM — últimas entradas</div>
+    <div class="chart-bars" id="chart-bars"></div>
+  </div>
+
+  <div class="tracker-form">
+    <div class="form-field">
+      <label class="form-label">Data</label>
+      <input type="date" class="form-input" id="inp-date">
+    </div>
+    <div class="form-field">
+      <label class="form-label">Exercício</label>
+      <input type="text" class="form-input" id="inp-ex" placeholder="ex: 1 nota por corda — abafado" list="ex-suggestions">
+      <datalist id="ex-suggestions">
+        <option value="1 nota por corda">
+        <option value="2 notas por corda">
+        <option value="3 notas por corda">
+        <option value="4 notas por corda">
+        <option value="Aranha — Extra 1 (L)">
+        <option value="Aranha — Extra 2 (+1)">
+        <option value="Extras 3, 4 e 5">
+        <option value="Out of Plateau">
+        <option value="Out of the Box">
+        <option value="Treino livre">
+      </datalist>
+    </div>
+    <div class="form-field">
+      <label class="form-label">Velocidade (BPM)</label>
+      <input type="number" class="form-input" id="inp-bpm" placeholder="120" min="20" max="400">
+    </div>
+    <button class="btn-add" onclick="addEntry()">+ Adicionar</button>
+  </div>
+
+  <div class="tracker-table-wrap">
+    <table class="tracker-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Data</th>
+          <th>Exercício</th>
+          <th>BPM</th>
+          <th style="text-align:center">—</th>
+        </tr>
+      </thead>
+      <tbody id="tracker-body"></tbody>
+    </table>
+    <div class="tracker-empty" id="tracker-empty">
+      <strong>—</strong>nenhuma entrada ainda — comece registrando hoje
+    </div>
+  </div>
+
+</section>
+
+
+
+
+<!-- ══ FUNDAMENTOS ══ -->
+<section class="fund-section">
+  <div class="fund-top-bar">
+    <div>
+      <div class="fund-sec-title">Fundamentos</div>
+      <div class="fund-sec-sub">Módulo 2 · 9 exercícios · histórico de BPM por sessão</div>
+    </div>
+  </div>
+  <div class="fund-legend">
+    <div class="fund-leg-item"><span class="fund-leg-dot" style="background:var(--red)"></span>Aprendendo</div>
+    <div class="fund-leg-item"><span class="fund-leg-dot" style="background:var(--accent)"></span>Praticando</div>
+    <div class="fund-leg-item"><span class="fund-leg-dot" style="background:var(--teal)"></span>Consolidado</div>
+    <div class="fund-leg-item"><span class="fund-leg-dot" style="background:var(--muted)"></span>Dominado</div>
+  </div>
+  <div class="fund-prog-wrap">
+    <div class="fund-prog-labels">
+      <span>Progresso geral</span>
+      <span id="fund-pct-label">0 / 9 consolidados</span>
+    </div>
+    <div class="fund-prog-track"><div class="fund-prog-fill" id="fund-prog-fill"></div></div>
+  </div>
+  <div class="fund-grid" id="fund-grid"></div>
+</section>
+
+<!-- Lightbox -->
+<div class="fund-lightbox" id="fund-lightbox" onclick="closeLightbox()">
+  <button class="fund-lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="fund-lightbox-img" src="" alt="">
+</div>
+
+
+<!-- ══ MUSICAL 1 ══ -->
+<section class="mus-section">
+  <div class="mus-top-bar">
+    <div>
+      <div class="mus-sec-title">Musical</div>
+      <div class="mus-sec-sub">Módulo 2 · Musical 1 · 5 minutos · 3 exercícios</div>
+    </div>
+  </div>
+  <div class="mus-prog-wrap">
+    <div class="mus-prog-labels">
+      <span>Progresso do musical</span>
+      <span id="mus-pct-label">0 / 3 consolidados</span>
+    </div>
+    <div class="mus-prog-track"><div class="mus-prog-fill" id="mus-prog-fill"></div></div>
+  </div>
+  <div class="mus-grid" id="mus-grid"></div>
+</section>
+
+
+<!-- ══ MUSICAL 10MIN ══ -->
+<section class="mus2-section">
+  <div class="mus2-top-bar">
+    <div>
+      <div class="mus2-sec-title c10">Musical 10min</div>
+      <div class="mus2-sec-sub">Módulo 2 · Musical 2 · Mesmos exercícios do 5min — foco em velocidade</div>
+    </div>
+  </div>
+  <div class="mus2-notice">⟳ <span>Mesmos exercícios do Musical 5min</span> — BPM rastreado separadamente para acompanhar a progressão de velocidade</div>
+  <div class="mus2-prog-wrap">
+    <div class="mus2-prog-labels"><span>Progresso</span><span id="m10-pct-label">0 / 3 consolidados</span></div>
+    <div class="mus2-prog-track"><div class="mus2-prog-fill c10" id="m10-prog-fill"></div></div>
+  </div>
+  <div class="mus2-grid" id="m10-grid"></div>
+</section>
+
+<!-- ══ MUSICAL 15MIN ══ -->
+<section class="mus2-section">
+  <div class="mus2-top-bar">
+    <div>
+      <div class="mus2-sec-title c15">Musical 15min</div>
+      <div class="mus2-sec-sub">Módulo 2 · Musical 3 · 6 exercícios novos</div>
+    </div>
+  </div>
+  <div class="mus2-prog-wrap">
+    <div class="mus2-prog-labels"><span>Progresso</span><span id="m15-pct-label">0 / 6 consolidados</span></div>
+    <div class="mus2-prog-track"><div class="mus2-prog-fill c15" id="m15-prog-fill"></div></div>
+  </div>
+  <div class="mus2-grid" id="m15-grid"></div>
+</section>
+
+<footer>
+  <p>Guitar Hacks — Programa iniciado em 24/05/2026</p>
+  <div class="progress-wrap">
+    <span>Progresso</span>
+    <div class="progress-bar"><div class="progress-fill" id="prog-fill"></div></div>
+    <span id="prog-pct">0%</span>
+  </div>
+</footer>
+
+<script>
+/* ── CALENDÁRIO ── */
+const start = new Date('2026-05-24');
+const today = new Date();
+today.setHours(0,0,0,0);
+const totalDays = 29;
+const elapsed = Math.max(0, Math.min(totalDays, Math.floor((today - start) / 86400000)));
+document.getElementById('days-elapsed').textContent = elapsed;
+const pct = Math.round((elapsed / totalDays) * 100);
+document.getElementById('prog-fill').style.width = pct + '%';
+document.getElementById('prog-pct').textContent = pct + '%';
+document.querySelectorAll('.day-cell[data-date]').forEach(cell => {
+  const cellDate = new Date(cell.dataset.date);
+  if (cellDate < today) cell.style.opacity = '0.45';
+});
+
+/* ── VARIAÇÕES (do PDF Dicas de Variações) ── */
+const VARIACOES = [
+  'Aberto (solto)', 'Abafado', 'Leve (baixo)', 'Forte (alto)',
+  'Palhetada paralela', 'Palhetada 45°', 'Perto da ponte',
+  'Entre os captadores', 'Rente à corda', 'Distante da corda',
+  'Palheta mais funda', 'Palheta mais leve',
+  'Mudar acentuações', 'Nota pontuada (rítmica)', 'Staccato'
+];
+const varGrid = document.getElementById('var-chips');
+VARIACOES.forEach(v => {
+  const chip = document.createElement('span');
+  chip.className = 'var-chip';
+  chip.textContent = v;
+  chip.title = 'Clique para adicionar ao exercício';
+  chip.onclick = () => {
+    const inp = document.getElementById('inp-ex');
+    inp.value = inp.value ? inp.value + ' — ' + v : v;
+    inp.focus();
+  };
+  varGrid.appendChild(chip);
+});
+
+/* ── SET DATA PADRÃO ── */
+const inpDate = document.getElementById('inp-date');
+const pad = n => String(n).padStart(2,'0');
+inpDate.value = `${today.getFullYear()}-${pad(today.getMonth()+1)}-${pad(today.getDate())}`;
+
+/* ── TAG HELPERS ── */
+function exTag(ex) {
+  const l = ex.toLowerCase();
+  if (l.includes('aranha') || l.includes('spider')) return ['Aranha','tag-spider'];
+  if (l.includes('extra')) return ['Extra','tag-extra'];
+  if (l.includes('plateau') || l.includes('box')) return ['Plateau','tag-plateau'];
+  if (l.includes('livre') || l.includes('repasse') || l.includes('revisão')) return ['Livre','tag-free'];
+  if (l.match(/\d\s*not/)) return [ex.match(/\d/)[0]+'N','tag-notes'];
+  return null;
+}
+function fmtDate(iso) {
+  const [y,m,d] = iso.split('-');
+  const meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  return `${d} ${meses[+m-1]} ${y}`;
+}
+
+/* ── LOCALSTORAGE ── */
+const KEY = 'ghacks_workout_v1';
+function load() { try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch(e){ return []; } }
+function save(data) { localStorage.setItem(KEY, JSON.stringify(data)); }
+
+/* ── RENDER ── */
+function render() {
+  const data = load();
+  const tbody = document.getElementById('tracker-body');
+  const empty = document.getElementById('tracker-empty');
+  const chartWrap = document.getElementById('bpm-chart-wrap');
+
+  tbody.innerHTML = '';
+
+  if (data.length === 0) {
+    empty.style.display = 'block';
+    chartWrap.style.display = 'none';
+    return;
+  }
+  empty.style.display = 'none';
+
+  // Tabela — ordem reversa (mais recente primeiro)
+  [...data].reverse().forEach((entry, revIdx) => {
+    const idx = data.length - 1 - revIdx;
+    const tr = document.createElement('tr');
+    const tag = exTag(entry.ex);
+    const tagHtml = tag ? `<span class="ex-tag ${tag[1]}">${tag[0]}</span>` : '';
+    tr.innerHTML = `
+      <td class="td-date" style="color:var(--muted);font-size:11px">${data.length - revIdx}</td>
+      <td class="td-date">${fmtDate(entry.date)}</td>
+      <td class="td-ex">${entry.ex}${tagHtml}</td>
+      <td class="td-bpm">${entry.bpm}<span>bpm</span></td>
+      <td class="td-actions"><button class="btn-del" onclick="delEntry(${idx})" title="Remover">✕</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  // Gráfico — últimas 12 entradas com BPM
+  const withBpm = data.filter(e => e.bpm);
+  if (withBpm.length >= 2) {
+    chartWrap.style.display = 'block';
+    const slice = withBpm.slice(-12);
+    const maxBpm = Math.max(...slice.map(e => e.bpm));
+    const minBpm = Math.min(...slice.map(e => e.bpm));
+    const range = maxBpm - minBpm || 1;
+    const chartBars = document.getElementById('chart-bars');
+    chartBars.innerHTML = '';
+    slice.forEach(e => {
+      const h = Math.max(8, Math.round(((e.bpm - minBpm) / range) * 68) + 8);
+      const wrap = document.createElement('div');
+      wrap.className = 'chart-bar-wrap';
+      wrap.innerHTML = `
+        <div class="chart-bar-val">${e.bpm}</div>
+        <div class="chart-bar" style="height:${h}px" title="${e.ex}: ${e.bpm} BPM"></div>
+        <div class="chart-bar-label">${fmtDate(e.date).slice(0,6)}</div>
+      `;
+      chartBars.appendChild(wrap);
+    });
+  } else {
+    chartWrap.style.display = 'none';
+  }
+}
+
+/* ── ADICIONAR ── */
+function addEntry() {
+  const date = document.getElementById('inp-date').value;
+  const ex = document.getElementById('inp-ex').value.trim();
+  const bpm = parseInt(document.getElementById('inp-bpm').value) || null;
+
+  if (!date || !ex) {
+    document.getElementById('inp-ex').style.borderColor = 'var(--red)';
+    setTimeout(() => document.getElementById('inp-ex').style.borderColor = '', 1000);
+    return;
+  }
+
+  const data = load();
+  data.push({ date, ex, bpm, id: Date.now() });
+  save(data);
+
+  document.getElementById('inp-ex').value = '';
+  document.getElementById('inp-bpm').value = '';
+  render();
+}
+
+/* ── DELETAR ── */
+function delEntry(idx) {
+  const data = load();
+  data.splice(idx, 1);
+  save(data);
+  render();
+}
+
+/* ── EXPORTAR CSV ── */
+function exportCSV() {
+  const data = load();
+  if (!data.length) return;
+  const rows = [['#','Data','Exercício','BPM']];
+  data.forEach((e, i) => rows.push([i+1, e.date, `"${e.ex}"`, e.bpm || '']));
+  const csv = rows.map(r => r.join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+  a.download = 'guitar-hacks-workout.csv';
+  a.click();
+}
+
+/* ── ENTER no campo BPM ── */
+document.getElementById('inp-bpm').addEventListener('keydown', e => { if (e.key === 'Enter') addEntry(); });
+document.getElementById('inp-ex').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('inp-bpm').focus(); });
+
+render();
+
+
+/* ══ FUNDAMENTOS ══ */
+const FUND_KEY = 'ghacks_fund_v2';
+
+const EXERCICIOS = [
+  { id:1, name:'Exercício 1', desc:'Cordas soltas — alternância básica P.M.', img:'assets/modulo2/fundamentos/fund-ex1.jpg', defaultStatus:'dominado' },
+  { id:2, name:'Exercício 2', desc:'Cordas soltas — salto entre 3 cordas com P.M.', img:'assets/modulo2/fundamentos/fund-ex2.jpg' },
+  { id:3, name:'Exercício 3 — Saltos', desc:'Alternância cordas 6 e 2', img:'assets/modulo2/fundamentos/fund-ex3.jpg' },
+  { id:4, name:'Exercício 4 — Salto total', desc:'Salto com todas as cordas — padrão alternado', img:'assets/modulo2/fundamentos/fund-ex4.jpg' },
+  { id:5, name:'Exercício 5', desc:'Cromático dedos 1-2-3-4 em posições fixas', img:'assets/modulo2/fundamentos/fund-ex5.jpg' },
+  { id:6, name:'Exercício 6 — Variações', desc:'Cromático casas 5–9, padrões ascendentes/descendentes', img:'assets/modulo2/fundamentos/fund-ex6.jpg' },
+  { id:7, name:'Exercício 7', desc:'Saltos + posições mistas, casas 3–8', img:'assets/modulo2/fundamentos/fund-ex7.jpg' },
+  { id:8, name:'Exercício 8', desc:'Combinações avançadas, casas 5–10, P.M. sustentado', img:'assets/modulo2/fundamentos/fund-ex8.jpg' },
+  { id:9, name:'Exercício 9', desc:'Combinações completas, casas 3–7, padrões cruzados', img:'assets/modulo2/fundamentos/fund-ex9.jpg' },
+];
+
+const STATUS_LABEL = { aprendendo:'Aprendendo', praticando:'Praticando', consolidado:'Consolidado', dominado:'Dominado' };
+
+function fundLoad() { try { return JSON.parse(localStorage.getItem(FUND_KEY)) || {}; } catch(e) { return {}; } }
+function fundSaveAll(d) { localStorage.setItem(FUND_KEY, JSON.stringify(d)); }
+
+function fmtDateShort(iso) {
+  const [y,m,d] = iso.split('-');
+  const M = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  return d + ' ' + M[+m-1];
+}
+
+function openLightbox(src) {
+  document.getElementById('fund-lightbox-img').src = src;
+  document.getElementById('fund-lightbox').classList.add('open');
+}
+function closeLightbox() {
+  document.getElementById('fund-lightbox').classList.remove('open');
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+function buildMiniChart(sessions) {
+  if (!sessions || sessions.length < 2) return '';
+  const last = sessions.slice(-10);
+  const allVals = last.flatMap(s => [s.bpmMin||0, s.bpmMax||0]).filter(Boolean);
+  if (!allVals.length) return '';
+  const maxVal = Math.max(...allVals);
+  const minVal = Math.min(...allVals.filter(Boolean));
+  const range = maxVal - minVal || 1;
+  const bars = last.map(s => {
+    const hMax = s.bpmMax ? Math.max(6, Math.round(((s.bpmMax - minVal) / range) * 48) + 6) : 0;
+    const hMin = s.bpmMin ? Math.max(4, Math.round(((s.bpmMin - minVal) / range) * 48) + 4) : 0;
+    return `<div class="fund-chart-bar-wrap">
+      <div class="fund-chart-val">${s.bpmMax||''}</div>
+      <div style="display:flex;gap:2px;align-items:flex-end;height:48px">
+        ${hMax ? `<div class="fund-chart-bar bar-max" style="height:${hMax}px;flex:1" title="Máx: ${s.bpmMax} BPM"></div>` : ''}
+        ${hMin ? `<div class="fund-chart-bar bar-min" style="height:${hMin}px;flex:1" title="Mín: ${s.bpmMin} BPM"></div>` : ''}
+      </div>
+      <div class="fund-chart-date">${fmtDateShort(s.date)}</div>
+    </div>`;
+  }).join('');
+  return `<div class="fund-chart">
+    <div class="fund-chart-legend">
+      <div class="fund-chart-leg-item"><div class="fund-chart-leg-dot" style="background:var(--accent)"></div>BPM máx</div>
+      <div class="fund-chart-leg-item"><div class="fund-chart-leg-dot" style="background:var(--teal)"></div>BPM mín</div>
+    </div>
+    <div class="fund-chart-bars">${bars}</div>
+  </div>`;
+}
+
+function buildHistoryTable(sessions, exId) {
+  if (!sessions || !sessions.length) return '<div class="fund-history-empty">Nenhuma sessão registrada ainda.</div>';
+  const rows = [...sessions].reverse().map((s, revIdx) => {
+    const idx = sessions.length - 1 - revIdx;
+    const bpmText = (s.bpmMin && s.bpmMax) ? `${s.bpmMin} – ${s.bpmMax}` : (s.bpmMax || s.bpmMin || '—');
+    const pill = s.status ? `<span class="fund-pill st-${s.status}" style="font-size:8px;padding:2px 6px">${STATUS_LABEL[s.status]||s.status}</span>` : '';
+    return `<tr>
+      <td class="hist-date">${fmtDateShort(s.date)}</td>
+      <td><span class="hist-bpm">${bpmText}<small> bpm</small></span></td>
+      <td>${pill}</td>
+      <td class="hist-note">${s.note||'—'}</td>
+      <td><button class="hist-del" onclick="fundDelSession(${exId},${idx})" title="Remover">✕</button></td>
+    </tr>`;
+  }).join('');
+  return `<table class="fund-hist-table">
+    <thead><tr><th>Data</th><th>BPM</th><th>Status</th><th>Nota</th><th></th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table>`;
+}
+
+function fundRenderProgress(data) {
+  const total = EXERCICIOS.length;
+  const done = EXERCICIOS.filter(ex => {
+    const d = data[ex.id];
+    return d && (d.currentStatus === 'consolidado' || d.currentStatus === 'dominado');
+  }).length;
+  const pct = Math.round((done / total) * 100);
+  const fill = document.getElementById('fund-prog-fill');
+  const label = document.getElementById('fund-pct-label');
+  if (fill) fill.style.width = pct + '%';
+  if (label) label.textContent = done + ' / ' + total + ' consolidados';
+}
+
+function fundRender() {
+  const data = fundLoad();
+  const grid = document.getElementById('fund-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  EXERCICIOS.forEach(ex => {
+    const d = data[ex.id] || {};
+    const status = d.currentStatus || ex.defaultStatus || 'aprendendo';
+    const sessions = d.sessions || [];
+    const lastSession = sessions.length ? sessions[sessions.length - 1] : null;
+    const bpmMin = lastSession && lastSession.bpmMin;
+    const bpmMax = lastSession && lastSession.bpmMax;
+    let bpmText = '—', bpmSub = '';
+    if (bpmMin && bpmMax) { bpmText = bpmMin + ' – ' + bpmMax; bpmSub = 'mín → máx'; }
+    else if (bpmMax)      { bpmText = bpmMax + ' BPM'; bpmSub = 'máx'; }
+    else if (bpmMin)      { bpmText = bpmMin + ' BPM'; bpmSub = 'mín'; }
+    const bpmEmpty = bpmText === '—';
+
+    const imgHTML = `
+      <div class="fund-img-wrap" onclick="openLightbox('${ex.img}')">
+        <img src="${ex.img}" alt="${ex.name}"
+          onerror="this.parentElement.outerHTML='<div class=\\'fund-img-missing\\'><strong>TAB</strong><p style=\\'margin:6px 0 4px\\'>Arquivo esperado:</p><p style=\\'word-break:break-all;font-size:9px\\'>${ex.img}</p></div>'"
+        >
+      </div>
+      <div class="fund-img-hint">clique para ampliar</div>`;
+
+    const miniChart  = buildMiniChart(sessions);
+    const histTable  = buildHistoryTable(sessions, ex.id);
+    const sessCount  = sessions.length;
+
+    const card = document.createElement('div');
+    card.className = `fund-card st-${status}`;
+    card.id = 'fund-card-' + ex.id;
+
+    card.innerHTML = `
+      <div class="fund-card-top" onclick="fundToggle(${ex.id})">
+        <div class="fund-ex-num">${String(ex.id).padStart(2,'0')}</div>
+        <div class="fund-ex-info">
+          <div class="fund-ex-name">${ex.name}</div>
+          <div class="fund-ex-desc">${ex.desc}</div>
+        </div>
+        <div class="fund-card-right">
+          <div class="fund-bpm-badge">
+            <div class="fund-bpm-val${bpmEmpty?' empty':''}">${bpmText}</div>
+            ${bpmSub ? `<div class="fund-bpm-sub">${bpmSub}</div>` : ''}
+          </div>
+          <span class="fund-pill st-${status}">${STATUS_LABEL[status]||status}</span>
+          <span class="fund-chevron">▼</span>
+        </div>
+      </div>
+      <div class="fund-card-body">
+        <div class="fund-body-inner">
+          <div class="fund-img-col">${imgHTML}</div>
+          <div class="fund-form-col">
+            <div style="font-family:var(--font-mono);font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px">Registrar sessão</div>
+            <div class="fund-fields">
+              <div class="fund-field">
+                <label>Data</label>
+                <input type="date" class="fund-input" id="fdate-${ex.id}" value="${new Date().toISOString().slice(0,10)}">
+              </div>
+              <div class="fund-field">
+                <label>BPM mínimo (limpo)</label>
+                <input type="number" class="fund-input" id="fbmin-${ex.id}" placeholder="ex: 80" min="20" max="400">
+              </div>
+              <div class="fund-field">
+                <label>BPM máximo (atingido)</label>
+                <input type="number" class="fund-input" id="fbmax-${ex.id}" placeholder="ex: 120" min="20" max="400">
+              </div>
+              <div class="fund-field">
+                <label>Status atual</label>
+                <select class="fund-select" id="fsel-${ex.id}">
+                  <option value="aprendendo" ${status==='aprendendo'?'selected':''}>Aprendendo</option>
+                  <option value="praticando"  ${status==='praticando' ?'selected':''}>Praticando</option>
+                  <option value="consolidado" ${status==='consolidado'?'selected':''}>Consolidado</option>
+                  <option value="dominado"    ${status==='dominado'   ?'selected':''}>Dominado</option>
+                </select>
+              </div>
+              <div class="fund-field wide">
+                <label>Observações (corda difícil, variação, dúvida...)</label>
+                <textarea class="fund-textarea" id="fnote-${ex.id}" placeholder="ex: Casa 7 travando na corda 1. Abafado ajudou."></textarea>
+              </div>
+            </div>
+            <div class="fund-row-btns">
+              <button class="fund-save-btn" onclick="fundAddSession(${ex.id})">+ Registrar sessão</button>
+              <span class="fund-flash" id="fflash-${ex.id}">✓ Salvo</span>
+            </div>
+          </div>
+        </div>
+        <div class="fund-history">
+          <div class="fund-history-title">
+            <span>Histórico — ${sessCount} sessão${sessCount !== 1 ? 'ões' : ''}</span>
+            ${sessCount ? `<button class="fund-history-clear" onclick="fundClearHistory(${ex.id})">Limpar tudo</button>` : ''}
+          </div>
+          ${miniChart}
+          ${histTable}
+        </div>
+      </div>`;
+
+    grid.appendChild(card);
+  });
+
+  fundRenderProgress(data);
+}
+
+function fundToggle(id) {
+  document.getElementById('fund-card-' + id).classList.toggle('open');
+}
+
+function fundAddSession(id) {
+  const date   = document.getElementById('fdate-'  + id).value;
+  const bpmMin = parseInt(document.getElementById('fbmin-'  + id).value) || null;
+  const bpmMax = parseInt(document.getElementById('fbmax-'  + id).value) || null;
+  const status = document.getElementById('fsel-'   + id).value;
+  const note   = document.getElementById('fnote-'  + id).value.trim();
+  if (!date) return;
+
+  const data = fundLoad();
+  if (!data[id]) data[id] = { sessions: [] };
+  if (!data[id].sessions) data[id].sessions = [];
+  data[id].sessions.push({ date, bpmMin, bpmMax, status, note, savedAt: new Date().toISOString() });
+  data[id].currentStatus = status;
+  fundSaveAll(data);
+
+  const flash = document.getElementById('fflash-' + id);
+  flash.style.opacity = '1';
+  setTimeout(() => { flash.style.opacity = '0'; }, 1800);
+
+  fundRender();
+  document.getElementById('fund-card-' + id).classList.add('open');
+  document.getElementById('fbmin-'  + id).value = '';
+  document.getElementById('fbmax-'  + id).value = '';
+  document.getElementById('fnote-'  + id).value = '';
+}
+
+function fundDelSession(exId, idx) {
+  const data = fundLoad();
+  if (!data[exId] || !data[exId].sessions) return;
+  data[exId].sessions.splice(idx, 1);
+  const sessions = data[exId].sessions;
+  if (sessions.length) data[exId].currentStatus = sessions[sessions.length - 1].status;
+  fundSaveAll(data);
+  fundRender();
+  document.getElementById('fund-card-' + exId).classList.add('open');
+}
+
+function fundClearHistory(exId) {
+  if (!confirm('Limpar todo o histórico deste exercício?')) return;
+  const data = fundLoad();
+  if (data[exId]) data[exId].sessions = [];
+  fundSaveAll(data);
+  fundRender();
+  document.getElementById('fund-card-' + exId).classList.add('open');
+}
+
+fundRender();
+
+
+/* ══ MUSICAL 1 ══ */
+const MUS_KEY = 'ghacks_mus1_v1';
+
+const ARPEJOS = [
+  { id:'maior',     label:'Ré Maior' },
+  { id:'menor',     label:'Ré menor' },
+  { id:'diminuto',  label:'Ré diminuto' },
+  { id:'aumentado', label:'Ré aumentado' },
+];
+
+const MUS_EXERCICIOS = [
+  { id:1, name:'Exercício 1 — Arpejos de Ré', desc:'4 arpejos: Maior · menor · diminuto · aumentado', img:'assets/modulo2/musical1/mus1-ex1.jpg', type:'arpejos' },
+  { id:2, name:'Exercício 2', desc:'Linha melódica com saltos — casas 4–12', img:'assets/modulo2/musical1/mus1-ex2.jpg', type:'simple' },
+  { id:3, name:'Exercício 3', desc:'Linha melódica — casas 5–10', img:'assets/modulo2/musical1/mus1-ex3.jpg', type:'simple' },
+];
+
+const MUS_STATUS_LABEL = { aprendendo:'Aprendendo', praticando:'Praticando', consolidado:'Consolidado', dominado:'Dominado' };
+
+function musLoad() { try { return JSON.parse(localStorage.getItem(MUS_KEY)) || {}; } catch(e) { return {}; } }
+function musSaveAll(d) { localStorage.setItem(MUS_KEY, JSON.stringify(d)); }
+
+function musFmtDate(iso) {
+  const [y,m,d] = iso.split('-');
+  const M=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  return d+' '+M[+m-1];
+}
+
+function musGetStatus(ex, data) {
+  const d = data[ex.id];
+  if (!d) return 'aprendendo';
+  if (ex.type === 'arpejos') {
+    const order = ['aprendendo','praticando','consolidado','dominado'];
+    const statuses = ARPEJOS.map(a => {
+      const sessions = (d.arpejos&&d.arpejos[a.id]&&d.arpejos[a.id].sessions)||[];
+      return sessions.length ? sessions[sessions.length-1].status : 'aprendendo';
+    });
+    return statuses.reduce((acc,s) => order.indexOf(s)<order.indexOf(acc)?s:acc, 'dominado');
+  }
+  const sessions = d.sessions||[];
+  return sessions.length ? sessions[sessions.length-1].status : 'aprendendo';
+}
+
+function musLatestBpm(sessions) {
+  if (!sessions||!sessions.length) return {text:'—',sub:'',empty:true};
+  const last = sessions[sessions.length-1];
+  if (last.bpmMin&&last.bpmMax) return {text:last.bpmMin+' – '+last.bpmMax,sub:'mín → máx',empty:false};
+  if (last.bpmMax) return {text:last.bpmMax+' BPM',sub:'máx',empty:false};
+  if (last.bpmMin) return {text:last.bpmMin+' BPM',sub:'mín',empty:false};
+  return {text:'—',sub:'',empty:true};
+}
+
+function musMiniChart(sessions) {
+  if (!sessions||sessions.length<2) return '';
+  const last = sessions.slice(-10);
+  const allVals = last.flatMap(s=>[s.bpmMin||0,s.bpmMax||0]).filter(Boolean);
+  if (!allVals.length) return '';
+  const maxVal=Math.max(...allVals), minVal=Math.min(...allVals), range=maxVal-minVal||1;
+  const bars = last.map(s => {
+    const hMax = s.bpmMax?Math.max(5,Math.round(((s.bpmMax-minVal)/range)*44)+5):0;
+    const hMin = s.bpmMin?Math.max(3,Math.round(((s.bpmMin-minVal)/range)*44)+3):0;
+    return `<div class="mus-chart-bar-wrap">
+      <div class="mus-chart-val">${s.bpmMax||''}</div>
+      <div style="display:flex;gap:2px;align-items:flex-end;height:44px">
+        ${hMax?`<div class="mus-chart-bar bar-max" style="height:${hMax}px;flex:1"></div>`:''}
+        ${hMin?`<div class="mus-chart-bar bar-min" style="height:${hMin}px;flex:1"></div>`:''}
+      </div>
+      <div class="mus-chart-date">${musFmtDate(s.date)}</div>
+    </div>`;
+  }).join('');
+  return `<div class="mus-chart">
+    <div class="mus-chart-legend">
+      <div class="mus-chart-leg-item"><div class="mus-chart-leg-dot" style="background:var(--purple)"></div>BPM máx</div>
+      <div class="mus-chart-leg-item"><div class="mus-chart-leg-dot" style="background:var(--teal)"></div>BPM mín</div>
+    </div>
+    <div class="mus-chart-bars">${bars}</div>
+  </div>`;
+}
+
+function musHistTable(sessions, exId, isArpejo, arpejoId) {
+  if (!sessions||!sessions.length) return '<div class="mus-hist-empty">Nenhuma sessão ainda.</div>';
+  const rows = [...sessions].reverse().map((s,ri) => {
+    const idx = sessions.length-1-ri;
+    const bpm = (s.bpmMin&&s.bpmMax)?`${s.bpmMin} – ${s.bpmMax}`:(s.bpmMax||s.bpmMin||'—');
+    const pill = s.status?`<span class="mus-pill st-${s.status}" style="font-size:8px;padding:2px 6px">${MUS_STATUS_LABEL[s.status]||s.status}</span>`:'';
+    const delFn = isArpejo?`musDelArpejoSession(${exId},'${arpejoId}',${idx})`:`musDelSession(${exId},${idx})`;
+    return `<tr>
+      <td class="mhist-date">${musFmtDate(s.date)}</td>
+      <td><span class="mhist-bpm">${bpm}<small> bpm</small></span></td>
+      <td>${pill}</td>
+      <td class="mhist-note">${s.note||'—'}</td>
+      <td><button class="mhist-del" onclick="${delFn}">✕</button></td>
+    </tr>`;
+  }).join('');
+  return `<table class="mus-hist-table"><thead><tr><th>Data</th><th>BPM</th><th>Status</th><th>Nota</th><th></th></tr></thead><tbody>${rows}</tbody></table>`;
+}
+
+function musImgHTML(ex) {
+  return `<div class="mus-img-wrap" onclick="openLightbox('${ex.img}')">
+    <img src="${ex.img}" alt="${ex.name}" onerror="this.parentElement.outerHTML='<div class=\\'mus-img-missing\\'><strong>TAB</strong><p>${ex.img.split('/').pop()}</p><p style=\\'margin-top:4px\\'>assets/modulo2/musical1/</p></div>'">
+  </div>
+  <div class="mus-img-hint">clique para ampliar</div>`;
+}
+
+function musArpejosBlock(ex, data) {
+  const d = data[ex.id]||{};
+  const arpejoData = d.arpejos||{};
+  const today = new Date().toISOString().slice(0,10);
+  return ARPEJOS.map(a => {
+    const sessions = (arpejoData[a.id]&&arpejoData[a.id].sessions)||[];
+    const lastSess = sessions.length?sessions[sessions.length-1]:null;
+    const status = lastSess?lastSess.status:'aprendendo';
+    const bpmBadge = lastSess&&(lastSess.bpmMax||lastSess.bpmMin)?`${lastSess.bpmMin||'?'} – ${lastSess.bpmMax||'?'}`:'—';
+    const hist = musHistTable(sessions, ex.id, true, a.id);
+    const sessCount = sessions.length;
+    return `<div class="mus-arpejo-card">
+      <div class="mus-arpejo-header">
+        <div class="mus-arpejo-name">${a.label}</div>
+        <div class="mus-arpejo-bpm-badge${bpmBadge==='—'?' empty':''}">${bpmBadge}${bpmBadge!=='—'?' <small style="font-family:var(--font-mono);font-size:8px;color:var(--muted)">BPM</small>':''}</div>
+      </div>
+      <div class="mus-arpejo-fields">
+        <div class="mus-arpejo-field"><label>Data</label><input type="date" class="mus-input" id="adate-${ex.id}-${a.id}" value="${today}"></div>
+        <div class="mus-arpejo-field"><label>BPM mín</label><input type="number" class="mus-input" id="abmin-${ex.id}-${a.id}" placeholder="80" min="20" max="400"></div>
+        <div class="mus-arpejo-field"><label>BPM máx</label><input type="number" class="mus-input" id="abmax-${ex.id}-${a.id}" placeholder="120" min="20" max="400"></div>
+        <div class="mus-arpejo-field"><label>Status</label>
+          <select class="mus-select" id="asel-${ex.id}-${a.id}">
+            <option value="aprendendo" ${status==='aprendendo'?'selected':''}>Aprendendo</option>
+            <option value="praticando"  ${status==='praticando'?'selected':''}>Praticando</option>
+            <option value="consolidado" ${status==='consolidado'?'selected':''}>Consolidado</option>
+            <option value="dominado"    ${status==='dominado'?'selected':''}>Dominado</option>
+          </select>
+        </div>
+        <div class="mus-arpejo-field" style="grid-column:1/-1"><label>Observação</label><input type="text" class="mus-input" id="anote-${ex.id}-${a.id}" placeholder="ex: inversão difícil, tempo lento..."></div>
+        <button class="mus-arpejo-save" style="grid-column:1/-1" onclick="musAddArpejoSession(${ex.id},'${a.id}')">+ Registrar</button>
+      </div>
+      <span class="mus-arpejo-flash" id="aflash-${ex.id}-${a.id}">✓ Salvo</span>
+      <div class="mus-arpejo-history">
+        <div class="mus-arpejo-hist-title">
+          <span>${sessCount} sessão${sessCount!==1?'ões':''}</span>
+          ${sessCount?`<button class="mus-history-clear" onclick="musClearArpejoHistory(${ex.id},'${a.id}')">Limpar</button>`:''}
+        </div>
+        ${hist}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function musSimpleFormBlock(ex, data) {
+  const d = data[ex.id]||{};
+  const sessions = d.sessions||[];
+  const lastSess = sessions.length?sessions[sessions.length-1]:null;
+  const status = lastSess?lastSess.status:'aprendendo';
+  const today = new Date().toISOString().slice(0,10);
+  return `<div class="mus-simple-fields">
+    <div class="mus-simple-field"><label>Data</label><input type="date" class="mus-input" id="mdate-${ex.id}" value="${today}"></div>
+    <div class="mus-simple-field"><label>BPM mínimo</label><input type="number" class="mus-input" id="mbmin-${ex.id}" placeholder="80" min="20" max="400"></div>
+    <div class="mus-simple-field"><label>BPM máximo</label><input type="number" class="mus-input" id="mbmax-${ex.id}" placeholder="120" min="20" max="400"></div>
+    <div class="mus-simple-field"><label>Status</label>
+      <select class="mus-select" id="msel-${ex.id}">
+        <option value="aprendendo" ${status==='aprendendo'?'selected':''}>Aprendendo</option>
+        <option value="praticando"  ${status==='praticando'?'selected':''}>Praticando</option>
+        <option value="consolidado" ${status==='consolidado'?'selected':''}>Consolidado</option>
+        <option value="dominado"    ${status==='dominado'?'selected':''}>Dominado</option>
+      </select>
+    </div>
+    <div class="mus-simple-field wide"><label>Observações</label><textarea class="mus-simple-textarea" id="mnote-${ex.id}" placeholder="ex: compasso 3 travando nas notas altas..."></textarea></div>
+  </div>
+  <div class="mus-row-btns">
+    <button class="mus-save-btn" onclick="musAddSession(${ex.id})">+ Registrar sessão</button>
+    <span class="mus-flash" id="mflash-${ex.id}">✓ Salvo</span>
+  </div>`;
+}
+
+function musSimpleHistBlock(ex, data) {
+  const d = data[ex.id]||{};
+  const sessions = d.sessions||[];
+  const chart = musMiniChart(sessions);
+  const hist = musHistTable(sessions, ex.id, false, null);
+  const sessCount = sessions.length;
+  return `<div class="mus-history">
+    <div class="mus-history-title">
+      <span>Histórico — ${sessCount} sessão${sessCount!==1?'ões':''}</span>
+      ${sessCount?`<button class="mus-history-clear" onclick="musClearHistory(${ex.id})">Limpar tudo</button>`:''}
+    </div>
+    ${chart}${hist}
+  </div>`;
+}
+
+function musRenderProgress(data) {
+  const total = MUS_EXERCICIOS.length;
+  const done = MUS_EXERCICIOS.filter(ex => { const s=musGetStatus(ex,data); return s==='consolidado'||s==='dominado'; }).length;
+  const pct = Math.round((done/total)*100);
+  const fill=document.getElementById('mus-prog-fill'), label=document.getElementById('mus-pct-label');
+  if(fill) fill.style.width=pct+'%';
+  if(label) label.textContent=done+' / '+total+' consolidados';
+}
+
+function musRender() {
+  const data = musLoad();
+  const grid = document.getElementById('mus-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  MUS_EXERCICIOS.forEach(ex => {
+    const status = musGetStatus(ex, data);
+    const d = data[ex.id]||{};
+    let bpmText='—', bpmSub='', bpmEmpty=true;
+    if (ex.type==='simple') {
+      const b = musLatestBpm(d.sessions||[]);
+      bpmText=b.text; bpmSub=b.sub; bpmEmpty=b.empty;
+    } else {
+      const maxes = ARPEJOS.map(a => {
+        const sessions=(d.arpejos&&d.arpejos[a.id]&&d.arpejos[a.id].sessions)||[];
+        const last=sessions.length?sessions[sessions.length-1]:null;
+        return last?(last.bpmMax||last.bpmMin||0):0;
+      }).filter(Boolean);
+      if (maxes.length) { bpmText=Math.min(...maxes)+'–'+Math.max(...maxes); bpmSub='arpejos'; bpmEmpty=false; }
+    }
+
+    const bodyInner = ex.type==='arpejos'
+      ? `<div class="mus-img-col">${musImgHTML(ex)}</div>
+         <div class="mus-form-col">
+           <div style="font-family:var(--font-mono);font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px">Registrar por arpejo</div>
+           <div class="mus-arpejo-grid">${musArpejosBlock(ex,data)}</div>
+         </div>`
+      : `<div class="mus-img-col">${musImgHTML(ex)}</div>
+         <div class="mus-form-col">
+           <div style="font-family:var(--font-mono);font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px">Registrar sessão</div>
+           ${musSimpleFormBlock(ex,data)}
+         </div>`;
+
+    const histBlock = ex.type==='simple' ? musSimpleHistBlock(ex,data) : '';
+
+    const card = document.createElement('div');
+    card.className=`mus-card st-${status}`;
+    card.id='mus-card-'+ex.id;
+    card.innerHTML=`
+      <div class="mus-card-top" onclick="musToggle(${ex.id})">
+        <div class="mus-ex-num">${String(ex.id).padStart(2,'0')}</div>
+        <div class="mus-ex-info">
+          <div class="mus-ex-name">${ex.name}</div>
+          <div class="mus-ex-desc">${ex.desc}</div>
+        </div>
+        <div class="mus-card-right">
+          <div class="mus-bpm-badge">
+            <div class="mus-bpm-val${bpmEmpty?' empty':''}">${bpmText}</div>
+            ${bpmSub?`<div class="mus-bpm-sub">${bpmSub}</div>`:''}
+          </div>
+          <span class="mus-pill st-${status}">${MUS_STATUS_LABEL[status]||status}</span>
+          <span class="mus-chevron">▼</span>
+        </div>
+      </div>
+      <div class="mus-card-body">
+        <div class="mus-body-inner">${bodyInner}</div>
+        ${histBlock}
+      </div>`;
+    grid.appendChild(card);
+  });
+  musRenderProgress(data);
+}
+
+function musToggle(id) { document.getElementById('mus-card-'+id).classList.toggle('open'); }
+
+function musAddArpejoSession(exId, arpejoId) {
+  const date  = document.getElementById(`adate-${exId}-${arpejoId}`).value;
+  const bpmMin= parseInt(document.getElementById(`abmin-${exId}-${arpejoId}`).value)||null;
+  const bpmMax= parseInt(document.getElementById(`abmax-${exId}-${arpejoId}`).value)||null;
+  const status= document.getElementById(`asel-${exId}-${arpejoId}`).value;
+  const note  = document.getElementById(`anote-${exId}-${arpejoId}`).value.trim();
+  if (!date) return;
+  const data = musLoad();
+  if (!data[exId]) data[exId]={};
+  if (!data[exId].arpejos) data[exId].arpejos={};
+  if (!data[exId].arpejos[arpejoId]) data[exId].arpejos[arpejoId]={sessions:[]};
+  data[exId].arpejos[arpejoId].sessions.push({date,bpmMin,bpmMax,status,note,savedAt:new Date().toISOString()});
+  musSaveAll(data);
+  const flash=document.getElementById(`aflash-${exId}-${arpejoId}`);
+  flash.style.opacity='1'; setTimeout(()=>flash.style.opacity='0',1800);
+  musRender(); document.getElementById('mus-card-'+exId).classList.add('open');
+}
+
+function musAddSession(exId) {
+  const date  = document.getElementById('mdate-'+exId).value;
+  const bpmMin= parseInt(document.getElementById('mbmin-'+exId).value)||null;
+  const bpmMax= parseInt(document.getElementById('mbmax-'+exId).value)||null;
+  const status= document.getElementById('msel-'+exId).value;
+  const note  = document.getElementById('mnote-'+exId).value.trim();
+  if (!date) return;
+  const data = musLoad();
+  if (!data[exId]) data[exId]={sessions:[]};
+  if (!data[exId].sessions) data[exId].sessions=[];
+  data[exId].sessions.push({date,bpmMin,bpmMax,status,note,savedAt:new Date().toISOString()});
+  musSaveAll(data);
+  const flash=document.getElementById('mflash-'+exId);
+  flash.style.opacity='1'; setTimeout(()=>flash.style.opacity='0',1800);
+  musRender(); document.getElementById('mus-card-'+exId).classList.add('open');
+  document.getElementById('mbmin-'+exId).value='';
+  document.getElementById('mbmax-'+exId).value='';
+  document.getElementById('mnote-'+exId).value='';
+}
+
+function musDelSession(exId,idx) {
+  const data=musLoad();
+  if(data[exId]&&data[exId].sessions) data[exId].sessions.splice(idx,1);
+  musSaveAll(data); musRender(); document.getElementById('mus-card-'+exId).classList.add('open');
+}
+
+function musDelArpejoSession(exId,arpejoId,idx) {
+  const data=musLoad();
+  if(data[exId]&&data[exId].arpejos&&data[exId].arpejos[arpejoId])
+    data[exId].arpejos[arpejoId].sessions.splice(idx,1);
+  musSaveAll(data); musRender(); document.getElementById('mus-card-'+exId).classList.add('open');
+}
+
+function musClearHistory(exId) {
+  if(!confirm('Limpar histórico deste exercício?')) return;
+  const data=musLoad(); if(data[exId]) data[exId].sessions=[];
+  musSaveAll(data); musRender(); document.getElementById('mus-card-'+exId).classList.add('open');
+}
+
+function musClearArpejoHistory(exId,arpejoId) {
+  if(!confirm('Limpar histórico deste arpejo?')) return;
+  const data=musLoad();
+  if(data[exId]&&data[exId].arpejos&&data[exId].arpejos[arpejoId])
+    data[exId].arpejos[arpejoId].sessions=[];
+  musSaveAll(data); musRender(); document.getElementById('mus-card-'+exId).classList.add('open');
+}
+
+musRender();
+
+
+/* ══ MUSICAL 10MIN + 15MIN ══ */
+
+/* ── shared helpers ── */
+function m2FmtDate(iso) {
+  const [y,m,d]=iso.split('-');
+  const M=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  return d+' '+M[+m-1];
+}
+function m2Load(key) { try{return JSON.parse(localStorage.getItem(key))||{};}catch(e){return {};} }
+function m2Save(key,d) { localStorage.setItem(key,JSON.stringify(d)); }
+const M2_STATUS = {aprendendo:'Aprendendo',praticando:'Praticando',consolidado:'Consolidado',dominado:'Dominado'};
+
+function m2LatestBpm(sessions) {
+  if (!sessions||!sessions.length) return {text:'—',sub:'',empty:true};
+  const last=sessions[sessions.length-1];
+  if(last.bpmMin&&last.bpmMax) return {text:last.bpmMin+' – '+last.bpmMax,sub:'mín → máx',empty:false};
+  if(last.bpmMax) return {text:last.bpmMax+' BPM',sub:'máx',empty:false};
+  if(last.bpmMin) return {text:last.bpmMin+' BPM',sub:'mín',empty:false};
+  return {text:'—',sub:'',empty:true};
+}
+
+function m2MiniChart(sessions, colorClass) {
+  if(!sessions||sessions.length<2) return '';
+  const last=sessions.slice(-10);
+  const allVals=last.flatMap(s=>[s.bpmMin||0,s.bpmMax||0]).filter(Boolean);
+  if(!allVals.length) return '';
+  const maxVal=Math.max(...allVals),minVal=Math.min(...allVals),range=maxVal-minVal||1;
+  const bars=last.map(s=>{
+    const hMax=s.bpmMax?Math.max(5,Math.round(((s.bpmMax-minVal)/range)*44)+5):0;
+    const hMin=s.bpmMin?Math.max(3,Math.round(((s.bpmMin-minVal)/range)*44)+3):0;
+    return `<div class="mus2-chart-bar-wrap">
+      <div class="mus2-chart-val">${s.bpmMax||''}</div>
+      <div style="display:flex;gap:2px;align-items:flex-end;height:44px">
+        ${hMax?`<div class="mus2-chart-bar ${colorClass}" style="height:${hMax}px;flex:1"></div>`:''}
+        ${hMin?`<div class="mus2-chart-bar bar-min" style="height:${hMin}px;flex:1"></div>`:''}
+      </div>
+      <div class="mus2-chart-date">${m2FmtDate(s.date)}</div>
+    </div>`;
+  }).join('');
+  const dotColor = colorClass==='c10'?'#7ecff5':'#ff9f7a';
+  return `<div class="mus2-chart">
+    <div class="mus2-chart-legend">
+      <div class="mus2-chart-leg-item"><div class="mus2-chart-leg-dot" style="background:${dotColor}"></div>BPM máx</div>
+      <div class="mus2-chart-leg-item"><div class="mus2-chart-leg-dot" style="background:var(--teal)"></div>BPM mín</div>
+    </div>
+    <div class="mus2-chart-bars">${bars}</div>
+  </div>`;
+}
+
+function m2HistTable(sessions, ns, exId, colorClass) {
+  if(!sessions||!sessions.length) return '<div class="mus2-hist-empty">Nenhuma sessão ainda.</div>';
+  const rows=[...sessions].reverse().map((s,ri)=>{
+    const idx=sessions.length-1-ri;
+    const bpm=(s.bpmMin&&s.bpmMax)?`${s.bpmMin} – ${s.bpmMax}`:(s.bpmMax||s.bpmMin||'—');
+    const pill=s.status?`<span class="mus2-pill st-${s.status} ${colorClass}" style="font-size:8px;padding:2px 6px">${M2_STATUS[s.status]||s.status}</span>`:'';
+    return `<tr>
+      <td class="m2hist-date">${m2FmtDate(s.date)}</td>
+      <td><span class="m2hist-bpm ${colorClass}">${bpm}<small> bpm</small></span></td>
+      <td>${pill}</td>
+      <td class="m2hist-note">${s.note||'—'}</td>
+      <td><button class="m2hist-del" onclick="${ns}DelSession('${exId}',${idx})">✕</button></td>
+    </tr>`;
+  }).join('');
+  return `<table class="mus2-hist-table"><thead><tr><th>Data</th><th>BPM</th><th>Status</th><th>Nota</th><th></th></tr></thead><tbody>${rows}</tbody></table>`;
+}
+
+function m2ImgHTML(imgPath, name, folderHint) {
+  return `<div class="mus2-img-wrap" onclick="openLightbox('${imgPath}')">
+    <img src="${imgPath}" alt="${name}" onerror="this.parentElement.outerHTML='<div class=\\'mus2-img-missing\\'><strong>TAB</strong><p>${imgPath.split('/').pop()}</p><p style=\\'margin-top:4px\\'>${folderHint}</p></div>'">
+  </div>
+  <div class="mus2-img-hint">clique para ampliar</div>`;
+}
+
+function m2FormBlock(ns, exId, sessions, colorClass) {
+  const lastSess=sessions.length?sessions[sessions.length-1]:null;
+  const status=lastSess?lastSess.status:'aprendendo';
+  const today=new Date().toISOString().slice(0,10);
+  return `<div style="font-family:var(--font-mono);font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px">Registrar sessão</div>
+  <div class="mus2-fields">
+    <div class="mus2-field"><label>Data</label><input type="date" class="mus2-input" id="${ns}date-${exId}" value="${today}"></div>
+    <div class="mus2-field"><label>BPM mínimo</label><input type="number" class="mus2-input" id="${ns}bmin-${exId}" placeholder="80" min="20" max="400"></div>
+    <div class="mus2-field"><label>BPM máximo</label><input type="number" class="mus2-input" id="${ns}bmax-${exId}" placeholder="120" min="20" max="400"></div>
+    <div class="mus2-field"><label>Status</label>
+      <select class="mus2-select" id="${ns}sel-${exId}">
+        <option value="aprendendo" ${status==='aprendendo'?'selected':''}>Aprendendo</option>
+        <option value="praticando"  ${status==='praticando'?'selected':''}>Praticando</option>
+        <option value="consolidado" ${status==='consolidado'?'selected':''}>Consolidado</option>
+        <option value="dominado"    ${status==='dominado'?'selected':''}>Dominado</option>
+      </select>
+    </div>
+    <div class="mus2-field wide"><label>Observações</label>
+      <textarea class="mus2-textarea" id="${ns}note-${exId}" placeholder="ex: trecho difícil, queda de velocidade..."></textarea>
+    </div>
+  </div>
+  <div class="mus2-row-btns">
+    <button class="mus2-save-btn ${colorClass}" onclick="${ns}AddSession('${exId}')">+ Registrar</button>
+    <span class="mus2-flash" id="${ns}flash-${exId}">✓ Salvo</span>
+  </div>`;
+}
+
+function m2HistBlock(ns, exId, sessions, colorClass) {
+  const chart=m2MiniChart(sessions, colorClass);
+  const hist=m2HistTable(sessions, ns, exId, colorClass);
+  const sessCount=sessions.length;
+  return `<div class="mus2-history">
+    <div class="mus2-history-title">
+      <span>Histórico — ${sessCount} sessão${sessCount!==1?'ões':''}</span>
+      ${sessCount?`<button class="mus2-history-clear" onclick="${ns}ClearHistory('${exId}')">Limpar tudo</button>`:''}
+    </div>
+    ${chart}${hist}
+  </div>`;
+}
+
+function m2RenderGrid(gridId, exercises, storageKey, progFillId, progLabelId, colorClass, ns, folderHint) {
+  const data=m2Load(storageKey);
+  const grid=document.getElementById(gridId);
+  if(!grid) return;
+  grid.innerHTML='';
+
+  exercises.forEach(ex => {
+    const d=data[ex.id]||{};
+    const sessions=d.sessions||[];
+    const lastSess=sessions.length?sessions[sessions.length-1]:null;
+    const status=lastSess?lastSess.status:'aprendendo';
+    const bpm=m2LatestBpm(sessions);
+
+    const card=document.createElement('div');
+    card.className=`mus2-card st-${status} ${colorClass}`;
+    card.id=`${ns}card-${ex.id}`;
+    card.innerHTML=`
+      <div class="mus2-card-top" onclick="${ns}Toggle('${ex.id}')">
+        <div class="mus2-ex-num ${status==='aprendendo'?'':status==='consolidado'||status==='dominado'?'':colorClass}">${String(ex.id).padStart(2,'0')}</div>
+        <div class="mus2-ex-info">
+          <div class="mus2-ex-name">${ex.name}</div>
+          <div class="mus2-ex-desc">${ex.desc}</div>
+        </div>
+        <div class="mus2-card-right">
+          <div>
+            <div class="mus2-bpm-val ${bpm.empty?'empty':colorClass}">${bpm.text}</div>
+            ${bpm.sub?`<div class="mus2-bpm-sub">${bpm.sub}</div>`:''}
+          </div>
+          <span class="mus2-pill st-${status} ${colorClass}">${M2_STATUS[status]||status}</span>
+          <span class="mus2-chevron">▼</span>
+        </div>
+      </div>
+      <div class="mus2-card-body">
+        <div class="mus2-body-inner">
+          <div class="mus2-img-col">${m2ImgHTML(ex.img, ex.name, folderHint)}</div>
+          <div class="mus2-form-col">${m2FormBlock(ns, ex.id, sessions, colorClass)}</div>
+        </div>
+        ${m2HistBlock(ns, ex.id, sessions, colorClass)}
+      </div>`;
+    grid.appendChild(card);
+  });
+
+  // progress
+  const total=exercises.length;
+  const done=exercises.filter(ex=>{
+    const d=data[ex.id]; const sessions=d?d.sessions||[]:[];
+    const last=sessions.length?sessions[sessions.length-1]:null;
+    return last&&(last.status==='consolidado'||last.status==='dominado');
+  }).length;
+  const pct=Math.round((done/total)*100);
+  const fill=document.getElementById(progFillId),label=document.getElementById(progLabelId);
+  if(fill) fill.style.width=pct+'%';
+  if(label) label.textContent=done+' / '+total+' consolidados';
+}
+
+/* ── MUSICAL 10MIN ── */
+const M10_KEY='ghacks_m10_v1';
+const M10_EX=[
+  {id:1,name:'Exercício 1 — Arpejos de Ré',desc:'Mesmos 4 arpejos do 5min — foco em aumentar velocidade',img:'assets/modulo2/musical1/mus1-ex1.jpg'},
+  {id:2,name:'Exercício 2',desc:'Linha melódica com saltos — puxar BPM do 5min',img:'assets/modulo2/musical1/mus1-ex2.jpg'},
+  {id:3,name:'Exercício 3',desc:'Linha melódica — puxar BPM do 5min',img:'assets/modulo2/musical1/mus1-ex3.jpg'},
+];
+
+function m10Render() { m2RenderGrid('m10-grid',M10_EX,M10_KEY,'m10-prog-fill','m10-pct-label','c10','m10','assets/modulo2/musical1/'); }
+function m10Toggle(id) { document.getElementById('m10card-'+id).classList.toggle('open'); }
+function m10AddSession(exId) {
+  const date=document.getElementById('m10date-'+exId).value;
+  const bpmMin=parseInt(document.getElementById('m10bmin-'+exId).value)||null;
+  const bpmMax=parseInt(document.getElementById('m10bmax-'+exId).value)||null;
+  const status=document.getElementById('m10sel-'+exId).value;
+  const note=document.getElementById('m10note-'+exId).value.trim();
+  if(!date) return;
+  const data=m2Load(M10_KEY);
+  if(!data[exId]) data[exId]={sessions:[]};
+  data[exId].sessions.push({date,bpmMin,bpmMax,status,note,savedAt:new Date().toISOString()});
+  m2Save(M10_KEY,data);
+  const flash=document.getElementById('m10flash-'+exId);
+  flash.style.opacity='1'; setTimeout(()=>flash.style.opacity='0',1800);
+  m10Render(); document.getElementById('m10card-'+exId).classList.add('open');
+  document.getElementById('m10bmin-'+exId).value='';
+  document.getElementById('m10bmax-'+exId).value='';
+  document.getElementById('m10note-'+exId).value='';
+}
+function m10DelSession(exId,idx) {
+  const data=m2Load(M10_KEY);
+  if(data[exId]&&data[exId].sessions) data[exId].sessions.splice(idx,1);
+  m2Save(M10_KEY,data); m10Render(); document.getElementById('m10card-'+exId).classList.add('open');
+}
+function m10ClearHistory(exId) {
+  if(!confirm('Limpar histórico?')) return;
+  const data=m2Load(M10_KEY); if(data[exId]) data[exId].sessions=[];
+  m2Save(M10_KEY,data); m10Render(); document.getElementById('m10card-'+exId).classList.add('open');
+}
+
+/* ── MUSICAL 15MIN ── */
+const M15_KEY='ghacks_m15_v1';
+const M15_EX=[
+  {id:1,name:'Exercício 1',desc:'Padrão melódico corda solta + nota, casas 7–9',img:'assets/modulo2/musical3/mus3-ex1.jpg'},
+  {id:2,name:'Exercício 2',desc:'Padrão corda solta intercalada, casas 7–10',img:'assets/modulo2/musical3/mus3-ex2.jpg'},
+  {id:3,name:'Exercício 3',desc:'Padrão corda solta intercalada, casas 7–12',img:'assets/modulo2/musical3/mus3-ex3.jpg'},
+  {id:4,name:'Exercício 4',desc:'Linha melódica ascendente/descendente, casas 1–12',img:'assets/modulo2/musical3/mus3-ex4.jpg'},
+  {id:5,name:'Exercício 5',desc:'Padrão corda solta em várias posições, casas 5–12 (2 páginas)',img:'assets/modulo2/musical3/mus3-ex5.jpg'},
+  {id:6,name:'Exercício 6',desc:'Padrão com variações, casas 3–10 (2 páginas)',img:'assets/modulo2/musical3/mus3-ex6.jpg'},
+];
+
+function m15Render() { m2RenderGrid('m15-grid',M15_EX,M15_KEY,'m15-prog-fill','m15-pct-label','c15','m15','assets/modulo2/musical3/'); }
+function m15Toggle(id) { document.getElementById('m15card-'+id).classList.toggle('open'); }
+function m15AddSession(exId) {
+  const date=document.getElementById('m15date-'+exId).value;
+  const bpmMin=parseInt(document.getElementById('m15bmin-'+exId).value)||null;
+  const bpmMax=parseInt(document.getElementById('m15bmax-'+exId).value)||null;
+  const status=document.getElementById('m15sel-'+exId).value;
+  const note=document.getElementById('m15note-'+exId).value.trim();
+  if(!date) return;
+  const data=m2Load(M15_KEY);
+  if(!data[exId]) data[exId]={sessions:[]};
+  data[exId].sessions.push({date,bpmMin,bpmMax,status,note,savedAt:new Date().toISOString()});
+  m2Save(M15_KEY,data);
+  const flash=document.getElementById('m15flash-'+exId);
+  flash.style.opacity='1'; setTimeout(()=>flash.style.opacity='0',1800);
+  m15Render(); document.getElementById('m15card-'+exId).classList.add('open');
+  document.getElementById('m15bmin-'+exId).value='';
+  document.getElementById('m15bmax-'+exId).value='';
+  document.getElementById('m15note-'+exId).value='';
+}
+function m15DelSession(exId,idx) {
+  const data=m2Load(M15_KEY);
+  if(data[exId]&&data[exId].sessions) data[exId].sessions.splice(idx,1);
+  m2Save(M15_KEY,data); m15Render(); document.getElementById('m15card-'+exId).classList.add('open');
+}
+function m15ClearHistory(exId) {
+  if(!confirm('Limpar histórico?')) return;
+  const data=m2Load(M15_KEY); if(data[exId]) data[exId].sessions=[];
+  m2Save(M15_KEY,data); m15Render(); document.getElementById('m15card-'+exId).classList.add('open');
+}
+
+m10Render();
+m15Render();
+
+</script>
+
+</body>
+</html>
