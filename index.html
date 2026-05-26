@@ -1186,15 +1186,15 @@ render();
 const FUND_KEY = 'ghacks_fund_v2';
 
 const EXERCICIOS = [
-  { id:1, name:'Exercício 1', desc:'Cordas soltas — alternância básica P.M.', img:'assets/modulo2/fundamentos/Exercicio1.pdf', defaultStatus:'dominado' },
-  { id:2, name:'Exercício 2', desc:'Cordas soltas — salto entre 3 cordas com P.M.', img:'assets/modulo2/fundamentos/Exercicio2.pdf' },
-  { id:3, name:'Exercício 3 — Saltos', desc:'Alternância cordas 6 e 2', img:'assets/modulo2/fundamentos/Exercicio3.pdf' },
-  { id:4, name:'Exercício 4 — Salto total', desc:'Salto com todas as cordas — padrão alternado', img:'assets/modulo2/fundamentos/Exercicio4.pdf' },
-  { id:5, name:'Exercício 5', desc:'Cromático dedos 1-2-3-4 em posições fixas', img:'assets/modulo2/fundamentos/Exercicio5.pdf' },
-  { id:6, name:'Exercício 6 — Variações', desc:'Cromático casas 5–9, padrões ascendentes/descendentes', img:'assets/modulo2/fundamentos/Exercicio6.pdf' },
-  { id:7, name:'Exercício 7', desc:'Saltos + posições mistas, casas 3–8', img:'assets/modulo2/fundamentos/Exercicio7.pdf' },
-  { id:8, name:'Exercício 8', desc:'Combinações avançadas, casas 5–10, P.M. sustentado', img:'assets/modulo2/fundamentos/Exercicio8.pdf' },
-  { id:9, name:'Exercício 9', desc:'Combinações completas, casas 3–7, padrões cruzados', img:'assets/modulo2/fundamentos/Exercicio9.pdf' },
+  { id:1, name:'Exercício 1', desc:'Cordas soltas — alternância básica P.M.', img:'assets/modulo2/fundamentos1/Exercicio1.pdf', defaultStatus:'dominado' },
+  { id:2, name:'Exercício 2', desc:'Cordas soltas — salto entre 3 cordas com P.M.', img:'assets/modulo2/fundamentos1/Exercicio2.pdf' },
+  { id:3, name:'Exercício 3 — Saltos', desc:'Alternância cordas 6 e 2', img:'assets/modulo2/fundamentos1/Exercicio3.pdf' },
+  { id:4, name:'Exercício 4 — Salto total', desc:'Salto com todas as cordas — padrão alternado', img:'assets/modulo2/fundamentos1/Exercicio4.pdf' },
+  { id:5, name:'Exercício 5', desc:'Cromático dedos 1-2-3-4 em posições fixas', img:'assets/modulo2/fundamentos1/Exercicio5.pdf' },
+  { id:6, name:'Exercício 6 — Variações', desc:'Cromático casas 5–9, padrões ascendentes/descendentes', img:'assets/modulo2/fundamentos1/Exercicio6.pdf' },
+  { id:7, name:'Exercício 7', desc:'Saltos + posições mistas, casas 3–8', img:'assets/modulo2/fundamentos1/Exercicio7.pdf' },
+  { id:8, name:'Exercício 8', desc:'Combinações avançadas, casas 5–10, P.M. sustentado', img:'assets/modulo2/fundamentos1/Exercicio8.pdf' },
+  { id:9, name:'Exercício 9', desc:'Combinações completas, casas 3–7, padrões cruzados', img:'assets/modulo2/fundamentos1/Exercicio9.pdf' },
 ];
 
 const STATUS_LABEL = { aprendendo:'Aprendendo', praticando:'Praticando', consolidado:'Consolidado', dominado:'Dominado' };
@@ -1452,9 +1452,9 @@ const ARPEJOS = [
 ];
 
 const MUS_EXERCICIOS = [
-  { id:1, name:'Exercício 1 — Arpejos de Ré', desc:'4 arpejos: Maior · menor · diminuto · aumentado', img:'assets/modulo2/musical1/Exercicio1.pdf', type:'arpejos' },
-  { id:2, name:'Exercício 2', desc:'Linha melódica com saltos — casas 4–12', img:'assets/modulo2/musical1/Exercicio2.pdf', type:'simple' },
-  { id:3, name:'Exercício 3', desc:'Linha melódica — casas 5–10', img:'assets/modulo2/musical1/Exercicio3.pdf', type:'simple' },
+  { id:1, name:'Exercício 1 — Arpejos de Ré', desc:'4 arpejos: Maior · menor · diminuto · aumentado', img:'assets/modulo2/musical2/Exercicio1.pdf', type:'arpejos' },
+  { id:2, name:'Exercício 2', desc:'Linha melódica com saltos — casas 4–12', img:'assets/modulo2/musical2/Exercicio2.pdf', type:'simple' },
+  { id:3, name:'Exercício 3', desc:'Linha melódica — casas 5–10', img:'assets/modulo2/musical2/Exercicio3.pdf', type:'simple' },
 ];
 
 const MUS_STATUS_LABEL = { aprendendo:'Aprendendo', praticando:'Praticando', consolidado:'Consolidado', dominado:'Dominado' };
@@ -1942,12 +1942,12 @@ function m2RenderGrid(gridId, exercises, storageKey, progFillId, progLabelId, co
 /* ── MUSICAL 10MIN ── */
 const M10_KEY='ghacks_m10_v1';
 const M10_EX=[
-  {id:1,name:'Exercício 1 — Arpejos de Ré',desc:'Mesmos 4 arpejos do 5min — foco em aumentar velocidade',img:'assets/modulo2/musical1/Exercicio1.pdf'},
-  {id:2,name:'Exercício 2',desc:'Linha melódica com saltos — puxar BPM do 5min',img:'assets/modulo2/musical1/Exercicio2.pdf'},
-  {id:3,name:'Exercício 3',desc:'Linha melódica — puxar BPM do 5min',img:'assets/modulo2/musical1/Exercicio3.pdf'},
+  {id:1,name:'Exercício 1 — Arpejos de Ré',desc:'Mesmos 4 arpejos do 5min — foco em aumentar velocidade',img:'assets/modulo2/musical2/Exercicio1.pdf'},
+  {id:2,name:'Exercício 2',desc:'Linha melódica com saltos — puxar BPM do 5min',img:'assets/modulo2/musical2/Exercicio2.pdf'},
+  {id:3,name:'Exercício 3',desc:'Linha melódica — puxar BPM do 5min',img:'assets/modulo2/musical2/Exercicio3.pdf'},
 ];
 
-function m10Render() { m2RenderGrid('m10-grid',M10_EX,M10_KEY,'m10-prog-fill','m10-pct-label','c10','m10','assets/modulo2/musical1/'); }
+function m10Render() { m2RenderGrid('m10-grid',M10_EX,M10_KEY,'m10-prog-fill','m10-pct-label','c10','m10','assets/modulo2/musical2/'); }
 function m10Toggle(id) { document.getElementById('m10card-'+id).classList.toggle('open'); }
 function m10AddSession(exId) {
   const date=document.getElementById('m10date-'+exId).value;
@@ -1981,15 +1981,15 @@ function m10ClearHistory(exId) {
 /* ── MUSICAL 15MIN ── */
 const M15_KEY='ghacks_m15_v1';
 const M15_EX=[
-  {id:1,name:'Exercício 1',desc:'Padrão melódico corda solta + nota, casas 7–9',img:'assets/modulo2/musical3/Exercicio1.pdf'},
-  {id:2,name:'Exercício 2',desc:'Padrão corda solta intercalada, casas 7–10',img:'assets/modulo2/musical3/Exercicio2.pdf'},
-  {id:3,name:'Exercício 3',desc:'Padrão corda solta intercalada, casas 7–12',img:'assets/modulo2/musical3/Exercicio3.pdf'},
-  {id:4,name:'Exercício 4',desc:'Linha melódica ascendente/descendente, casas 1–12',img:'assets/modulo2/musical3/Exercicio4.pdf'},
-  {id:5,name:'Exercício 5',desc:'Padrão corda solta em várias posições, casas 5–12 (2 páginas)',img:'assets/modulo2/musical3/Exercicio5.pdf'},
-  {id:6,name:'Exercício 6',desc:'Padrão com variações, casas 3–10 (2 páginas)',img:'assets/modulo2/musical3/Exercicio6.pdf'},
+  {id:1,name:'Exercício 1',desc:'Padrão melódico corda solta + nota, casas 7–9',img:'assets/modulo2/musical4/Exercicio1.pdf'},
+  {id:2,name:'Exercício 2',desc:'Padrão corda solta intercalada, casas 7–10',img:'assets/modulo2/musical4/Exercicio2.pdf'},
+  {id:3,name:'Exercício 3',desc:'Padrão corda solta intercalada, casas 7–12',img:'assets/modulo2/musical4/Exercicio3.pdf'},
+  {id:4,name:'Exercício 4',desc:'Linha melódica ascendente/descendente, casas 1–12',img:'assets/modulo2/musical4/Exercicio4.pdf'},
+  {id:5,name:'Exercício 5',desc:'Padrão corda solta em várias posições, casas 5–12 (2 páginas)',img:'assets/modulo2/musical4/Exercicio5.pdf'},
+  {id:6,name:'Exercício 6',desc:'Padrão com variações, casas 3–10 (2 páginas)',img:'assets/modulo2/musical4/Exercicio6.pdf'},
 ];
 
-function m15Render() { m2RenderGrid('m15-grid',M15_EX,M15_KEY,'m15-prog-fill','m15-pct-label','c15','m15','assets/modulo2/musical3/'); }
+function m15Render() { m2RenderGrid('m15-grid',M15_EX,M15_KEY,'m15-prog-fill','m15-pct-label','c15','m15','assets/modulo2/musical4/'); }
 function m15Toggle(id) { document.getElementById('m15card-'+id).classList.toggle('open'); }
 function m15AddSession(exId) {
   const date=document.getElementById('m15date-'+exId).value;
