@@ -634,6 +634,143 @@
   #gh-timer-toggle:hover { border-color: rgba(232,197,71,0.4); color: var(--accent); }
   #gh-timer-reset:hover { border-color: var(--border-hover); }
 
+
+  /* ══ OUT OF THE PLATEAU ══ */
+  .otp-section { padding:2rem 3rem 4rem; border-top:1px solid var(--border); }
+  .otp-header { display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-bottom:1.25rem; }
+  .otp-title { font-family:var(--font-display); font-size:1.8rem; letter-spacing:0.06em; color:var(--red); line-height:1; }
+  .otp-sub { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-top:4px; }
+
+  /* Timer */
+  .otp-timer-card { background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:1.5rem; margin-bottom:1.5rem; display:grid; grid-template-columns:1fr auto; gap:1.5rem; align-items:center; }
+  .otp-timer-left { display:flex; flex-direction:column; gap:10px; }
+  .otp-timer-label { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; }
+  .otp-time-btns { display:flex; gap:8px; }
+  .otp-time-btn { font-family:var(--font-mono); font-size:10px; letter-spacing:0.08em; text-transform:uppercase; padding:6px 14px; border-radius:20px; border:1px solid var(--border); background:transparent; color:var(--muted); cursor:pointer; transition:all 0.15s; }
+  .otp-time-btn:hover { color:var(--text); border-color:var(--border-hover); }
+  .otp-time-btn.active { background:var(--red); color:#fff; border-color:var(--red); }
+  .otp-timer-display { text-align:center; min-width:140px; }
+  .otp-timer-digits { font-family:var(--font-display); font-size:3.5rem; color:var(--red); letter-spacing:0.06em; line-height:1; transition:color 0.3s; }
+  .otp-timer-digits.warning { color:var(--accent); }
+  .otp-timer-digits.done { color:var(--teal); }
+  .otp-timer-controls { display:flex; gap:8px; justify-content:center; margin-top:10px; }
+  .otp-tc-btn { font-family:var(--font-mono); font-size:10px; letter-spacing:0.08em; text-transform:uppercase; padding:7px 16px; border-radius:6px; border:1px solid var(--border); background:transparent; color:var(--muted); cursor:pointer; transition:all 0.15s; }
+  .otp-tc-btn:hover { color:var(--text); border-color:var(--border-hover); }
+  .otp-tc-btn.primary { background:var(--red); color:#fff; border-color:var(--red); }
+  .otp-tc-btn.primary:hover { opacity:0.85; }
+
+  /* OTP Form */
+  .otp-form-card { background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:1.5rem; margin-bottom:1.5rem; }
+  .otp-form-title { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:1rem; }
+  .otp-fields { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:10px; align-items:end; }
+  .otp-field { display:flex; flex-direction:column; gap:5px; }
+  .otp-field.wide { grid-column:1/-1; }
+  .otp-field label { font-family:var(--font-mono); font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; }
+  .otp-input { background:var(--surface); border:1px solid var(--border); border-radius:6px; color:var(--text); font-family:var(--font-body); font-size:13px; padding:8px 10px; outline:none; width:100%; transition:border-color 0.15s; }
+  .otp-input:focus { border-color:rgba(232,84,84,0.4); }
+  .otp-select { background:var(--surface); border:1px solid var(--border); border-radius:6px; color:var(--text); font-family:var(--font-body); font-size:13px; padding:8px 10px; outline:none; width:100%; cursor:pointer; -webkit-appearance:none; transition:border-color 0.15s; }
+  .otp-select:focus { border-color:rgba(232,84,84,0.4); }
+  .otp-textarea { background:var(--surface); border:1px solid var(--border); border-radius:6px; color:var(--text); font-family:var(--font-body); font-size:12px; padding:8px 10px; outline:none; width:100%; resize:vertical; min-height:52px; line-height:1.5; transition:border-color 0.15s; }
+  .otp-textarea:focus { border-color:rgba(232,84,84,0.4); }
+  .otp-row-btns { display:flex; align-items:center; gap:10px; margin-top:12px; }
+  .otp-save-btn { background:var(--red); color:#fff; border:none; border-radius:6px; font-family:var(--font-mono); font-size:10px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; padding:8px 18px; cursor:pointer; transition:opacity 0.15s; }
+  .otp-save-btn:hover { opacity:0.85; }
+  .otp-flash { font-family:var(--font-mono); font-size:10px; color:var(--teal); text-transform:uppercase; letter-spacing:0.1em; opacity:0; transition:opacity 0.3s; }
+
+  /* OTP History */
+  .otp-history-wrap { background:var(--surface2); border:1px solid var(--border); border-radius:12px; overflow:hidden; }
+  .otp-history-header { padding:1rem 1.25rem; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--border); }
+  .otp-history-title { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; }
+  .otp-history-clear { font-family:var(--font-mono); font-size:9px; color:var(--muted); background:none; border:1px solid var(--border); border-radius:4px; padding:2px 8px; cursor:pointer; text-transform:uppercase; }
+  .otp-history-clear:hover { color:var(--red); border-color:rgba(232,84,84,0.3); }
+  .otp-hist-empty { padding:2rem; text-align:center; font-family:var(--font-mono); font-size:11px; color:var(--muted); font-style:italic; }
+  .otp-hist-table { width:100%; border-collapse:collapse; }
+  .otp-hist-table th { font-family:var(--font-mono); font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; padding:8px 12px; text-align:left; border-bottom:1px solid var(--border); }
+  .otp-hist-table td { font-size:12px; padding:10px 12px; border-bottom:1px solid rgba(255,255,255,0.03); vertical-align:middle; }
+  .otp-hist-table tr:last-child td { border-bottom:none; }
+  .otp-hist-table tr:hover td { background:rgba(255,255,255,0.02); }
+  .otp-date { font-family:var(--font-mono); font-size:10px; color:var(--muted); white-space:nowrap; }
+  .otp-ex-name { font-size:12px; color:var(--text); max-width:180px; }
+  .otp-bpm-gain { font-family:var(--font-display); font-size:1rem; color:var(--red); letter-spacing:0.04em; white-space:nowrap; }
+  .otp-bpm-gain small { font-family:var(--font-mono); font-size:8px; color:var(--muted); }
+  .otp-bpm-gain.positive { color:var(--teal); }
+  .otp-time-badge { font-family:var(--font-mono); font-size:9px; color:var(--muted); border:1px solid var(--border); border-radius:10px; padding:2px 7px; white-space:nowrap; }
+  .otp-del { background:none; border:1px solid var(--border); border-radius:4px; color:var(--muted); font-size:11px; width:24px; height:24px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; }
+  .otp-del:hover { border-color:var(--red); color:var(--red); }
+
+  /* ══ OUT OF THE BOX ══ */
+  .otb-section { padding:2rem 3rem 4rem; border-top:1px solid var(--border); }
+  .otb-header { margin-bottom:1.25rem; }
+  .otb-title { font-family:var(--font-display); font-size:1.8rem; letter-spacing:0.06em; color:var(--purple); line-height:1; }
+  .otb-sub { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-top:4px; }
+  .otb-layout { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.5rem; }
+  .otb-timer-card { background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:1.5rem; display:flex; flex-direction:column; align-items:center; gap:12px; }
+  .otb-timer-label { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; }
+  .otb-timer-digits { font-family:var(--font-display); font-size:4rem; color:var(--purple); letter-spacing:0.06em; line-height:1; transition:color 0.3s; }
+  .otb-timer-digits.warning { color:var(--accent); }
+  .otb-timer-digits.done { color:var(--teal); }
+  .otb-tc-btn { font-family:var(--font-mono); font-size:10px; letter-spacing:0.08em; text-transform:uppercase; padding:7px 16px; border-radius:6px; border:1px solid var(--border); background:transparent; color:var(--muted); cursor:pointer; transition:all 0.15s; }
+  .otb-tc-btn.primary { background:var(--purple); color:#fff; border-color:var(--purple); }
+  .otb-tc-btn.primary:hover { opacity:0.85; }
+  .otb-tc-btn:hover { color:var(--text); border-color:var(--border-hover); }
+  .otb-timer-controls { display:flex; gap:8px; }
+  .otb-variations-card { background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:1.5rem; }
+  .otb-var-title { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:10px; }
+  .otb-var-grid { display:flex; flex-wrap:wrap; gap:6px; }
+  .otb-var-chip { font-family:var(--font-mono); font-size:10px; color:var(--muted); border:1px solid var(--border); border-radius:20px; padding:4px 12px; cursor:pointer; transition:all 0.15s; }
+  .otb-var-chip:hover { color:var(--purple); border-color:rgba(180,139,255,0.4); }
+  .otb-var-chip.used { color:var(--purple); border-color:rgba(180,139,255,0.4); background:var(--purple-dim); }
+  .otb-form-card { background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:1.5rem; margin-bottom:1.5rem; }
+  .otb-form-title { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:1rem; }
+  .otb-fields { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .otb-field { display:flex; flex-direction:column; gap:5px; }
+  .otb-field.wide { grid-column:1/-1; }
+  .otb-field label { font-family:var(--font-mono); font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; }
+  .otb-input { background:var(--surface); border:1px solid var(--border); border-radius:6px; color:var(--text); font-family:var(--font-body); font-size:13px; padding:8px 10px; outline:none; width:100%; transition:border-color 0.15s; }
+  .otb-input:focus { border-color:rgba(180,139,255,0.4); }
+  .otb-textarea { background:var(--surface); border:1px solid var(--border); border-radius:6px; color:var(--text); font-family:var(--font-body); font-size:12px; padding:8px 10px; outline:none; width:100%; resize:vertical; min-height:80px; line-height:1.5; transition:border-color 0.15s; }
+  .otb-textarea:focus { border-color:rgba(180,139,255,0.4); }
+  .otb-save-btn { background:var(--purple); color:#fff; border:none; border-radius:6px; font-family:var(--font-mono); font-size:10px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; padding:8px 18px; cursor:pointer; transition:opacity 0.15s; }
+  .otb-save-btn:hover { opacity:0.85; }
+  .otb-flash { font-family:var(--font-mono); font-size:10px; color:var(--teal); text-transform:uppercase; letter-spacing:0.1em; opacity:0; transition:opacity 0.3s; }
+  .otb-row-btns { display:flex; align-items:center; gap:10px; margin-top:12px; }
+  .otb-history-wrap { background:var(--surface2); border:1px solid var(--border); border-radius:12px; overflow:hidden; }
+  .otb-history-header { padding:1rem 1.25rem; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--border); }
+  .otb-history-title { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; }
+  .otb-hist-clear { font-family:var(--font-mono); font-size:9px; color:var(--muted); background:none; border:1px solid var(--border); border-radius:4px; padding:2px 8px; cursor:pointer; text-transform:uppercase; }
+  .otb-hist-clear:hover { color:var(--red); border-color:rgba(232,84,84,0.3); }
+  .otb-hist-empty { padding:2rem; text-align:center; font-family:var(--font-mono); font-size:11px; color:var(--muted); font-style:italic; }
+  .otb-hist-table { width:100%; border-collapse:collapse; }
+  .otb-hist-table th { font-family:var(--font-mono); font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; padding:8px 12px; text-align:left; border-bottom:1px solid var(--border); }
+  .otb-hist-table td { font-size:12px; padding:10px 12px; border-bottom:1px solid rgba(255,255,255,0.03); vertical-align:middle; }
+  .otb-hist-table tr:last-child td { border-bottom:none; }
+  .otb-hist-table tr:hover td { background:rgba(255,255,255,0.02); }
+  .otb-hist-date { font-family:var(--font-mono); font-size:10px; color:var(--muted); white-space:nowrap; }
+  .otb-hist-vars { font-size:11px; color:var(--muted); max-width:220px; }
+  .otb-hist-note { font-size:11px; color:var(--muted); max-width:200px; }
+  .otb-del { background:none; border:1px solid var(--border); border-radius:4px; color:var(--muted); font-size:11px; width:24px; height:24px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; }
+  .otb-del:hover { border-color:var(--red); color:var(--red); }
+
+  /* ══ BACKUP ══ */
+  .backup-bar { padding:1rem 3rem; border-top:1px solid var(--border); background:var(--surface2); display:flex; align-items:center; gap:1rem; flex-wrap:wrap; }
+  .backup-label { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-right:4px; }
+  .backup-btn { font-family:var(--font-mono); font-size:10px; letter-spacing:0.08em; text-transform:uppercase; padding:7px 14px; border-radius:6px; border:1px solid var(--border); background:transparent; color:var(--muted); cursor:pointer; transition:all 0.15s; }
+  .backup-btn:hover { color:var(--text); border-color:var(--border-hover); }
+  .backup-btn.export { border-color:rgba(232,197,71,0.3); color:var(--accent); }
+  .backup-btn.export:hover { background:var(--accent-dim); }
+  .backup-btn.import { border-color:rgba(78,205,196,0.3); color:var(--teal); }
+  .backup-btn.import:hover { background:var(--teal-dim); }
+  .backup-status { font-family:var(--font-mono); font-size:10px; color:var(--teal); text-transform:uppercase; letter-spacing:0.08em; opacity:0; transition:opacity 0.3s; }
+
+  @media (max-width:900px) {
+    .otp-section, .otb-section { padding:1.5rem; }
+    .otp-fields { grid-template-columns:1fr 1fr; }
+    .otp-timer-card { grid-template-columns:1fr; }
+    .otb-layout { grid-template-columns:1fr; }
+    .otb-fields { grid-template-columns:1fr; }
+    .backup-bar { padding:1rem 1.5rem; }
+  }
+
 </style>
 <body>
 
@@ -1103,6 +1240,162 @@
   </div>
   <div class="mus2-grid" id="m20-grid"></div>
 </section>
+
+
+<!-- ══ OUT OF THE PLATEAU ══ -->
+<section class="otp-section">
+  <div class="otp-header">
+    <div>
+      <div class="otp-title">Out of the Plateau</div>
+      <div class="otp-sub">Módulo 2 · 6º e 7º — forçar velocidade em um exercício sem variar</div>
+    </div>
+  </div>
+
+  <!-- Timer -->
+  <div class="otp-timer-card">
+    <div class="otp-timer-left">
+      <div class="otp-timer-label">Duração da sessão</div>
+      <div class="otp-time-btns">
+        <button class="otp-time-btn active" onclick="otpSetTime(5,this)">5 min</button>
+        <button class="otp-time-btn" onclick="otpSetTime(10,this)">10 min</button>
+        <button class="otp-time-btn" onclick="otpSetTime(15,this)">15 min</button>
+      </div>
+    </div>
+    <div class="otp-timer-display">
+      <div class="otp-timer-digits" id="otp-digits">05:00</div>
+      <div class="otp-timer-controls">
+        <button class="otp-tc-btn primary" id="otp-toggle">▶</button>
+        <button class="otp-tc-btn" id="otp-reset">↺</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Form -->
+  <div class="otp-form-card">
+    <div class="otp-form-title">Registrar sessão</div>
+    <div class="otp-fields">
+      <div class="otp-field">
+        <label>Exercício trabalhado</label>
+        <input type="text" class="otp-input" id="otp-ex" placeholder="ex: Fund. Ex.5 — Cromático">
+      </div>
+      <div class="otp-field">
+        <label>Data</label>
+        <input type="date" class="otp-input" id="otp-date">
+      </div>
+      <div class="otp-field">
+        <label>BPM inicial</label>
+        <input type="number" class="otp-input" id="otp-bpm-start" placeholder="80" min="20" max="400">
+      </div>
+      <div class="otp-field">
+        <label>BPM final atingido</label>
+        <input type="number" class="otp-input" id="otp-bpm-end" placeholder="110" min="20" max="400">
+      </div>
+      <div class="otp-field">
+        <label>Duração</label>
+        <select class="otp-select" id="otp-duration">
+          <option value="5">5 minutos</option>
+          <option value="10">10 minutos</option>
+          <option value="15">15 minutos</option>
+        </select>
+      </div>
+      <div class="otp-field wide">
+        <label>Observações</label>
+        <textarea class="otp-textarea" id="otp-note" placeholder="ex: travou em 110, mas limpou bem até 105..."></textarea>
+      </div>
+    </div>
+    <div class="otp-row-btns">
+      <button class="otp-save-btn" onclick="otpAddSession()">+ Registrar</button>
+      <span class="otp-flash" id="otp-flash">✓ Salvo</span>
+    </div>
+  </div>
+
+  <!-- History -->
+  <div class="otp-history-wrap">
+    <div class="otp-history-header">
+      <div class="otp-history-title">Histórico <span id="otp-hist-count" style="color:var(--muted)"></span></div>
+      <button class="otp-history-clear" onclick="otpClearHistory()">Limpar tudo</button>
+    </div>
+    <div id="otp-history-body"></div>
+  </div>
+</section>
+
+<!-- ══ OUT OF THE BOX ══ -->
+<section class="otb-section">
+  <div class="otb-header">
+    <div class="otb-title">Out of the Box</div>
+    <div class="otb-sub">Módulo 2 · 8º — 5 minutos · improvisar e variar tudo que já viu</div>
+  </div>
+
+  <div class="otb-layout">
+    <!-- Timer 5min fixo -->
+    <div class="otb-timer-card">
+      <div class="otb-timer-label">5 minutos — improvisar livre</div>
+      <div class="otb-timer-digits" id="otb-digits">05:00</div>
+      <div class="otb-timer-controls">
+        <button class="otb-tc-btn primary" id="otb-toggle">▶</button>
+        <button class="otb-tc-btn" id="otb-reset">↺</button>
+      </div>
+    </div>
+
+    <!-- Variações -->
+    <div class="otb-variations-card">
+      <div class="otb-var-title">Variações — clique para marcar o que usou</div>
+      <div class="otb-var-grid" id="otb-var-grid"></div>
+    </div>
+  </div>
+
+  <!-- Form -->
+  <div class="otb-form-card">
+    <div class="otb-form-title">Registrar sessão</div>
+    <div class="otb-fields">
+      <div class="otb-field">
+        <label>Data</label>
+        <input type="date" class="otb-input" id="otb-date">
+      </div>
+      <div class="otb-field">
+        <label>Sensação geral (1–5)</label>
+        <select class="otb-input" id="otb-feel" style="-webkit-appearance:none">
+          <option value="">—</option>
+          <option value="1">1 — travado</option>
+          <option value="2">2 — difícil</option>
+          <option value="3">3 — ok</option>
+          <option value="4">4 — fluindo</option>
+          <option value="5">5 — excelente</option>
+        </select>
+      </div>
+      <div class="otb-field wide">
+        <label>Variações usadas (auto-preenchido pelos chips acima)</label>
+        <input type="text" class="otb-input" id="otb-vars-used" placeholder="clique nos chips acima ou escreva aqui...">
+      </div>
+      <div class="otb-field wide">
+        <label>Observações livres</label>
+        <textarea class="otb-textarea" id="otb-note" placeholder="ex: tentei misturar abafado com staccato, ficou interessante..."></textarea>
+      </div>
+    </div>
+    <div class="otb-row-btns">
+      <button class="otb-save-btn" onclick="otbAddSession()">+ Registrar sessão</button>
+      <span class="otb-flash" id="otb-flash">✓ Salvo</span>
+    </div>
+  </div>
+
+  <!-- History -->
+  <div class="otb-history-wrap">
+    <div class="otb-history-header">
+      <div class="otb-history-title">Histórico <span id="otb-hist-count" style="color:var(--muted)"></span></div>
+      <button class="otb-hist-clear" onclick="otbClearHistory()">Limpar tudo</button>
+    </div>
+    <div id="otb-history-body"></div>
+  </div>
+</section>
+
+<!-- ══ BACKUP ══ -->
+<div class="backup-bar">
+  <span class="backup-label">Backup dos dados</span>
+  <button class="backup-btn export" onclick="backupExport()">↓ Exportar backup</button>
+  <button class="backup-btn import" onclick="document.getElementById('backup-file-input').click()">↑ Importar backup</button>
+  <input type="file" id="backup-file-input" accept=".json" style="display:none" onchange="backupImport(this)">
+  <span class="backup-status" id="backup-status"></span>
+</div>
 
 <footer>
   <p>Guitar Hacks — Programa iniciado em 24/05/2026</p>
@@ -2237,6 +2530,323 @@ m20Render();
   updateUI();
 })();
 
+
+
+/* ══ OUT OF THE PLATEAU ══ */
+const OTP_KEY = 'ghacks_otp_v1';
+const OTB_KEY = 'ghacks_otb_v1';
+
+function ghFmtDate(iso) {
+  const [y,m,d] = iso.split('-');
+  const M=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  return d+' '+M[+m-1]+' '+y;
+}
+
+// ── OTP Timer ──
+(function(){
+  let mins = 5, remaining = 300, running = false, interval = null;
+
+  function fmtTime(s) {
+    return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+  }
+  function updateUI() {
+    const d = document.getElementById('otp-digits');
+    const t = document.getElementById('otp-toggle');
+    if (!d || !t) return;
+    d.textContent = fmtTime(remaining);
+    d.className = 'otp-timer-digits' + (remaining===0?' done':remaining<=30?' warning':'');
+    t.textContent = running ? '⏸' : '▶';
+    t.className = 'otp-tc-btn primary';
+    // sync duration select
+    const sel = document.getElementById('otp-duration');
+    if (sel) sel.value = String(mins);
+  }
+
+  window.otpSetTime = function(m, btn) {
+    if (running) return;
+    mins = m; remaining = m * 60;
+    document.querySelectorAll('.otp-time-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    updateUI();
+  };
+
+  document.getElementById('otp-toggle').addEventListener('click', function() {
+    if (remaining === 0) { remaining = mins*60; }
+    running = !running;
+    if (running) {
+      interval = setInterval(() => {
+        remaining--;
+        if (remaining <= 0) {
+          remaining = 0; running = false; clearInterval(interval);
+          try { new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAA').play(); } catch(e){}
+        }
+        updateUI();
+      }, 1000);
+    } else { clearInterval(interval); }
+    updateUI();
+  });
+
+  document.getElementById('otp-reset').addEventListener('click', function() {
+    clearInterval(interval); running = false; remaining = mins*60; updateUI();
+  });
+
+  // Set today's date
+  const today = new Date().toISOString().slice(0,10);
+  const di = document.getElementById('otp-date');
+  if (di) di.value = today;
+
+  updateUI();
+})();
+
+// ── OTP Data ──
+function otpLoad() { try{return JSON.parse(localStorage.getItem(OTP_KEY))||[];}catch(e){return[];} }
+function otpSave(d) { localStorage.setItem(OTP_KEY, JSON.stringify(d)); }
+
+function otpFmtGain(start, end) {
+  if (!start || !end) return end ? end+' BPM' : '—';
+  const gain = end - start;
+  return `${start} → ${end} <span style="font-family:var(--font-mono);font-size:9px;color:${gain>0?'var(--teal)':'var(--muted)'}">${gain>0?'+'+gain:gain} BPM</span>`;
+}
+
+function otpRender() {
+  const sessions = otpLoad();
+  const body = document.getElementById('otp-history-body');
+  const count = document.getElementById('otp-hist-count');
+  if (!body) return;
+  if (count) count.textContent = sessions.length ? `— ${sessions.length} sessão${sessions.length!==1?'ões':''}` : '';
+  if (!sessions.length) {
+    body.innerHTML = '<div class="otp-hist-empty">Nenhuma sessão registrada ainda.</div>';
+    return;
+  }
+  const rows = [...sessions].reverse().map((s,ri) => {
+    const idx = sessions.length-1-ri;
+    return `<tr>
+      <td class="otp-date">${ghFmtDate(s.date)}</td>
+      <td class="otp-ex-name">${s.ex||'—'}</td>
+      <td class="otp-bpm-gain${s.bpmEnd&&s.bpmStart&&s.bpmEnd>s.bpmStart?' positive':''}">${otpFmtGain(s.bpmStart,s.bpmEnd)}</td>
+      <td><span class="otp-time-badge">${s.duration||5} min</span></td>
+      <td class="otp-date" style="max-width:180px;color:var(--muted)">${s.note||'—'}</td>
+      <td><button class="otp-del" onclick="otpDel(${idx})">✕</button></td>
+    </tr>`;
+  }).join('');
+  body.innerHTML = `<table class="otp-hist-table">
+    <thead><tr><th>Data</th><th>Exercício</th><th>BPM</th><th>Tempo</th><th>Nota</th><th></th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table>`;
+}
+
+function otpAddSession() {
+  const ex       = document.getElementById('otp-ex').value.trim();
+  const date     = document.getElementById('otp-date').value;
+  const bpmStart = parseInt(document.getElementById('otp-bpm-start').value)||null;
+  const bpmEnd   = parseInt(document.getElementById('otp-bpm-end').value)||null;
+  const duration = parseInt(document.getElementById('otp-duration').value)||5;
+  const note     = document.getElementById('otp-note').value.trim();
+  if (!date) return;
+  const sessions = otpLoad();
+  sessions.push({ex,date,bpmStart,bpmEnd,duration,note,savedAt:new Date().toISOString()});
+  otpSave(sessions);
+  const flash = document.getElementById('otp-flash');
+  flash.style.opacity='1'; setTimeout(()=>flash.style.opacity='0',1800);
+  ['otp-ex','otp-bpm-start','otp-bpm-end','otp-note'].forEach(id => document.getElementById(id).value='');
+  otpRender();
+}
+
+function otpDel(idx) {
+  const s = otpLoad(); s.splice(idx,1); otpSave(s); otpRender();
+}
+function otpClearHistory() {
+  if(!confirm('Limpar todo o histórico do Out of the Plateau?')) return;
+  otpSave([]); otpRender();
+}
+
+otpRender();
+
+/* ══ OUT OF THE BOX ══ */
+const OTB_VARIACOES = [
+  'Aberto (solto)','Abafado','Leve (baixo)','Forte (alto)',
+  'Palhetada paralela','Palhetada 45°','Perto da ponte',
+  'Entre os captadores','Rente à corda','Distante da corda',
+  'Palheta mais funda','Palheta mais leve',
+  'Mudar acentuações','Nota pontuada (rítmica)','Staccato'
+];
+
+let otbUsedVars = [];
+
+// Build variation chips
+(function(){
+  const grid = document.getElementById('otb-var-grid');
+  if (!grid) return;
+  OTB_VARIACOES.forEach(v => {
+    const chip = document.createElement('span');
+    chip.className = 'otb-var-chip';
+    chip.textContent = v;
+    chip.onclick = () => {
+      chip.classList.toggle('used');
+      if (chip.classList.contains('used')) {
+        if (!otbUsedVars.includes(v)) otbUsedVars.push(v);
+      } else {
+        otbUsedVars = otbUsedVars.filter(x => x !== v);
+      }
+      const inp = document.getElementById('otb-vars-used');
+      if (inp) inp.value = otbUsedVars.join(', ');
+    };
+    grid.appendChild(chip);
+  });
+
+  // Set today
+  const today = new Date().toISOString().slice(0,10);
+  const di = document.getElementById('otb-date');
+  if (di) di.value = today;
+})();
+
+// ── OTB Timer (fixed 5min) ──
+(function(){
+  let remaining = 300, running = false, interval = null;
+  function fmtTime(s) {
+    return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+  }
+  function updateUI() {
+    const d = document.getElementById('otb-digits');
+    const t = document.getElementById('otb-toggle');
+    if (!d||!t) return;
+    d.textContent = fmtTime(remaining);
+    d.className = 'otb-timer-digits'+(remaining===0?' done':remaining<=30?' warning':'');
+    t.textContent = running ? '⏸' : '▶';
+  }
+  document.getElementById('otb-toggle').addEventListener('click', function(){
+    if (remaining===0) remaining=300;
+    running=!running;
+    if (running) {
+      interval=setInterval(()=>{
+        remaining--;
+        if(remaining<=0){remaining=0;running=false;clearInterval(interval);}
+        updateUI();
+      },1000);
+    } else { clearInterval(interval); }
+    updateUI();
+  });
+  document.getElementById('otb-reset').addEventListener('click', function(){
+    clearInterval(interval); running=false; remaining=300; updateUI();
+  });
+  updateUI();
+})();
+
+function otbLoad() { try{return JSON.parse(localStorage.getItem(OTB_KEY))||[];}catch(e){return[];} }
+function otbSave(d) { localStorage.setItem(OTB_KEY, JSON.stringify(d)); }
+
+function otbRender() {
+  const sessions = otbLoad();
+  const body = document.getElementById('otb-history-body');
+  const count = document.getElementById('otb-hist-count');
+  if (!body) return;
+  if (count) count.textContent = sessions.length ? `— ${sessions.length} sessão${sessions.length!==1?'ões':''}` : '';
+  if (!sessions.length) {
+    body.innerHTML = '<div class="otb-hist-empty">Nenhuma sessão registrada ainda.</div>';
+    return;
+  }
+  const feelLabel = {1:'😐 Travado',2:'😕 Difícil',3:'🙂 Ok',4:'😊 Fluindo',5:'🤩 Excelente'};
+  const rows = [...sessions].reverse().map((s,ri) => {
+    const idx = sessions.length-1-ri;
+    return `<tr>
+      <td class="otb-hist-date">${ghFmtDate(s.date)}</td>
+      <td class="otb-hist-vars">${s.vars||'—'}</td>
+      <td style="font-size:11px;white-space:nowrap">${s.feel?feelLabel[s.feel]||s.feel:'—'}</td>
+      <td class="otb-hist-note">${s.note||'—'}</td>
+      <td><button class="otb-del" onclick="otbDel(${idx})">✕</button></td>
+    </tr>`;
+  }).join('');
+  body.innerHTML = `<table class="otb-hist-table">
+    <thead><tr><th>Data</th><th>Variações</th><th>Sensação</th><th>Notas</th><th></th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table>`;
+}
+
+function otbAddSession() {
+  const date = document.getElementById('otb-date').value;
+  const vars = document.getElementById('otb-vars-used').value.trim();
+  const feel = document.getElementById('otb-feel').value;
+  const note = document.getElementById('otb-note').value.trim();
+  if (!date) return;
+  const sessions = otbLoad();
+  sessions.push({date,vars,feel,note,savedAt:new Date().toISOString()});
+  otbSave(sessions);
+  const flash = document.getElementById('otb-flash');
+  flash.style.opacity='1'; setTimeout(()=>flash.style.opacity='0',1800);
+  document.getElementById('otb-vars-used').value='';
+  document.getElementById('otb-note').value='';
+  document.getElementById('otb-feel').value='';
+  // clear chips
+  otbUsedVars=[];
+  document.querySelectorAll('.otb-var-chip').forEach(c=>c.classList.remove('used'));
+  otbRender();
+}
+
+function otbDel(idx) {
+  const s=otbLoad(); s.splice(idx,1); otbSave(s); otbRender();
+}
+function otbClearHistory() {
+  if(!confirm('Limpar todo o histórico do Out of the Box?')) return;
+  otbSave([]); otbRender();
+}
+
+otbRender();
+
+/* ══ BACKUP ══ */
+const ALL_KEYS = [
+  'ghacks_workout_v1','ghacks_fund_v2',
+  'ghacks_mus1_v1','ghacks_m10_v1','ghacks_m15_v1','ghacks_m20_v1',
+  'ghacks_otp_v1','ghacks_otb_v1'
+];
+
+function backupExport() {
+  const backup = {};
+  ALL_KEYS.forEach(k => {
+    try { const v=localStorage.getItem(k); if(v) backup[k]=JSON.parse(v); } catch(e){}
+  });
+  backup._exportedAt = new Date().toISOString();
+  backup._version = 1;
+  const blob = new Blob([JSON.stringify(backup, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'guitar-hacks-backup-'+new Date().toISOString().slice(0,10)+'.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function backupImport(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const backup = JSON.parse(e.target.result);
+      let count = 0;
+      ALL_KEYS.forEach(k => {
+        if (backup[k] !== undefined) {
+          localStorage.setItem(k, JSON.stringify(backup[k]));
+          count++;
+        }
+      });
+      const status = document.getElementById('backup-status');
+      status.textContent = `✓ ${count} chaves restauradas`;
+      status.style.opacity = '1';
+      setTimeout(() => status.style.opacity='0', 3000);
+      // re-render all
+      if(typeof fundRender==='function') fundRender();
+      if(typeof musRender==='function') musRender();
+      if(typeof m10Render==='function') m10Render();
+      if(typeof m15Render==='function') m15Render();
+      if(typeof m20Render==='function') m20Render();
+      if(typeof render==='function') render();
+      otpRender(); otbRender();
+    } catch(err) {
+      alert('Arquivo inválido. Certifique-se de usar um backup gerado por este site.');
+    }
+    input.value = '';
+  };
+  reader.readAsText(file);
+}
 
 </script>
 
