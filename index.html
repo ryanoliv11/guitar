@@ -635,19 +635,41 @@
   #gh-timer-reset:hover { border-color: var(--border-hover); }
 
 
-  /* ══ OUT OF THE PLATEAU ══ */
-  .otp-section { padding:2rem 3rem 4rem; border-top:1px solid var(--border); }
-  .otp-header { display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-bottom:1.25rem; }
-  .otp-title { font-family:var(--font-display); font-size:1.8rem; letter-spacing:0.06em; color:var(--red); line-height:1; }
-  .otp-sub { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-top:4px; }
+  /* ══ NAV ══ */
+  .site-nav { position:sticky; top:0; z-index:200; background:rgba(13,13,15,0.97); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); display:flex; align-items:center; overflow-x:auto; scrollbar-width:none; }
+  .site-nav::-webkit-scrollbar { display:none; }
+  .nav-logo { font-family:var(--font-display); font-size:1.1rem; letter-spacing:0.08em; color:var(--accent); padding:0 1.25rem; border-right:1px solid var(--border); white-space:nowrap; flex-shrink:0; line-height:48px; }
+  .nav-btn { font-family:var(--font-mono); font-size:10px; letter-spacing:0.1em; text-transform:uppercase; padding:0 1.1rem; line-height:48px; color:var(--muted); background:none; border:none; border-right:1px solid var(--border); cursor:pointer; transition:color 0.15s,background 0.15s; white-space:nowrap; flex-shrink:0; position:relative; }
+  .nav-btn:hover { color:var(--text); background:rgba(255,255,255,0.03); }
+  .nav-btn.active::after { content:''; position:absolute; bottom:0; left:0; right:0; height:2px; background:var(--accent); }
+  .nav-btn.active { color:var(--accent); }
+  .nav-btn.n-mod2.active { color:#b48bff; } .nav-btn.n-mod2.active::after { background:#b48bff; }
+  .nav-btn.n-mod3.active { color:var(--teal); } .nav-btn.n-mod3.active::after { background:var(--teal); }
+  .nav-btn.n-workout.active { color:var(--accent); }
+  .nav-btn.n-backup.active { color:var(--teal); }
+  .nav-btn.n-mod4.active { color:#f5c842; } .nav-btn.n-mod4.active::after { background:#f5c842; }
+  .page { display:none; } .page.active { display:block; }
+  /* MOD TABS */
+  .mod-tabs { display:flex; gap:0; border-bottom:1px solid var(--border); background:var(--surface2); overflow-x:auto; scrollbar-width:none; position:sticky; top:48px; z-index:100; }
+  .mod-tabs::-webkit-scrollbar { display:none; }
+  .mod-tab { font-family:var(--font-mono); font-size:10px; letter-spacing:0.1em; text-transform:uppercase; padding:0 1.1rem; line-height:40px; color:var(--muted); background:none; border:none; border-right:1px solid var(--border); cursor:pointer; white-space:nowrap; position:relative; flex-shrink:0; }
+  .mod-tab:hover { color:var(--text); }
+  .mod-tab.active { color:var(--text); }
+  .mod-tab.active::after { content:''; position:absolute; bottom:0; left:0; right:0; height:2px; }
+  .t-mod2.active { color:#b48bff; } .t-mod2.active::after { background:#b48bff; }
+  .t-mod3.active { color:var(--teal); } .t-mod3.active::after { background:var(--teal); }
+  .mod-page { display:none; } .mod-page.active { display:block; }
 
-  /* Timer */
+  /* ══ TRACKER / FUND / MUS shared (already in file) ══ */
+
+  /* ══ OTP ══ */
+  .otp-section { padding:2rem 3rem 4rem; border-top:1px solid var(--border); }
+  .otp-title { font-family:var(--font-display); font-size:1.8rem; letter-spacing:0.06em; color:var(--red); line-height:1; margin-bottom:4px; }
+  .otp-sub { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:1.5rem; }
   .otp-timer-card { background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:1.5rem; margin-bottom:1.5rem; display:grid; grid-template-columns:1fr auto; gap:1.5rem; align-items:center; }
-  .otp-timer-left { display:flex; flex-direction:column; gap:10px; }
-  .otp-timer-label { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; }
+  .otp-timer-label { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:10px; }
   .otp-time-btns { display:flex; gap:8px; }
   .otp-time-btn { font-family:var(--font-mono); font-size:10px; letter-spacing:0.08em; text-transform:uppercase; padding:6px 14px; border-radius:20px; border:1px solid var(--border); background:transparent; color:var(--muted); cursor:pointer; transition:all 0.15s; }
-  .otp-time-btn:hover { color:var(--text); border-color:var(--border-hover); }
   .otp-time-btn.active { background:var(--red); color:#fff; border-color:var(--red); }
   .otp-timer-display { text-align:center; min-width:140px; }
   .otp-timer-digits { font-family:var(--font-display); font-size:3.5rem; color:var(--red); letter-spacing:0.06em; line-height:1; transition:color 0.3s; }
@@ -655,29 +677,20 @@
   .otp-timer-digits.done { color:var(--teal); }
   .otp-timer-controls { display:flex; gap:8px; justify-content:center; margin-top:10px; }
   .otp-tc-btn { font-family:var(--font-mono); font-size:10px; letter-spacing:0.08em; text-transform:uppercase; padding:7px 16px; border-radius:6px; border:1px solid var(--border); background:transparent; color:var(--muted); cursor:pointer; transition:all 0.15s; }
-  .otp-tc-btn:hover { color:var(--text); border-color:var(--border-hover); }
   .otp-tc-btn.primary { background:var(--red); color:#fff; border-color:var(--red); }
-  .otp-tc-btn.primary:hover { opacity:0.85; }
-
-  /* OTP Form */
   .otp-form-card { background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:1.5rem; margin-bottom:1.5rem; }
   .otp-form-title { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:1rem; }
-  .otp-fields { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:10px; align-items:end; }
+  .otp-fields { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:10px; }
   .otp-field { display:flex; flex-direction:column; gap:5px; }
   .otp-field.wide { grid-column:1/-1; }
   .otp-field label { font-family:var(--font-mono); font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; }
   .otp-input { background:var(--surface); border:1px solid var(--border); border-radius:6px; color:var(--text); font-family:var(--font-body); font-size:13px; padding:8px 10px; outline:none; width:100%; transition:border-color 0.15s; }
   .otp-input:focus { border-color:rgba(232,84,84,0.4); }
-  .otp-select { background:var(--surface); border:1px solid var(--border); border-radius:6px; color:var(--text); font-family:var(--font-body); font-size:13px; padding:8px 10px; outline:none; width:100%; cursor:pointer; -webkit-appearance:none; transition:border-color 0.15s; }
-  .otp-select:focus { border-color:rgba(232,84,84,0.4); }
-  .otp-textarea { background:var(--surface); border:1px solid var(--border); border-radius:6px; color:var(--text); font-family:var(--font-body); font-size:12px; padding:8px 10px; outline:none; width:100%; resize:vertical; min-height:52px; line-height:1.5; transition:border-color 0.15s; }
-  .otp-textarea:focus { border-color:rgba(232,84,84,0.4); }
+  .otp-select { background:var(--surface); border:1px solid var(--border); border-radius:6px; color:var(--text); font-family:var(--font-body); font-size:13px; padding:8px 10px; outline:none; width:100%; cursor:pointer; -webkit-appearance:none; }
+  .otp-textarea { background:var(--surface); border:1px solid var(--border); border-radius:6px; color:var(--text); font-family:var(--font-body); font-size:12px; padding:8px 10px; outline:none; width:100%; resize:vertical; min-height:52px; line-height:1.5; }
   .otp-row-btns { display:flex; align-items:center; gap:10px; margin-top:12px; }
   .otp-save-btn { background:var(--red); color:#fff; border:none; border-radius:6px; font-family:var(--font-mono); font-size:10px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; padding:8px 18px; cursor:pointer; transition:opacity 0.15s; }
-  .otp-save-btn:hover { opacity:0.85; }
   .otp-flash { font-family:var(--font-mono); font-size:10px; color:var(--teal); text-transform:uppercase; letter-spacing:0.1em; opacity:0; transition:opacity 0.3s; }
-
-  /* OTP History */
   .otp-history-wrap { background:var(--surface2); border:1px solid var(--border); border-radius:12px; overflow:hidden; }
   .otp-history-header { padding:1rem 1.25rem; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--border); }
   .otp-history-title { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; }
@@ -688,21 +701,18 @@
   .otp-hist-table th { font-family:var(--font-mono); font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; padding:8px 12px; text-align:left; border-bottom:1px solid var(--border); }
   .otp-hist-table td { font-size:12px; padding:10px 12px; border-bottom:1px solid rgba(255,255,255,0.03); vertical-align:middle; }
   .otp-hist-table tr:last-child td { border-bottom:none; }
-  .otp-hist-table tr:hover td { background:rgba(255,255,255,0.02); }
   .otp-date { font-family:var(--font-mono); font-size:10px; color:var(--muted); white-space:nowrap; }
   .otp-ex-name { font-size:12px; color:var(--text); max-width:180px; }
   .otp-bpm-gain { font-family:var(--font-display); font-size:1rem; color:var(--red); letter-spacing:0.04em; white-space:nowrap; }
-  .otp-bpm-gain small { font-family:var(--font-mono); font-size:8px; color:var(--muted); }
   .otp-bpm-gain.positive { color:var(--teal); }
-  .otp-time-badge { font-family:var(--font-mono); font-size:9px; color:var(--muted); border:1px solid var(--border); border-radius:10px; padding:2px 7px; white-space:nowrap; }
+  .otp-time-badge { font-family:var(--font-mono); font-size:9px; color:var(--muted); border:1px solid var(--border); border-radius:10px; padding:2px 7px; }
   .otp-del { background:none; border:1px solid var(--border); border-radius:4px; color:var(--muted); font-size:11px; width:24px; height:24px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; }
   .otp-del:hover { border-color:var(--red); color:var(--red); }
 
-  /* ══ OUT OF THE BOX ══ */
+  /* ══ OTB ══ */
   .otb-section { padding:2rem 3rem 4rem; border-top:1px solid var(--border); }
-  .otb-header { margin-bottom:1.25rem; }
-  .otb-title { font-family:var(--font-display); font-size:1.8rem; letter-spacing:0.06em; color:var(--purple); line-height:1; }
-  .otb-sub { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-top:4px; }
+  .otb-title { font-family:var(--font-display); font-size:1.8rem; letter-spacing:0.06em; color:var(--purple); line-height:1; margin-bottom:4px; }
+  .otb-sub { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:1.5rem; }
   .otb-layout { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.5rem; }
   .otb-timer-card { background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:1.5rem; display:flex; flex-direction:column; align-items:center; gap:12px; }
   .otb-timer-label { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; }
@@ -711,8 +721,6 @@
   .otb-timer-digits.done { color:var(--teal); }
   .otb-tc-btn { font-family:var(--font-mono); font-size:10px; letter-spacing:0.08em; text-transform:uppercase; padding:7px 16px; border-radius:6px; border:1px solid var(--border); background:transparent; color:var(--muted); cursor:pointer; transition:all 0.15s; }
   .otb-tc-btn.primary { background:var(--purple); color:#fff; border-color:var(--purple); }
-  .otb-tc-btn.primary:hover { opacity:0.85; }
-  .otb-tc-btn:hover { color:var(--text); border-color:var(--border-hover); }
   .otb-timer-controls { display:flex; gap:8px; }
   .otb-variations-card { background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:1.5rem; }
   .otb-var-title { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:10px; }
@@ -727,11 +735,8 @@
   .otb-field.wide { grid-column:1/-1; }
   .otb-field label { font-family:var(--font-mono); font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; }
   .otb-input { background:var(--surface); border:1px solid var(--border); border-radius:6px; color:var(--text); font-family:var(--font-body); font-size:13px; padding:8px 10px; outline:none; width:100%; transition:border-color 0.15s; }
-  .otb-input:focus { border-color:rgba(180,139,255,0.4); }
-  .otb-textarea { background:var(--surface); border:1px solid var(--border); border-radius:6px; color:var(--text); font-family:var(--font-body); font-size:12px; padding:8px 10px; outline:none; width:100%; resize:vertical; min-height:80px; line-height:1.5; transition:border-color 0.15s; }
-  .otb-textarea:focus { border-color:rgba(180,139,255,0.4); }
+  .otb-textarea { background:var(--surface); border:1px solid var(--border); border-radius:6px; color:var(--text); font-family:var(--font-body); font-size:12px; padding:8px 10px; outline:none; width:100%; resize:vertical; min-height:80px; line-height:1.5; }
   .otb-save-btn { background:var(--purple); color:#fff; border:none; border-radius:6px; font-family:var(--font-mono); font-size:10px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; padding:8px 18px; cursor:pointer; transition:opacity 0.15s; }
-  .otb-save-btn:hover { opacity:0.85; }
   .otb-flash { font-family:var(--font-mono); font-size:10px; color:var(--teal); text-transform:uppercase; letter-spacing:0.1em; opacity:0; transition:opacity 0.3s; }
   .otb-row-btns { display:flex; align-items:center; gap:10px; margin-top:12px; }
   .otb-history-wrap { background:var(--surface2); border:1px solid var(--border); border-radius:12px; overflow:hidden; }
@@ -744,36 +749,229 @@
   .otb-hist-table th { font-family:var(--font-mono); font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; padding:8px 12px; text-align:left; border-bottom:1px solid var(--border); }
   .otb-hist-table td { font-size:12px; padding:10px 12px; border-bottom:1px solid rgba(255,255,255,0.03); vertical-align:middle; }
   .otb-hist-table tr:last-child td { border-bottom:none; }
-  .otb-hist-table tr:hover td { background:rgba(255,255,255,0.02); }
   .otb-hist-date { font-family:var(--font-mono); font-size:10px; color:var(--muted); white-space:nowrap; }
   .otb-hist-vars { font-size:11px; color:var(--muted); max-width:220px; }
   .otb-hist-note { font-size:11px; color:var(--muted); max-width:200px; }
   .otb-del { background:none; border:1px solid var(--border); border-radius:4px; color:var(--muted); font-size:11px; width:24px; height:24px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; }
   .otb-del:hover { border-color:var(--red); color:var(--red); }
 
-  /* ══ BACKUP ══ */
+  /* ══ BACKUP BAR ══ */
   .backup-bar { padding:1rem 3rem; border-top:1px solid var(--border); background:var(--surface2); display:flex; align-items:center; gap:1rem; flex-wrap:wrap; }
-  .backup-label { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-right:4px; }
+  .backup-label { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; }
   .backup-btn { font-family:var(--font-mono); font-size:10px; letter-spacing:0.08em; text-transform:uppercase; padding:7px 14px; border-radius:6px; border:1px solid var(--border); background:transparent; color:var(--muted); cursor:pointer; transition:all 0.15s; }
-  .backup-btn:hover { color:var(--text); border-color:var(--border-hover); }
   .backup-btn.export { border-color:rgba(232,197,71,0.3); color:var(--accent); }
   .backup-btn.export:hover { background:var(--accent-dim); }
-  .backup-btn.import { border-color:rgba(78,205,196,0.3); color:var(--teal); }
-  .backup-btn.import:hover { background:var(--teal-dim); }
+  .backup-btn.import-btn { border-color:rgba(78,205,196,0.3); color:var(--teal); }
+  .backup-btn.import-btn:hover { background:var(--teal-dim); }
   .backup-status { font-family:var(--font-mono); font-size:10px; color:var(--teal); text-transform:uppercase; letter-spacing:0.08em; opacity:0; transition:opacity 0.3s; }
 
+  /* ══ MOD 3 ══ */
+  .m3-fund-section { padding:2rem 3rem 4rem; border-top:1px solid var(--border); }
+  .m3-sec-title { font-family:var(--font-display); font-size:1.8rem; letter-spacing:0.06em; color:var(--teal); line-height:1; margin-bottom:4px; }
+  .m3-sec-sub { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:1.5rem; }
+  .m3-prog-wrap { margin-bottom:2rem; }
+  .m3-prog-labels { display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px; }
+  .m3-prog-track { height:4px; background:var(--border); border-radius:2px; overflow:hidden; }
+  .m3-prog-fill { height:100%; background:var(--teal); border-radius:2px; transition:width 0.6s; }
+  .m3-grid { display:flex; flex-direction:column; gap:8px; }
+  .m3-card { border:1px solid var(--border); border-radius:12px; background:var(--surface2); overflow:hidden; transition:border-color 0.2s; }
+  .m3-card.st-aprendendo { border-left:3px solid var(--red); }
+  .m3-card.st-praticando { border-left:3px solid var(--teal); }
+  .m3-card.st-consolidado { border-left:3px solid var(--teal); opacity:0.85; }
+  .m3-card.st-dominado { border-left:3px solid var(--muted); opacity:0.7; }
+  .m3-card-top { display:grid; grid-template-columns:2.8rem 1fr auto; align-items:center; gap:1rem; padding:1rem 1.25rem; cursor:pointer; user-select:none; }
+  .m3-card-top:hover { background:rgba(255,255,255,0.02); }
+  .m3-ex-num { font-family:var(--font-display); font-size:1.9rem; color:var(--teal); letter-spacing:0.04em; line-height:1; text-align:center; }
+  .m3-card.st-aprendendo .m3-ex-num { color:var(--red); }
+  .m3-card.st-dominado .m3-ex-num { color:var(--muted); }
+  .m3-ex-info { min-width:0; }
+  .m3-ex-name { font-size:13px; font-weight:500; color:var(--text); margin-bottom:2px; }
+  .m3-ex-desc { font-size:11px; color:var(--muted); }
+  .m3-card-right { display:flex; align-items:center; gap:10px; flex-shrink:0; }
+  .m3-bpm-val { font-family:var(--font-display); font-size:1.1rem; color:var(--teal); letter-spacing:0.04em; line-height:1; white-space:nowrap; }
+  .m3-bpm-val.empty { font-family:var(--font-mono); font-size:9px; color:var(--muted); }
+  .m3-bpm-sub { font-family:var(--font-mono); font-size:8px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-top:2px; }
+  .m3-pill { font-family:var(--font-mono); font-size:9px; text-transform:uppercase; letter-spacing:0.08em; padding:3px 9px; border-radius:20px; white-space:nowrap; }
+  .m3-pill.st-aprendendo { background:rgba(232,84,84,0.1); color:var(--red); border:1px solid rgba(232,84,84,0.2); }
+  .m3-pill.st-praticando { background:var(--teal-dim); color:var(--teal); border:1px solid rgba(78,205,196,0.2); }
+  .m3-pill.st-consolidado { background:var(--teal-dim); color:var(--teal); border:1px solid rgba(78,205,196,0.3); }
+  .m3-pill.st-dominado { background:rgba(255,255,255,0.04); color:var(--muted); border:1px solid var(--border); }
+  .m3-chevron { font-size:10px; color:var(--muted); transition:transform 0.2s; }
+  .m3-card.open .m3-chevron { transform:rotate(180deg); }
+  .m3-card-body { display:none; border-top:1px solid var(--border); }
+  .m3-card.open .m3-card-body { display:block; }
+  .m3-body-inner { display:grid; grid-template-columns:280px 1fr; }
+  .m3-img-col { border-right:1px solid var(--border); padding:1rem; background:var(--surface); }
+  .m3-img-wrap { border-radius:8px; overflow:hidden; border:1px solid var(--border); cursor:pointer; }
+  .m3-img-hint { font-family:var(--font-mono); font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; text-align:center; margin-top:8px; }
+  .m3-img-missing { background:var(--surface2); border:1px dashed var(--border); border-radius:8px; padding:2rem 1rem; text-align:center; }
+  .m3-img-missing strong { display:block; font-family:var(--font-display); font-size:1.5rem; color:var(--border-hover); margin-bottom:6px; }
+  .m3-img-missing p { font-family:var(--font-mono); font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; line-height:1.8; }
+  .m3-form-col { padding:1.25rem; display:flex; flex-direction:column; gap:1rem; }
+  .m3-fields { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
+  .m3-field { display:flex; flex-direction:column; gap:5px; }
+  .m3-field.wide { grid-column:1/-1; }
+  .m3-field label { font-family:var(--font-mono); font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; }
+  .m3-input { background:var(--surface); border:1px solid var(--border); border-radius:6px; color:var(--text); font-family:var(--font-body); font-size:13px; padding:8px 10px; outline:none; width:100%; transition:border-color 0.15s; }
+  .m3-input:focus { border-color:rgba(78,205,196,0.4); }
+  .m3-select { background:var(--surface); border:1px solid var(--border); border-radius:6px; color:var(--text); font-family:var(--font-body); font-size:13px; padding:8px 10px; outline:none; width:100%; cursor:pointer; -webkit-appearance:none; }
+  .m3-select:focus { border-color:rgba(78,205,196,0.4); }
+  .m3-textarea { background:var(--surface); border:1px solid var(--border); border-radius:6px; color:var(--text); font-family:var(--font-body); font-size:12px; padding:8px 10px; outline:none; width:100%; resize:vertical; min-height:56px; line-height:1.5; }
+  .m3-textarea:focus { border-color:rgba(78,205,196,0.4); }
+  .m3-row-btns { display:flex; align-items:center; gap:10px; }
+  .m3-save-btn { background:var(--teal); color:#0d0d0f; border:none; border-radius:6px; font-family:var(--font-mono); font-size:10px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; padding:8px 18px; cursor:pointer; transition:opacity 0.15s; }
+  .m3-save-btn:hover { opacity:0.85; }
+  .m3-flash { font-family:var(--font-mono); font-size:10px; color:var(--teal); text-transform:uppercase; letter-spacing:0.1em; opacity:0; transition:opacity 0.3s; }
+  .m3-history { border-top:1px solid var(--border); padding:1rem 1.25rem; }
+  .m3-history-title { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:1rem; display:flex; align-items:center; justify-content:space-between; }
+  .m3-history-clear { font-family:var(--font-mono); font-size:9px; color:var(--muted); background:none; border:1px solid var(--border); border-radius:4px; padding:2px 8px; cursor:pointer; text-transform:uppercase; }
+  .m3-history-clear:hover { color:var(--red); border-color:rgba(232,84,84,0.3); }
+  .m3-hist-empty { font-family:var(--font-mono); font-size:11px; color:var(--muted); font-style:italic; }
+  .m3-hist-table { width:100%; border-collapse:collapse; }
+  .m3-hist-table th { font-family:var(--font-mono); font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; padding:6px 8px; text-align:left; border-bottom:1px solid var(--border); }
+  .m3-hist-table td { font-size:12px; padding:8px 8px; border-bottom:1px solid rgba(255,255,255,0.03); vertical-align:middle; }
+  .m3-hist-table tr:last-child td { border-bottom:none; }
+  .m3-hist-table tr:hover td { background:rgba(255,255,255,0.02); }
+  .m3hist-date { font-family:var(--font-mono); font-size:10px; color:var(--muted); white-space:nowrap; }
+  .m3hist-bpm { font-family:var(--font-display); font-size:1rem; color:var(--teal); letter-spacing:0.04em; }
+  .m3hist-bpm small { font-family:var(--font-mono); font-size:8px; color:var(--muted); }
+  .m3hist-note { font-size:11px; color:var(--muted); max-width:200px; }
+  .m3hist-del { background:none; border:1px solid var(--border); border-radius:4px; color:var(--muted); font-size:11px; width:24px; height:24px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; }
+  .m3hist-del:hover { border-color:var(--red); color:var(--red); }
+  .m3-chart { margin-bottom:1rem; }
+  .m3-chart-bars { display:flex; gap:4px; align-items:flex-end; height:52px; }
+  .m3-chart-bar-wrap { flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; min-width:0; }
+  .m3-chart-bar { width:100%; border-radius:3px 3px 0 0; min-height:4px; }
+  .m3-chart-bar.m3-max { background:var(--teal); opacity:0.8; }
+  .m3-chart-bar.m3-min { background:var(--purple); opacity:0.6; }
+  .m3-chart-date { font-family:var(--font-mono); font-size:7px; color:var(--muted); text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; width:100%; }
+  .m3-chart-val { font-family:var(--font-mono); font-size:7px; color:var(--muted); }
+  .m3-coming-soon { padding:3rem; text-align:center; }
+  .m3-coming-soon strong { display:block; font-family:var(--font-display); font-size:2.5rem; color:var(--border-hover); letter-spacing:0.1em; margin-bottom:8px; }
+  .m3-coming-soon p { font-family:var(--font-mono); font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; }
   @media (max-width:900px) {
-    .otp-section, .otb-section { padding:1.5rem; }
+    .otp-section,.otb-section,.m3-fund-section { padding:1.5rem; }
     .otp-fields { grid-template-columns:1fr 1fr; }
     .otp-timer-card { grid-template-columns:1fr; }
     .otb-layout { grid-template-columns:1fr; }
     .otb-fields { grid-template-columns:1fr; }
     .backup-bar { padding:1rem 1.5rem; }
+    .m3-body-inner { grid-template-columns:1fr; }
+    .m3-img-col { border-right:none; border-bottom:1px solid var(--border); }
+    .m3-fields { grid-template-columns:1fr 1fr; }
+  }
+
+
+  /* ══ MOD 4 ══ */
+  .t-mod4.active { color:#f5c842; } .t-mod4.active::after { background:#f5c842; }
+  .m4-divider { display:flex; align-items:center; gap:1rem; padding:1.5rem 3rem 0.5rem; }
+  .m4-divider-line { flex:1; height:1px; background:var(--border); }
+  .m4-divider-label { font-family:var(--font-display); font-size:1.1rem; letter-spacing:0.1em; color:#f5c842; white-space:nowrap; }
+  .m4-divider-sub { font-family:var(--font-mono); font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-left:4px; }
+  .m4f-section { padding:1rem 3rem 3rem; }
+  .m4f-prog-wrap { margin-bottom:1.5rem; }
+  .m4f-prog-labels { display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px; }
+  .m4f-prog-track { height:4px; background:var(--border); border-radius:2px; overflow:hidden; }
+  .m4f-prog-fill { height:100%; background:#f5c842; border-radius:2px; transition:width 0.6s; }
+  .m4f-grid { display:flex; flex-direction:column; gap:8px; }
+  .m4f-card { border:1px solid var(--border); border-radius:12px; background:var(--surface2); overflow:hidden; transition:border-color 0.2s; }
+  .m4f-card.st-aprendendo { border-left:3px solid var(--red); }
+  .m4f-card.st-praticando { border-left:3px solid #f5c842; }
+  .m4f-card.st-consolidado { border-left:3px solid var(--teal); opacity:0.85; }
+  .m4f-card.st-dominado { border-left:3px solid var(--muted); opacity:0.7; }
+  .m4f-card-top { display:grid; grid-template-columns:2.8rem 1fr auto; align-items:center; gap:1rem; padding:1rem 1.25rem; cursor:pointer; user-select:none; }
+  .m4f-card-top:hover { background:rgba(255,255,255,0.02); }
+  .m4f-ex-num { font-family:var(--font-display); font-size:1.9rem; color:#f5c842; letter-spacing:0.04em; line-height:1; text-align:center; }
+  .m4f-card.st-aprendendo .m4f-ex-num { color:var(--red); }
+  .m4f-card.st-consolidado .m4f-ex-num { color:var(--teal); }
+  .m4f-card.st-dominado .m4f-ex-num { color:var(--muted); }
+  .m4f-ex-info { min-width:0; }
+  .m4f-ex-name { font-size:13px; font-weight:500; color:var(--text); margin-bottom:2px; }
+  .m4f-ex-desc { font-size:11px; color:var(--muted); }
+  .m4f-card-right { display:flex; align-items:center; gap:10px; flex-shrink:0; }
+  .m4f-bpm-val { font-family:var(--font-display); font-size:1.1rem; color:#f5c842; letter-spacing:0.04em; line-height:1; white-space:nowrap; }
+  .m4f-bpm-val.empty { font-family:var(--font-mono); font-size:9px; color:var(--muted); }
+  .m4f-bpm-sub { font-family:var(--font-mono); font-size:8px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-top:2px; }
+  .m4f-pill { font-family:var(--font-mono); font-size:9px; text-transform:uppercase; letter-spacing:0.08em; padding:3px 9px; border-radius:20px; white-space:nowrap; }
+  .m4f-pill.st-aprendendo { background:rgba(232,84,84,0.1); color:var(--red); border:1px solid rgba(232,84,84,0.2); }
+  .m4f-pill.st-praticando { background:rgba(245,200,66,0.1); color:#f5c842; border:1px solid rgba(245,200,66,0.2); }
+  .m4f-pill.st-consolidado { background:var(--teal-dim); color:var(--teal); border:1px solid rgba(78,205,196,0.2); }
+  .m4f-pill.st-dominado { background:rgba(255,255,255,0.04); color:var(--muted); border:1px solid var(--border); }
+  .m4f-chevron { font-size:10px; color:var(--muted); transition:transform 0.2s; }
+  .m4f-card.open .m4f-chevron { transform:rotate(180deg); }
+  .m4f-card-body { display:none; border-top:1px solid var(--border); }
+  .m4f-card.open .m4f-card-body { display:block; }
+  .m4f-body-inner { display:grid; grid-template-columns:280px 1fr; }
+  .m4f-img-col { border-right:1px solid var(--border); padding:1rem; background:var(--surface); }
+  .m4f-img-wrap { border-radius:8px; overflow:hidden; border:1px solid var(--border); cursor:pointer; }
+  .m4f-img-hint { font-family:var(--font-mono); font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; text-align:center; margin-top:8px; }
+  .m4f-img-missing { background:var(--surface2); border:1px dashed var(--border); border-radius:8px; padding:2rem 1rem; text-align:center; }
+  .m4f-img-missing strong { display:block; font-family:var(--font-display); font-size:1.5rem; color:var(--border-hover); margin-bottom:6px; }
+  .m4f-img-missing p { font-family:var(--font-mono); font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; line-height:1.8; }
+  .m4f-form-col { padding:1.25rem; display:flex; flex-direction:column; gap:1rem; }
+  .m4f-fields { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
+  .m4f-field { display:flex; flex-direction:column; gap:5px; }
+  .m4f-field.wide { grid-column:1/-1; }
+  .m4f-field label { font-family:var(--font-mono); font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; }
+  .m4f-input { background:var(--surface); border:1px solid var(--border); border-radius:6px; color:var(--text); font-family:var(--font-body); font-size:13px; padding:8px 10px; outline:none; width:100%; transition:border-color 0.15s; }
+  .m4f-input:focus { border-color:rgba(245,200,66,0.4); }
+  .m4f-select { background:var(--surface); border:1px solid var(--border); border-radius:6px; color:var(--text); font-family:var(--font-body); font-size:13px; padding:8px 10px; outline:none; width:100%; cursor:pointer; -webkit-appearance:none; }
+  .m4f-select:focus { border-color:rgba(245,200,66,0.4); }
+  .m4f-textarea { background:var(--surface); border:1px solid var(--border); border-radius:6px; color:var(--text); font-family:var(--font-body); font-size:12px; padding:8px 10px; outline:none; width:100%; resize:vertical; min-height:56px; line-height:1.5; }
+  .m4f-textarea:focus { border-color:rgba(245,200,66,0.4); }
+  .m4f-row-btns { display:flex; align-items:center; gap:10px; }
+  .m4f-save-btn { background:#f5c842; color:#0d0d0f; border:none; border-radius:6px; font-family:var(--font-mono); font-size:10px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; padding:8px 18px; cursor:pointer; transition:opacity 0.15s; }
+  .m4f-save-btn:hover { opacity:0.85; }
+  .m4f-flash { font-family:var(--font-mono); font-size:10px; color:var(--teal); text-transform:uppercase; letter-spacing:0.1em; opacity:0; transition:opacity 0.3s; }
+  .m4f-history { border-top:1px solid var(--border); padding:1rem 1.25rem; }
+  .m4f-history-title { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:1rem; display:flex; align-items:center; justify-content:space-between; }
+  .m4f-history-clear { font-family:var(--font-mono); font-size:9px; color:var(--muted); background:none; border:1px solid var(--border); border-radius:4px; padding:2px 8px; cursor:pointer; text-transform:uppercase; }
+  .m4f-history-clear:hover { color:var(--red); border-color:rgba(232,84,84,0.3); }
+  .m4f-hist-empty { font-family:var(--font-mono); font-size:11px; color:var(--muted); font-style:italic; }
+  .m4f-hist-table { width:100%; border-collapse:collapse; }
+  .m4f-hist-table th { font-family:var(--font-mono); font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; padding:6px 8px; text-align:left; border-bottom:1px solid var(--border); }
+  .m4f-hist-table td { font-size:12px; padding:8px 8px; border-bottom:1px solid rgba(255,255,255,0.03); vertical-align:middle; }
+  .m4f-hist-table tr:last-child td { border-bottom:none; }
+  .m4f-hist-table tr:hover td { background:rgba(255,255,255,0.02); }
+  .m4fhist-date { font-family:var(--font-mono); font-size:10px; color:var(--muted); white-space:nowrap; }
+  .m4fhist-bpm { font-family:var(--font-display); font-size:1rem; color:#f5c842; letter-spacing:0.04em; }
+  .m4fhist-bpm small { font-family:var(--font-mono); font-size:8px; color:var(--muted); }
+  .m4fhist-note { font-size:11px; color:var(--muted); max-width:200px; }
+  .m4fhist-del { background:none; border:1px solid var(--border); border-radius:4px; color:var(--muted); font-size:11px; width:24px; height:24px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; }
+  .m4fhist-del:hover { border-color:var(--red); color:var(--red); }
+  .m4f-chart { margin-bottom:1rem; }
+  .m4f-chart-bars { display:flex; gap:4px; align-items:flex-end; height:52px; }
+  .m4f-chart-bar-wrap { flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; min-width:0; }
+  .m4f-chart-bar { width:100%; border-radius:3px 3px 0 0; min-height:4px; }
+  .m4f-chart-bar.m4-max { background:#f5c842; opacity:0.8; }
+  .m4f-chart-bar.m4-min { background:var(--purple); opacity:0.6; }
+  .m4f-chart-date { font-family:var(--font-mono); font-size:7px; color:var(--muted); text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; width:100%; }
+  .m4f-chart-val { font-family:var(--font-mono); font-size:7px; color:var(--muted); }
+  .m4-coming-soon { padding:3rem; text-align:center; }
+  .m4-coming-soon strong { display:block; font-family:var(--font-display); font-size:2.5rem; color:var(--border-hover); letter-spacing:0.1em; margin-bottom:8px; }
+  .m4-coming-soon p { font-family:var(--font-mono); font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; }
+  @media (max-width:900px) {
+    .m4f-section { padding:1rem 1.5rem 2rem; }
+    .m4-divider { padding:1.5rem 1.5rem 0.5rem; }
+    .m4f-body-inner { grid-template-columns:1fr; }
+    .m4f-img-col { border-right:none; border-bottom:1px solid var(--border); }
+    .m4f-fields { grid-template-columns:1fr 1fr; }
   }
 
 </style>
 <body>
 
+<nav class="site-nav">
+  <div class="nav-logo">GH</div>
+  <button class="nav-btn active" onclick="showPage('calendar',this)">Calendário</button>
+  <button class="nav-btn n-mod2" onclick="showPage('mod2',this)">Módulo 2</button>
+  <button class="nav-btn n-mod3" onclick="showPage('mod3',this)">Módulo 3</button>
+  <button class="nav-btn n-mod4" onclick="showPage('mod4',this)">Módulo 4</button>
+  <button class="nav-btn n-workout" onclick="showPage('workout',this)">Workout</button>
+  <button class="nav-btn n-backup" onclick="showPage('backup',this)">Backup</button>
+</nav>
+
+<div class="page active" id="page-calendar">
 <header>
   <div class="header-left">
     <h1>Guitar<br>Hacks</h1>
@@ -1071,8 +1269,359 @@
   </div>
 
 </main>
+</div><!-- /page-calendar -->
+
+<div class="page" id="page-mod2">
+<div class="mod-tabs" id="mod2-tabs">
+  <button class="mod-tab t-mod2 active" onclick="showModTab('mod2','fundamentos',this)">Fundamentos</button>
+  <button class="mod-tab t-mod2" onclick="showModTab('mod2','mus5',this)">Musical 5min</button>
+  <button class="mod-tab t-mod2" onclick="showModTab('mod2','mus10',this)">Musical 10min</button>
+  <button class="mod-tab t-mod2" onclick="showModTab('mod2','mus15',this)">Musical 15min</button>
+  <button class="mod-tab t-mod2" onclick="showModTab('mod2','otp',this)">Out of the Plateau</button>
+  <button class="mod-tab t-mod2" onclick="showModTab('mod2','otb',this)">Out of the Box</button>
+</div>
+
 
 <!-- ══ WORKOUT TRACKER ══ -->
+<div class="mod-page active" id="mod2-fundamentos">
+
+
+
+
+
+<!-- ══ FUNDAMENTOS ══ -->
+<section class="fund-section">
+  <div class="fund-top-bar">
+    <div>
+      <div class="fund-sec-title">1º Fundamentos</div>
+      <div class="fund-sec-sub">Módulo 2 · 9 exercícios · histórico de BPM por sessão</div>
+    </div>
+  </div>
+  <div class="fund-legend">
+    <div class="fund-leg-item"><span class="fund-leg-dot" style="background:var(--red)"></span>Aprendendo</div>
+    <div class="fund-leg-item"><span class="fund-leg-dot" style="background:var(--accent)"></span>Praticando</div>
+    <div class="fund-leg-item"><span class="fund-leg-dot" style="background:var(--teal)"></span>Consolidado</div>
+    <div class="fund-leg-item"><span class="fund-leg-dot" style="background:var(--muted)"></span>Dominado</div>
+  </div>
+  <div class="fund-prog-wrap">
+    <div class="fund-prog-labels">
+      <span>Progresso geral</span>
+      <span id="fund-pct-label">0 / 9 consolidados</span>
+    </div>
+    <div class="fund-prog-track"><div class="fund-prog-fill" id="fund-prog-fill"></div></div>
+  </div>
+  <div class="fund-grid" id="fund-grid"></div>
+</section>
+
+<!-- Lightbox -->
+<div class="fund-lightbox" id="fund-lightbox">
+  <button class="fund-lightbox-close" onclick="closeLightbox()">✕</button>
+  <embed id="fund-lightbox-embed" src="" type="application/pdf" style="width:100%;max-width:900px;height:90vh;border-radius:8px;">
+</div>
+
+
+<!-- ══ MUSICAL 1 ══ -->
+</div><!-- /mod2-fundamentos -->
+<div class="mod-page" id="mod2-mus5">
+<section class="mus-section">
+  <div class="mus-top-bar">
+    <div>
+      <div class="mus-sec-title">2º Musical 5min</div>
+      <div class="mus-sec-sub">Módulo 2 · 5 minutos · 3 exercícios</div>
+    </div>
+  </div>
+  <div class="mus-prog-wrap">
+    <div class="mus-prog-labels">
+      <span>Progresso do musical</span>
+      <span id="mus-pct-label">0 / 3 consolidados</span>
+    </div>
+    <div class="mus-prog-track"><div class="mus-prog-fill" id="mus-prog-fill"></div></div>
+  </div>
+  <div class="mus-grid" id="mus-grid"></div>
+</section>
+
+
+<!-- ══ MUSICAL 10MIN ══ -->
+</div><!-- /mod2-mus5 -->
+<div class="mod-page" id="mod2-mus10">
+<section class="mus2-section">
+  <div class="mus2-top-bar">
+    <div>
+      <div class="mus2-sec-title c10">3º Musical 10min</div>
+      <div class="mus2-sec-sub">Módulo 2 · Mesmos exercícios do 5min — foco em velocidade</div>
+    </div>
+  </div>
+  <div class="mus2-notice">⟳ <span>Mesmos exercícios do Musical 5min</span> — BPM rastreado separadamente para acompanhar a progressão de velocidade</div>
+  <div class="mus2-prog-wrap">
+    <div class="mus2-prog-labels"><span>Progresso</span><span id="m10-pct-label">0 / 3 consolidados</span></div>
+    <div class="mus2-prog-track"><div class="mus2-prog-fill c10" id="m10-prog-fill"></div></div>
+  </div>
+  <div class="mus2-grid" id="m10-grid"></div>
+</section>
+
+<!-- ══ MUSICAL 15MIN ══ -->
+</div><!-- /mod2-mus10 -->
+<div class="mod-page" id="mod2-mus15">
+<section class="mus2-section">
+  <div class="mus2-top-bar">
+    <div>
+      <div class="mus2-sec-title c15">4º Musical 15min</div>
+      <div class="mus2-sec-sub">Módulo 2 · 6 exercícios novos</div>
+    </div>
+  </div>
+  <div class="mus2-prog-wrap">
+    <div class="mus2-prog-labels"><span>Progresso</span><span id="m15-pct-label">0 / 6 consolidados</span></div>
+    <div class="mus2-prog-track"><div class="mus2-prog-fill c15" id="m15-prog-fill"></div></div>
+  </div>
+  <div class="mus2-grid" id="m15-grid"></div>
+</section>
+
+<!-- ══ MUSICAL 20MIN ══ -->
+<section class="mus2-section">
+  <div class="mus2-top-bar">
+    <div>
+      <div class="mus2-sec-title c20">5º Musical 20min</div>
+      <div class="mus2-sec-sub">Módulo 2 · Mesmos exercícios do 4º — foco em velocidade</div>
+    </div>
+  </div>
+  <div class="mus2-notice" style="border-color:rgba(110,231,183,0.2);color:#6ee7b7;">⟳ <span>Mesmos exercícios do Musical 15min</span> — BPM rastreado separadamente para acompanhar a progressão de velocidade</div>
+  <div class="mus2-prog-wrap">
+    <div class="mus2-prog-labels"><span>Progresso</span><span id="m20-pct-label">0 / 6 consolidados</span></div>
+    <div class="mus2-prog-track"><div class="mus2-prog-fill c20" id="m20-prog-fill"></div></div>
+  </div>
+  <div class="mus2-grid" id="m20-grid"></div>
+</section>
+
+
+</div><!-- /mod2-mus15 -->
+<div class="mod-page" id="mod2-otp">
+<section class="otp-section">
+  <div class="otp-title">Out of the Plateau</div>
+  <div class="otp-sub">Módulo 2 · 6º e 7º — forçar velocidade em um exercício · 5, 10 ou 15 minutos</div>
+  <div class="otp-timer-card">
+    <div>
+      <div class="otp-timer-label">Duração da sessão</div>
+      <div class="otp-time-btns">
+        <button class="otp-time-btn active" onclick="otpSetTime(5,this)">5 min</button>
+        <button class="otp-time-btn" onclick="otpSetTime(10,this)">10 min</button>
+        <button class="otp-time-btn" onclick="otpSetTime(15,this)">15 min</button>
+      </div>
+    </div>
+    <div class="otp-timer-display">
+      <div class="otp-timer-digits" id="otp-digits">05:00</div>
+      <div class="otp-timer-controls">
+        <button class="otp-tc-btn primary" id="otp-toggle">▶</button>
+        <button class="otp-tc-btn" id="otp-reset">↺</button>
+      </div>
+    </div>
+  </div>
+  <div class="otp-form-card">
+    <div class="otp-form-title">Registrar sessão</div>
+    <div class="otp-fields">
+      <div class="otp-field"><label>Exercício trabalhado</label><input type="text" class="otp-input" id="otp-ex" placeholder="ex: Fund. Ex.5 — Cromático"></div>
+      <div class="otp-field"><label>Data</label><input type="date" class="otp-input" id="otp-date"></div>
+      <div class="otp-field"><label>BPM inicial</label><input type="number" class="otp-input" id="otp-bpm-start" placeholder="80" min="20" max="400"></div>
+      <div class="otp-field"><label>BPM final</label><input type="number" class="otp-input" id="otp-bpm-end" placeholder="110" min="20" max="400"></div>
+      <div class="otp-field"><label>Duração</label>
+        <select class="otp-select" id="otp-duration">
+          <option value="5">5 minutos</option>
+          <option value="10">10 minutos</option>
+          <option value="15">15 minutos</option>
+        </select>
+      </div>
+      <div class="otp-field wide"><label>Observações</label><textarea class="otp-textarea" id="otp-note" placeholder="ex: travou em 110, limpou bem até 105..."></textarea></div>
+    </div>
+    <div class="otp-row-btns">
+      <button class="otp-save-btn" onclick="otpAddSession()">+ Registrar</button>
+      <span class="otp-flash" id="otp-flash">✓ Salvo</span>
+    </div>
+  </div>
+  <div class="otp-history-wrap">
+    <div class="otp-history-header">
+      <div class="otp-history-title">Histórico <span id="otp-hist-count" style="color:var(--muted)"></span></div>
+      <button class="otp-history-clear" onclick="otpClearHistory()">Limpar tudo</button>
+    </div>
+    <div id="otp-history-body"></div>
+  </div>
+</section>
+</div><!-- /mod2-otp -->
+
+<div class="mod-page" id="mod2-otb">
+<section class="otb-section">
+  <div class="otb-title">Out of the Box</div>
+  <div class="otb-sub">Módulo 2 · 8º — 5 minutos · improvisar e variar tudo que já viu</div>
+  <div class="otb-layout">
+    <div class="otb-timer-card">
+      <div class="otb-timer-label">5 minutos — improvisar livre</div>
+      <div class="otb-timer-digits" id="otb-digits">05:00</div>
+      <div class="otb-timer-controls">
+        <button class="otb-tc-btn primary" id="otb-toggle">▶</button>
+        <button class="otb-tc-btn" id="otb-reset">↺</button>
+      </div>
+    </div>
+    <div class="otb-variations-card">
+      <div class="otb-var-title">Variações — clique para marcar o que usou</div>
+      <div class="otb-var-grid" id="otb-var-grid"></div>
+    </div>
+  </div>
+  <div class="otb-form-card">
+    <div class="otb-form-title">Registrar sessão</div>
+    <div class="otb-fields">
+      <div class="otb-field"><label>Data</label><input type="date" class="otb-input" id="otb-date"></div>
+      <div class="otb-field"><label>Sensação geral (1–5)</label>
+        <select class="otb-input" id="otb-feel" style="-webkit-appearance:none">
+          <option value="">—</option>
+          <option value="1">1 — travado</option>
+          <option value="2">2 — difícil</option>
+          <option value="3">3 — ok</option>
+          <option value="4">4 — fluindo</option>
+          <option value="5">5 — excelente</option>
+        </select>
+      </div>
+      <div class="otb-field wide"><label>Variações usadas</label><input type="text" class="otb-input" id="otb-vars-used" placeholder="clique nos chips acima ou escreva aqui..."></div>
+      <div class="otb-field wide"><label>Observações livres</label><textarea class="otb-textarea" id="otb-note" placeholder="ex: tentei misturar abafado com staccato..."></textarea></div>
+    </div>
+    <div class="otb-row-btns">
+      <button class="otb-save-btn" onclick="otbAddSession()">+ Registrar sessão</button>
+      <span class="otb-flash" id="otb-flash">✓ Salvo</span>
+    </div>
+  </div>
+  <div class="otb-history-wrap">
+    <div class="otb-history-header">
+      <div class="otb-history-title">Histórico <span id="otb-hist-count" style="color:var(--muted)"></span></div>
+      <button class="otb-hist-clear" onclick="otbClearHistory()">Limpar tudo</button>
+    </div>
+    <div id="otb-history-body"></div>
+  </div>
+</section>
+</div><!-- /mod2-otb -->
+
+</div><!-- /page-mod2 -->
+
+<!-- ══ MOD 3 ══ -->
+<div class="page" id="page-mod3">
+<div class="mod-tabs" id="mod3-tabs">
+  <button class="mod-tab t-mod3 active" onclick="showModTab('mod3','fundamentos',this)">Fundamentos</button>
+  <button class="mod-tab t-mod3" onclick="showModTab('mod3','mus5',this)">Musical 1–5min</button>
+  <button class="mod-tab t-mod3" onclick="showModTab('mod3','mus615',this)">Musical 6–15min</button>
+  <button class="mod-tab t-mod3" onclick="showModTab('mod3','mus2020',this)">Musical 16–20min</button>
+  <button class="mod-tab t-mod3" onclick="showModTab('mod3','otp',this)">Out of the Plateau</button>
+  <button class="mod-tab t-mod3" onclick="showModTab('mod3','otb',this)">Out of the Box</button>
+</div>
+
+<div class="mod-page active" id="mod3-fundamentos">
+<section class="m3-fund-section">
+  <div class="m3-sec-title">Fundamentos</div>
+  <div class="m3-sec-sub">Módulo 3 · 7 exercícios</div>
+  <div class="m3-prog-wrap">
+    <div class="m3-prog-labels"><span>Progresso</span><span id="m3f-pct-label">0 / 7 consolidados</span></div>
+    <div class="m3-prog-track"><div class="m3-prog-fill" id="m3f-prog-fill"></div></div>
+  </div>
+  <div class="m3-grid" id="m3f-grid"></div>
+</section>
+</div><!-- /mod3-fundamentos -->
+
+<div class="mod-page" id="mod3-mus5">
+<div class="m3-coming-soon">
+  <strong>Em breve</strong>
+  <p>Musical 1–5min do Módulo 3 — adicione os exercícios quando tiver o material</p>
+</div>
+</div>
+
+<div class="mod-page" id="mod3-mus615">
+<div class="m3-coming-soon">
+  <strong>Em breve</strong>
+  <p>Musical 6–15min do Módulo 3 — adicione os exercícios quando tiver o material</p>
+</div>
+</div>
+
+<div class="mod-page" id="mod3-mus2020">
+<div class="m3-coming-soon">
+  <strong>Em breve</strong>
+  <p>Musical 16–20min do Módulo 3 — adicione os exercícios quando tiver o material</p>
+</div>
+</div>
+
+<div class="mod-page" id="mod3-otp">
+<div class="m3-coming-soon">
+  <strong>Em breve</strong>
+  <p>Out of the Plateau do Módulo 3</p>
+</div>
+</div>
+
+<div class="mod-page" id="mod3-otb">
+<div class="m3-coming-soon">
+  <strong>Em breve</strong>
+  <p>Out of the Box do Módulo 3</p>
+</div>
+</div>
+
+</div><!-- /page-mod3 -->
+
+<!-- ══ WORKOUT PAGE ══ -->
+
+<!-- ══ MOD 4 ══ -->
+<div class="page" id="page-mod4">
+<div class="mod-tabs" id="mod4-tabs">
+  <button class="mod-tab t-mod4 active" onclick="showModTab('mod4','fundamentos',this)">Fundamentos</button>
+  <button class="mod-tab t-mod4" onclick="showModTab('mod4','mus5',this)">Musical 1–5min</button>
+  <button class="mod-tab t-mod4" onclick="showModTab('mod4','mus615',this)">Musical 6–15min</button>
+  <button class="mod-tab t-mod4" onclick="showModTab('mod4','mus2020',this)">Musical 16–20min</button>
+  <button class="mod-tab t-mod4" onclick="showModTab('mod4','otp',this)">Out of the Plateau</button>
+  <button class="mod-tab t-mod4" onclick="showModTab('mod4','otb',this)">Out of the Box</button>
+</div>
+
+<div class="mod-page active" id="mod4-fundamentos">
+
+  <!-- ── Fundamentos 5min ── -->
+  <div class="m4-divider">
+    <div class="m4-divider-line"></div>
+    <div><span class="m4-divider-label">Fundamentos 5min</span><span class="m4-divider-sub">3 exercícios</span></div>
+    <div class="m4-divider-line"></div>
+  </div>
+  <div class="m4f-section">
+    <div class="m4f-prog-wrap">
+      <div class="m4f-prog-labels"><span>Progresso 5min</span><span id="m4f5-pct-label">0 / 3 consolidados</span></div>
+      <div class="m4f-prog-track"><div class="m4f-prog-fill" id="m4f5-prog-fill"></div></div>
+    </div>
+    <div class="m4f-grid" id="m4f5-grid"></div>
+  </div>
+
+  <!-- ── Fundamentos 10min ── -->
+  <div class="m4-divider">
+    <div class="m4-divider-line"></div>
+    <div><span class="m4-divider-label">Fundamentos 10min</span><span class="m4-divider-sub">1 exercício</span></div>
+    <div class="m4-divider-line"></div>
+  </div>
+  <div class="m4f-section">
+    <div class="m4f-prog-wrap">
+      <div class="m4f-prog-labels"><span>Progresso 10min</span><span id="m4f10-pct-label">0 / 1 consolidados</span></div>
+      <div class="m4f-prog-track"><div class="m4f-prog-fill" id="m4f10-prog-fill"></div></div>
+    </div>
+    <div class="m4f-grid" id="m4f10-grid"></div>
+  </div>
+
+</div><!-- /mod4-fundamentos -->
+
+<div class="mod-page" id="mod4-mus5">
+  <div class="m4-coming-soon"><strong>Em breve</strong><p>Musical 1–5min do Módulo 4</p></div>
+</div>
+<div class="mod-page" id="mod4-mus615">
+  <div class="m4-coming-soon"><strong>Em breve</strong><p>Musical 6–15min do Módulo 4</p></div>
+</div>
+<div class="mod-page" id="mod4-mus2020">
+  <div class="m4-coming-soon"><strong>Em breve</strong><p>Musical 16–20min do Módulo 4</p></div>
+</div>
+<div class="mod-page" id="mod4-otp">
+  <div class="m4-coming-soon"><strong>Em breve</strong><p>Out of the Plateau do Módulo 4</p></div>
+</div>
+<div class="mod-page" id="mod4-otb">
+  <div class="m4-coming-soon"><strong>Em breve</strong><p>Out of the Box do Módulo 4</p></div>
+</div>
+
+</div><!-- /page-mod4 -->
+
+<div class="page" id="page-workout">
 <section class="tracker-section">
 
   <div class="tracker-header">
@@ -1140,262 +1689,18 @@
   </div>
 
 </section>
+</div><!-- /page-workout -->
 
-
-
-
-<!-- ══ FUNDAMENTOS ══ -->
-<section class="fund-section">
-  <div class="fund-top-bar">
-    <div>
-      <div class="fund-sec-title">1º Fundamentos</div>
-      <div class="fund-sec-sub">Módulo 2 · 9 exercícios · histórico de BPM por sessão</div>
-    </div>
-  </div>
-  <div class="fund-legend">
-    <div class="fund-leg-item"><span class="fund-leg-dot" style="background:var(--red)"></span>Aprendendo</div>
-    <div class="fund-leg-item"><span class="fund-leg-dot" style="background:var(--accent)"></span>Praticando</div>
-    <div class="fund-leg-item"><span class="fund-leg-dot" style="background:var(--teal)"></span>Consolidado</div>
-    <div class="fund-leg-item"><span class="fund-leg-dot" style="background:var(--muted)"></span>Dominado</div>
-  </div>
-  <div class="fund-prog-wrap">
-    <div class="fund-prog-labels">
-      <span>Progresso geral</span>
-      <span id="fund-pct-label">0 / 9 consolidados</span>
-    </div>
-    <div class="fund-prog-track"><div class="fund-prog-fill" id="fund-prog-fill"></div></div>
-  </div>
-  <div class="fund-grid" id="fund-grid"></div>
-</section>
-
-<!-- Lightbox -->
-<div class="fund-lightbox" id="fund-lightbox">
-  <button class="fund-lightbox-close" onclick="closeLightbox()">✕</button>
-  <embed id="fund-lightbox-embed" src="" type="application/pdf" style="width:100%;max-width:900px;height:90vh;border-radius:8px;">
-</div>
-
-
-<!-- ══ MUSICAL 1 ══ -->
-<section class="mus-section">
-  <div class="mus-top-bar">
-    <div>
-      <div class="mus-sec-title">2º Musical 5min</div>
-      <div class="mus-sec-sub">Módulo 2 · 5 minutos · 3 exercícios</div>
-    </div>
-  </div>
-  <div class="mus-prog-wrap">
-    <div class="mus-prog-labels">
-      <span>Progresso do musical</span>
-      <span id="mus-pct-label">0 / 3 consolidados</span>
-    </div>
-    <div class="mus-prog-track"><div class="mus-prog-fill" id="mus-prog-fill"></div></div>
-  </div>
-  <div class="mus-grid" id="mus-grid"></div>
-</section>
-
-
-<!-- ══ MUSICAL 10MIN ══ -->
-<section class="mus2-section">
-  <div class="mus2-top-bar">
-    <div>
-      <div class="mus2-sec-title c10">3º Musical 10min</div>
-      <div class="mus2-sec-sub">Módulo 2 · Mesmos exercícios do 5min — foco em velocidade</div>
-    </div>
-  </div>
-  <div class="mus2-notice">⟳ <span>Mesmos exercícios do Musical 5min</span> — BPM rastreado separadamente para acompanhar a progressão de velocidade</div>
-  <div class="mus2-prog-wrap">
-    <div class="mus2-prog-labels"><span>Progresso</span><span id="m10-pct-label">0 / 3 consolidados</span></div>
-    <div class="mus2-prog-track"><div class="mus2-prog-fill c10" id="m10-prog-fill"></div></div>
-  </div>
-  <div class="mus2-grid" id="m10-grid"></div>
-</section>
-
-<!-- ══ MUSICAL 15MIN ══ -->
-<section class="mus2-section">
-  <div class="mus2-top-bar">
-    <div>
-      <div class="mus2-sec-title c15">4º Musical 15min</div>
-      <div class="mus2-sec-sub">Módulo 2 · 6 exercícios novos</div>
-    </div>
-  </div>
-  <div class="mus2-prog-wrap">
-    <div class="mus2-prog-labels"><span>Progresso</span><span id="m15-pct-label">0 / 6 consolidados</span></div>
-    <div class="mus2-prog-track"><div class="mus2-prog-fill c15" id="m15-prog-fill"></div></div>
-  </div>
-  <div class="mus2-grid" id="m15-grid"></div>
-</section>
-
-<!-- ══ MUSICAL 20MIN ══ -->
-<section class="mus2-section">
-  <div class="mus2-top-bar">
-    <div>
-      <div class="mus2-sec-title c20">5º Musical 20min</div>
-      <div class="mus2-sec-sub">Módulo 2 · Mesmos exercícios do 4º — foco em velocidade</div>
-    </div>
-  </div>
-  <div class="mus2-notice" style="border-color:rgba(110,231,183,0.2);color:#6ee7b7;">⟳ <span>Mesmos exercícios do Musical 15min</span> — BPM rastreado separadamente para acompanhar a progressão de velocidade</div>
-  <div class="mus2-prog-wrap">
-    <div class="mus2-prog-labels"><span>Progresso</span><span id="m20-pct-label">0 / 6 consolidados</span></div>
-    <div class="mus2-prog-track"><div class="mus2-prog-fill c20" id="m20-prog-fill"></div></div>
-  </div>
-  <div class="mus2-grid" id="m20-grid"></div>
-</section>
-
-
-<!-- ══ OUT OF THE PLATEAU ══ -->
-<section class="otp-section">
-  <div class="otp-header">
-    <div>
-      <div class="otp-title">Out of the Plateau</div>
-      <div class="otp-sub">Módulo 2 · 6º e 7º — forçar velocidade em um exercício sem variar</div>
-    </div>
-  </div>
-
-  <!-- Timer -->
-  <div class="otp-timer-card">
-    <div class="otp-timer-left">
-      <div class="otp-timer-label">Duração da sessão</div>
-      <div class="otp-time-btns">
-        <button class="otp-time-btn active" onclick="otpSetTime(5,this)">5 min</button>
-        <button class="otp-time-btn" onclick="otpSetTime(10,this)">10 min</button>
-        <button class="otp-time-btn" onclick="otpSetTime(15,this)">15 min</button>
-      </div>
-    </div>
-    <div class="otp-timer-display">
-      <div class="otp-timer-digits" id="otp-digits">05:00</div>
-      <div class="otp-timer-controls">
-        <button class="otp-tc-btn primary" id="otp-toggle">▶</button>
-        <button class="otp-tc-btn" id="otp-reset">↺</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Form -->
-  <div class="otp-form-card">
-    <div class="otp-form-title">Registrar sessão</div>
-    <div class="otp-fields">
-      <div class="otp-field">
-        <label>Exercício trabalhado</label>
-        <input type="text" class="otp-input" id="otp-ex" placeholder="ex: Fund. Ex.5 — Cromático">
-      </div>
-      <div class="otp-field">
-        <label>Data</label>
-        <input type="date" class="otp-input" id="otp-date">
-      </div>
-      <div class="otp-field">
-        <label>BPM inicial</label>
-        <input type="number" class="otp-input" id="otp-bpm-start" placeholder="80" min="20" max="400">
-      </div>
-      <div class="otp-field">
-        <label>BPM final atingido</label>
-        <input type="number" class="otp-input" id="otp-bpm-end" placeholder="110" min="20" max="400">
-      </div>
-      <div class="otp-field">
-        <label>Duração</label>
-        <select class="otp-select" id="otp-duration">
-          <option value="5">5 minutos</option>
-          <option value="10">10 minutos</option>
-          <option value="15">15 minutos</option>
-        </select>
-      </div>
-      <div class="otp-field wide">
-        <label>Observações</label>
-        <textarea class="otp-textarea" id="otp-note" placeholder="ex: travou em 110, mas limpou bem até 105..."></textarea>
-      </div>
-    </div>
-    <div class="otp-row-btns">
-      <button class="otp-save-btn" onclick="otpAddSession()">+ Registrar</button>
-      <span class="otp-flash" id="otp-flash">✓ Salvo</span>
-    </div>
-  </div>
-
-  <!-- History -->
-  <div class="otp-history-wrap">
-    <div class="otp-history-header">
-      <div class="otp-history-title">Histórico <span id="otp-hist-count" style="color:var(--muted)"></span></div>
-      <button class="otp-history-clear" onclick="otpClearHistory()">Limpar tudo</button>
-    </div>
-    <div id="otp-history-body"></div>
-  </div>
-</section>
-
-<!-- ══ OUT OF THE BOX ══ -->
-<section class="otb-section">
-  <div class="otb-header">
-    <div class="otb-title">Out of the Box</div>
-    <div class="otb-sub">Módulo 2 · 8º — 5 minutos · improvisar e variar tudo que já viu</div>
-  </div>
-
-  <div class="otb-layout">
-    <!-- Timer 5min fixo -->
-    <div class="otb-timer-card">
-      <div class="otb-timer-label">5 minutos — improvisar livre</div>
-      <div class="otb-timer-digits" id="otb-digits">05:00</div>
-      <div class="otb-timer-controls">
-        <button class="otb-tc-btn primary" id="otb-toggle">▶</button>
-        <button class="otb-tc-btn" id="otb-reset">↺</button>
-      </div>
-    </div>
-
-    <!-- Variações -->
-    <div class="otb-variations-card">
-      <div class="otb-var-title">Variações — clique para marcar o que usou</div>
-      <div class="otb-var-grid" id="otb-var-grid"></div>
-    </div>
-  </div>
-
-  <!-- Form -->
-  <div class="otb-form-card">
-    <div class="otb-form-title">Registrar sessão</div>
-    <div class="otb-fields">
-      <div class="otb-field">
-        <label>Data</label>
-        <input type="date" class="otb-input" id="otb-date">
-      </div>
-      <div class="otb-field">
-        <label>Sensação geral (1–5)</label>
-        <select class="otb-input" id="otb-feel" style="-webkit-appearance:none">
-          <option value="">—</option>
-          <option value="1">1 — travado</option>
-          <option value="2">2 — difícil</option>
-          <option value="3">3 — ok</option>
-          <option value="4">4 — fluindo</option>
-          <option value="5">5 — excelente</option>
-        </select>
-      </div>
-      <div class="otb-field wide">
-        <label>Variações usadas (auto-preenchido pelos chips acima)</label>
-        <input type="text" class="otb-input" id="otb-vars-used" placeholder="clique nos chips acima ou escreva aqui...">
-      </div>
-      <div class="otb-field wide">
-        <label>Observações livres</label>
-        <textarea class="otb-textarea" id="otb-note" placeholder="ex: tentei misturar abafado com staccato, ficou interessante..."></textarea>
-      </div>
-    </div>
-    <div class="otb-row-btns">
-      <button class="otb-save-btn" onclick="otbAddSession()">+ Registrar sessão</button>
-      <span class="otb-flash" id="otb-flash">✓ Salvo</span>
-    </div>
-  </div>
-
-  <!-- History -->
-  <div class="otb-history-wrap">
-    <div class="otb-history-header">
-      <div class="otb-history-title">Histórico <span id="otb-hist-count" style="color:var(--muted)"></span></div>
-      <button class="otb-hist-clear" onclick="otbClearHistory()">Limpar tudo</button>
-    </div>
-    <div id="otb-history-body"></div>
-  </div>
-</section>
-
-<!-- ══ BACKUP ══ -->
-<div class="backup-bar">
+<!-- BACKUP PAGE -->
+<div class="page" id="page-backup">
+<div class="backup-bar" style="border-top:none;padding:2rem 3rem">
   <span class="backup-label">Backup dos dados</span>
   <button class="backup-btn export" onclick="backupExport()">↓ Exportar backup</button>
-  <button class="backup-btn import" onclick="document.getElementById('backup-file-input').click()">↑ Importar backup</button>
+  <button class="backup-btn import-btn" onclick="document.getElementById('backup-file-input').click()">↑ Importar backup</button>
   <input type="file" id="backup-file-input" accept=".json" style="display:none" onchange="backupImport(this)">
   <span class="backup-status" id="backup-status"></span>
 </div>
+</div><!-- /page-backup -->
 
 <footer>
   <p>Guitar Hacks — Programa iniciado em 24/05/2026</p>
@@ -2531,223 +2836,173 @@ m20Render();
 })();
 
 
+/* ══ NAV + TABS ══ */
+function showPage(pageId, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  const page = document.getElementById('page-' + pageId);
+  if (page) page.classList.add('active');
+  if (btn) btn.classList.add('active');
+}
 
-/* ══ OUT OF THE PLATEAU ══ */
-const OTP_KEY = 'ghacks_otp_v1';
-const OTB_KEY = 'ghacks_otb_v1';
+function showModTab(modId, tabId, btn) {
+  const prefix = modId + '-';
+  document.querySelectorAll(`#mod${modId === 'mod2' ? '2' : '3'}-tabs .mod-tab`).forEach(b => b.classList.remove('active'));
+  const allModPages = document.querySelectorAll(`[id^="${prefix}"]`);
+  allModPages.forEach(p => { if (p.classList.contains('mod-page')) p.classList.remove('active'); });
+  const target = document.getElementById(prefix + tabId);
+  if (target) target.classList.add('active');
+  if (btn) btn.classList.add('active');
+}
 
+/* ══ SHARED HELPERS ══ */
 function ghFmtDate(iso) {
   const [y,m,d] = iso.split('-');
   const M=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
   return d+' '+M[+m-1]+' '+y;
 }
 
-// ── OTP Timer ──
+/* ══ OTP TIMER ══ */
 (function(){
-  let mins = 5, remaining = 300, running = false, interval = null;
-
-  function fmtTime(s) {
-    return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+  let mins=5, remaining=300, running=false, interval=null;
+  function fmt(s){ return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0'); }
+  function ui(){
+    const d=document.getElementById('otp-digits');
+    const t=document.getElementById('otp-toggle');
+    if(!d||!t) return;
+    d.textContent=fmt(remaining);
+    d.className='otp-timer-digits'+(remaining===0?' done':remaining<=30?' warning':'');
+    t.textContent=running?'⏸':'▶';
+    const sel=document.getElementById('otp-duration');
+    if(sel) sel.value=String(mins);
   }
-  function updateUI() {
-    const d = document.getElementById('otp-digits');
-    const t = document.getElementById('otp-toggle');
-    if (!d || !t) return;
-    d.textContent = fmtTime(remaining);
-    d.className = 'otp-timer-digits' + (remaining===0?' done':remaining<=30?' warning':'');
-    t.textContent = running ? '⏸' : '▶';
-    t.className = 'otp-tc-btn primary';
-    // sync duration select
-    const sel = document.getElementById('otp-duration');
-    if (sel) sel.value = String(mins);
-  }
-
-  window.otpSetTime = function(m, btn) {
-    if (running) return;
-    mins = m; remaining = m * 60;
-    document.querySelectorAll('.otp-time-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    updateUI();
+  window.otpSetTime=function(m,btn){
+    if(running) return;
+    mins=m; remaining=m*60;
+    document.querySelectorAll('.otp-time-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active'); ui();
   };
-
-  document.getElementById('otp-toggle').addEventListener('click', function() {
-    if (remaining === 0) { remaining = mins*60; }
-    running = !running;
-    if (running) {
-      interval = setInterval(() => {
-        remaining--;
-        if (remaining <= 0) {
-          remaining = 0; running = false; clearInterval(interval);
-          try { new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAA').play(); } catch(e){}
-        }
-        updateUI();
-      }, 1000);
-    } else { clearInterval(interval); }
-    updateUI();
+  const tog=document.getElementById('otp-toggle');
+  const rst=document.getElementById('otp-reset');
+  if(tog) tog.addEventListener('click',function(){
+    if(remaining===0) remaining=mins*60;
+    running=!running;
+    if(running){ interval=setInterval(()=>{ remaining--; if(remaining<=0){remaining=0;running=false;clearInterval(interval);} ui(); },1000); }
+    else clearInterval(interval);
+    ui();
   });
-
-  document.getElementById('otp-reset').addEventListener('click', function() {
-    clearInterval(interval); running = false; remaining = mins*60; updateUI();
-  });
-
-  // Set today's date
-  const today = new Date().toISOString().slice(0,10);
-  const di = document.getElementById('otp-date');
-  if (di) di.value = today;
-
-  updateUI();
+  if(rst) rst.addEventListener('click',function(){ clearInterval(interval); running=false; remaining=mins*60; ui(); });
+  const di=document.getElementById('otp-date');
+  if(di) di.value=new Date().toISOString().slice(0,10);
+  ui();
 })();
 
-// ── OTP Data ──
-function otpLoad() { try{return JSON.parse(localStorage.getItem(OTP_KEY))||[];}catch(e){return[];} }
-function otpSave(d) { localStorage.setItem(OTP_KEY, JSON.stringify(d)); }
+/* ══ OTP DATA ══ */
+const OTP_KEY='ghacks_otp_v1';
+function otpLoad(){ try{return JSON.parse(localStorage.getItem(OTP_KEY))||[];}catch(e){return[];} }
+function otpSave(d){ localStorage.setItem(OTP_KEY,JSON.stringify(d)); }
 
-function otpFmtGain(start, end) {
-  if (!start || !end) return end ? end+' BPM' : '—';
-  const gain = end - start;
-  return `${start} → ${end} <span style="font-family:var(--font-mono);font-size:9px;color:${gain>0?'var(--teal)':'var(--muted)'}">${gain>0?'+'+gain:gain} BPM</span>`;
-}
-
-function otpRender() {
-  const sessions = otpLoad();
-  const body = document.getElementById('otp-history-body');
-  const count = document.getElementById('otp-hist-count');
-  if (!body) return;
-  if (count) count.textContent = sessions.length ? `— ${sessions.length} sessão${sessions.length!==1?'ões':''}` : '';
-  if (!sessions.length) {
-    body.innerHTML = '<div class="otp-hist-empty">Nenhuma sessão registrada ainda.</div>';
-    return;
-  }
-  const rows = [...sessions].reverse().map((s,ri) => {
-    const idx = sessions.length-1-ri;
+function otpRender(){
+  const sessions=otpLoad();
+  const body=document.getElementById('otp-history-body');
+  const count=document.getElementById('otp-hist-count');
+  if(!body) return;
+  if(count) count.textContent=sessions.length?`— ${sessions.length} sessão${sessions.length!==1?'ões':''}`:'';
+  if(!sessions.length){ body.innerHTML='<div class="otp-hist-empty">Nenhuma sessão registrada ainda.</div>'; return; }
+  const rows=[...sessions].reverse().map((s,ri)=>{
+    const idx=sessions.length-1-ri;
+    const gain=s.bpmStart&&s.bpmEnd?s.bpmEnd-s.bpmStart:null;
+    const bpmText=s.bpmStart&&s.bpmEnd?`${s.bpmStart} → ${s.bpmEnd} <span style="font-family:var(--font-mono);font-size:9px;color:${gain>0?'var(--teal)':'var(--muted)'}">${gain>0?'+'+gain:gain} BPM</span>`:s.bpmEnd?s.bpmEnd+' BPM':'—';
     return `<tr>
       <td class="otp-date">${ghFmtDate(s.date)}</td>
       <td class="otp-ex-name">${s.ex||'—'}</td>
-      <td class="otp-bpm-gain${s.bpmEnd&&s.bpmStart&&s.bpmEnd>s.bpmStart?' positive':''}">${otpFmtGain(s.bpmStart,s.bpmEnd)}</td>
+      <td class="otp-bpm-gain${gain>0?' positive':''}">${bpmText}</td>
       <td><span class="otp-time-badge">${s.duration||5} min</span></td>
       <td class="otp-date" style="max-width:180px;color:var(--muted)">${s.note||'—'}</td>
       <td><button class="otp-del" onclick="otpDel(${idx})">✕</button></td>
     </tr>`;
   }).join('');
-  body.innerHTML = `<table class="otp-hist-table">
-    <thead><tr><th>Data</th><th>Exercício</th><th>BPM</th><th>Tempo</th><th>Nota</th><th></th></tr></thead>
-    <tbody>${rows}</tbody>
-  </table>`;
+  body.innerHTML=`<table class="otp-hist-table"><thead><tr><th>Data</th><th>Exercício</th><th>BPM</th><th>Tempo</th><th>Nota</th><th></th></tr></thead><tbody>${rows}</tbody></table>`;
 }
 
-function otpAddSession() {
-  const ex       = document.getElementById('otp-ex').value.trim();
-  const date     = document.getElementById('otp-date').value;
-  const bpmStart = parseInt(document.getElementById('otp-bpm-start').value)||null;
-  const bpmEnd   = parseInt(document.getElementById('otp-bpm-end').value)||null;
-  const duration = parseInt(document.getElementById('otp-duration').value)||5;
-  const note     = document.getElementById('otp-note').value.trim();
-  if (!date) return;
-  const sessions = otpLoad();
-  sessions.push({ex,date,bpmStart,bpmEnd,duration,note,savedAt:new Date().toISOString()});
-  otpSave(sessions);
-  const flash = document.getElementById('otp-flash');
-  flash.style.opacity='1'; setTimeout(()=>flash.style.opacity='0',1800);
-  ['otp-ex','otp-bpm-start','otp-bpm-end','otp-note'].forEach(id => document.getElementById(id).value='');
+function otpAddSession(){
+  const ex=document.getElementById('otp-ex').value.trim();
+  const date=document.getElementById('otp-date').value;
+  const bpmStart=parseInt(document.getElementById('otp-bpm-start').value)||null;
+  const bpmEnd=parseInt(document.getElementById('otp-bpm-end').value)||null;
+  const duration=parseInt(document.getElementById('otp-duration').value)||5;
+  const note=document.getElementById('otp-note').value.trim();
+  if(!date) return;
+  const s=otpLoad(); s.push({ex,date,bpmStart,bpmEnd,duration,note,savedAt:new Date().toISOString()});
+  otpSave(s);
+  const f=document.getElementById('otp-flash'); f.style.opacity='1'; setTimeout(()=>f.style.opacity='0',1800);
+  ['otp-ex','otp-bpm-start','otp-bpm-end','otp-note'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   otpRender();
 }
-
-function otpDel(idx) {
-  const s = otpLoad(); s.splice(idx,1); otpSave(s); otpRender();
-}
-function otpClearHistory() {
-  if(!confirm('Limpar todo o histórico do Out of the Plateau?')) return;
-  otpSave([]); otpRender();
-}
-
+function otpDel(idx){ const s=otpLoad(); s.splice(idx,1); otpSave(s); otpRender(); }
+function otpClearHistory(){ if(!confirm('Limpar todo o histórico?')) return; otpSave([]); otpRender(); }
 otpRender();
 
-/* ══ OUT OF THE BOX ══ */
-const OTB_VARIACOES = [
-  'Aberto (solto)','Abafado','Leve (baixo)','Forte (alto)',
-  'Palhetada paralela','Palhetada 45°','Perto da ponte',
-  'Entre os captadores','Rente à corda','Distante da corda',
-  'Palheta mais funda','Palheta mais leve',
-  'Mudar acentuações','Nota pontuada (rítmica)','Staccato'
-];
-
-let otbUsedVars = [];
-
-// Build variation chips
+/* ══ OTB TIMER ══ */
 (function(){
-  const grid = document.getElementById('otb-var-grid');
-  if (!grid) return;
-  OTB_VARIACOES.forEach(v => {
-    const chip = document.createElement('span');
-    chip.className = 'otb-var-chip';
-    chip.textContent = v;
-    chip.onclick = () => {
+  let remaining=300, running=false, interval=null;
+  function fmt(s){ return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0'); }
+  function ui(){
+    const d=document.getElementById('otb-digits');
+    const t=document.getElementById('otb-toggle');
+    if(!d||!t) return;
+    d.textContent=fmt(remaining);
+    d.className='otb-timer-digits'+(remaining===0?' done':remaining<=30?' warning':'');
+    t.textContent=running?'⏸':'▶';
+  }
+  const tog=document.getElementById('otb-toggle');
+  const rst=document.getElementById('otb-reset');
+  if(tog) tog.addEventListener('click',function(){
+    if(remaining===0) remaining=300;
+    running=!running;
+    if(running){ interval=setInterval(()=>{ remaining--; if(remaining<=0){remaining=0;running=false;clearInterval(interval);} ui(); },1000); }
+    else clearInterval(interval);
+    ui();
+  });
+  if(rst) rst.addEventListener('click',function(){ clearInterval(interval); running=false; remaining=300; ui(); });
+  ui();
+  const di=document.getElementById('otb-date');
+  if(di) di.value=new Date().toISOString().slice(0,10);
+})();
+
+/* ══ OTB DATA ══ */
+const OTB_KEY='ghacks_otb_v1';
+const OTB_VARIACOES=['Aberto (solto)','Abafado','Leve (baixo)','Forte (alto)','Palhetada paralela','Palhetada 45°','Perto da ponte','Entre os captadores','Rente à corda','Distante da corda','Palheta mais funda','Palheta mais leve','Mudar acentuações','Nota pontuada (rítmica)','Staccato'];
+let otbUsedVars=[];
+
+(function(){
+  const grid=document.getElementById('otb-var-grid');
+  if(!grid) return;
+  OTB_VARIACOES.forEach(v=>{
+    const chip=document.createElement('span');
+    chip.className='otb-var-chip'; chip.textContent=v;
+    chip.onclick=()=>{
       chip.classList.toggle('used');
-      if (chip.classList.contains('used')) {
-        if (!otbUsedVars.includes(v)) otbUsedVars.push(v);
-      } else {
-        otbUsedVars = otbUsedVars.filter(x => x !== v);
-      }
-      const inp = document.getElementById('otb-vars-used');
-      if (inp) inp.value = otbUsedVars.join(', ');
+      otbUsedVars=chip.classList.contains('used')?[...otbUsedVars,v]:otbUsedVars.filter(x=>x!==v);
+      const inp=document.getElementById('otb-vars-used'); if(inp) inp.value=otbUsedVars.join(', ');
     };
     grid.appendChild(chip);
   });
-
-  // Set today
-  const today = new Date().toISOString().slice(0,10);
-  const di = document.getElementById('otb-date');
-  if (di) di.value = today;
 })();
 
-// ── OTB Timer (fixed 5min) ──
-(function(){
-  let remaining = 300, running = false, interval = null;
-  function fmtTime(s) {
-    return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
-  }
-  function updateUI() {
-    const d = document.getElementById('otb-digits');
-    const t = document.getElementById('otb-toggle');
-    if (!d||!t) return;
-    d.textContent = fmtTime(remaining);
-    d.className = 'otb-timer-digits'+(remaining===0?' done':remaining<=30?' warning':'');
-    t.textContent = running ? '⏸' : '▶';
-  }
-  document.getElementById('otb-toggle').addEventListener('click', function(){
-    if (remaining===0) remaining=300;
-    running=!running;
-    if (running) {
-      interval=setInterval(()=>{
-        remaining--;
-        if(remaining<=0){remaining=0;running=false;clearInterval(interval);}
-        updateUI();
-      },1000);
-    } else { clearInterval(interval); }
-    updateUI();
-  });
-  document.getElementById('otb-reset').addEventListener('click', function(){
-    clearInterval(interval); running=false; remaining=300; updateUI();
-  });
-  updateUI();
-})();
+function otbLoad(){ try{return JSON.parse(localStorage.getItem(OTB_KEY))||[];}catch(e){return[];} }
+function otbSave(d){ localStorage.setItem(OTB_KEY,JSON.stringify(d)); }
 
-function otbLoad() { try{return JSON.parse(localStorage.getItem(OTB_KEY))||[];}catch(e){return[];} }
-function otbSave(d) { localStorage.setItem(OTB_KEY, JSON.stringify(d)); }
-
-function otbRender() {
-  const sessions = otbLoad();
-  const body = document.getElementById('otb-history-body');
-  const count = document.getElementById('otb-hist-count');
-  if (!body) return;
-  if (count) count.textContent = sessions.length ? `— ${sessions.length} sessão${sessions.length!==1?'ões':''}` : '';
-  if (!sessions.length) {
-    body.innerHTML = '<div class="otb-hist-empty">Nenhuma sessão registrada ainda.</div>';
-    return;
-  }
-  const feelLabel = {1:'😐 Travado',2:'😕 Difícil',3:'🙂 Ok',4:'😊 Fluindo',5:'🤩 Excelente'};
-  const rows = [...sessions].reverse().map((s,ri) => {
-    const idx = sessions.length-1-ri;
+function otbRender(){
+  const sessions=otbLoad();
+  const body=document.getElementById('otb-history-body');
+  const count=document.getElementById('otb-hist-count');
+  if(!body) return;
+  if(count) count.textContent=sessions.length?`— ${sessions.length} sessão${sessions.length!==1?'ões':''}`:'';
+  if(!sessions.length){ body.innerHTML='<div class="otb-hist-empty">Nenhuma sessão registrada ainda.</div>'; return; }
+  const feelLabel={1:'😐 Travado',2:'😕 Difícil',3:'🙂 Ok',4:'😊 Fluindo',5:'🤩 Excelente'};
+  const rows=[...sessions].reverse().map((s,ri)=>{
+    const idx=sessions.length-1-ri;
     return `<tr>
       <td class="otb-hist-date">${ghFmtDate(s.date)}</td>
       <td class="otb-hist-vars">${s.vars||'—'}</td>
@@ -2756,97 +3011,488 @@ function otbRender() {
       <td><button class="otb-del" onclick="otbDel(${idx})">✕</button></td>
     </tr>`;
   }).join('');
-  body.innerHTML = `<table class="otb-hist-table">
-    <thead><tr><th>Data</th><th>Variações</th><th>Sensação</th><th>Notas</th><th></th></tr></thead>
-    <tbody>${rows}</tbody>
-  </table>`;
+  body.innerHTML=`<table class="otb-hist-table"><thead><tr><th>Data</th><th>Variações</th><th>Sensação</th><th>Notas</th><th></th></tr></thead><tbody>${rows}</tbody></table>`;
 }
 
-function otbAddSession() {
-  const date = document.getElementById('otb-date').value;
-  const vars = document.getElementById('otb-vars-used').value.trim();
-  const feel = document.getElementById('otb-feel').value;
-  const note = document.getElementById('otb-note').value.trim();
-  if (!date) return;
-  const sessions = otbLoad();
-  sessions.push({date,vars,feel,note,savedAt:new Date().toISOString()});
-  otbSave(sessions);
-  const flash = document.getElementById('otb-flash');
-  flash.style.opacity='1'; setTimeout(()=>flash.style.opacity='0',1800);
+function otbAddSession(){
+  const date=document.getElementById('otb-date').value;
+  const vars=document.getElementById('otb-vars-used').value.trim();
+  const feel=document.getElementById('otb-feel').value;
+  const note=document.getElementById('otb-note').value.trim();
+  if(!date) return;
+  const s=otbLoad(); s.push({date,vars,feel,note,savedAt:new Date().toISOString()});
+  otbSave(s);
+  const f=document.getElementById('otb-flash'); f.style.opacity='1'; setTimeout(()=>f.style.opacity='0',1800);
   document.getElementById('otb-vars-used').value='';
   document.getElementById('otb-note').value='';
   document.getElementById('otb-feel').value='';
-  // clear chips
   otbUsedVars=[];
   document.querySelectorAll('.otb-var-chip').forEach(c=>c.classList.remove('used'));
   otbRender();
 }
-
-function otbDel(idx) {
-  const s=otbLoad(); s.splice(idx,1); otbSave(s); otbRender();
-}
-function otbClearHistory() {
-  if(!confirm('Limpar todo o histórico do Out of the Box?')) return;
-  otbSave([]); otbRender();
-}
-
+function otbDel(idx){ const s=otbLoad(); s.splice(idx,1); otbSave(s); otbRender(); }
+function otbClearHistory(){ if(!confirm('Limpar histórico do Out of the Box?')) return; otbSave([]); otbRender(); }
 otbRender();
 
-/* ══ BACKUP ══ */
-const ALL_KEYS = [
-  'ghacks_workout_v1','ghacks_fund_v2',
-  'ghacks_mus1_v1','ghacks_m10_v1','ghacks_m15_v1','ghacks_m20_v1',
-  'ghacks_otp_v1','ghacks_otb_v1'
+/* ══ MOD 3 FUNDAMENTOS ══ */
+const M3F_KEY='ghacks_m3f_v1';
+const M3F_STATUS={'aprendendo':'Aprendendo','praticando':'Praticando','consolidado':'Consolidado','dominado':'Dominado'};
+
+const M3F_EX=[
+  {id:1,name:'Exercício 1',desc:'Cordas soltas — alternância básica P.M.',img:'assets/modulo3/fundamentos/Exercicio1.pdf',defaultStatus:'dominado'},
+  {id:2,name:'Exercício 2',desc:'Cordas soltas em grupos — P.M.',img:'assets/modulo3/fundamentos/Exercicio2.pdf'},
+  {id:3,name:'Exercício 3 — Saltos',desc:'Saltos entre cordas, 2 páginas',img:'assets/modulo3/fundamentos/Exercicio3.pdf'},
+  {id:4,name:'Exercício 4',desc:'Padrão em 3 grupos de cordas',img:'assets/modulo3/fundamentos/Exercicio4.pdf'},
+  {id:5,name:'Exercício 5',desc:'Pentatônica — 3 páginas',img:'assets/modulo3/fundamentos/Exercicio5.pdf'},
+  {id:6,name:'Exercício 6',desc:'Arpejo Lá Maior com sétima Maior',img:'assets/modulo3/fundamentos/Exercicio6.pdf'},
+  {id:7,name:'Exercício 7',desc:'Pentatônica',img:'assets/modulo3/fundamentos/Exercicio7.pdf'},
 ];
 
-function backupExport() {
-  const backup = {};
-  ALL_KEYS.forEach(k => {
-    try { const v=localStorage.getItem(k); if(v) backup[k]=JSON.parse(v); } catch(e){}
-  });
-  backup._exportedAt = new Date().toISOString();
-  backup._version = 1;
-  const blob = new Blob([JSON.stringify(backup, null, 2)], {type:'application/json'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'guitar-hacks-backup-'+new Date().toISOString().slice(0,10)+'.json';
-  a.click();
-  URL.revokeObjectURL(a.href);
+function m3fLoad(){ try{return JSON.parse(localStorage.getItem(M3F_KEY))||{};}catch(e){return{};} }
+function m3fSave(d){ localStorage.setItem(M3F_KEY,JSON.stringify(d)); }
+
+function m3fFmtDate(iso){
+  const [y,m,d]=iso.split('-');
+  const M=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  return d+' '+M[+m-1];
 }
 
-function backupImport(input) {
-  const file = input.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    try {
-      const backup = JSON.parse(e.target.result);
-      let count = 0;
-      ALL_KEYS.forEach(k => {
-        if (backup[k] !== undefined) {
-          localStorage.setItem(k, JSON.stringify(backup[k]));
-          count++;
-        }
-      });
-      const status = document.getElementById('backup-status');
-      status.textContent = `✓ ${count} chaves restauradas`;
-      status.style.opacity = '1';
-      setTimeout(() => status.style.opacity='0', 3000);
-      // re-render all
+function m3fMiniChart(sessions){
+  if(!sessions||sessions.length<2) return '';
+  const last=sessions.slice(-10);
+  const allVals=last.flatMap(s=>[s.bpmMin||0,s.bpmMax||0]).filter(Boolean);
+  if(!allVals.length) return '';
+  const maxV=Math.max(...allVals),minV=Math.min(...allVals),range=maxV-minV||1;
+  const bars=last.map(s=>{
+    const hMax=s.bpmMax?Math.max(5,Math.round(((s.bpmMax-minV)/range)*44)+5):0;
+    const hMin=s.bpmMin?Math.max(3,Math.round(((s.bpmMin-minV)/range)*44)+3):0;
+    return `<div class="m3-chart-bar-wrap">
+      <div class="m3-chart-val">${s.bpmMax||''}</div>
+      <div style="display:flex;gap:2px;align-items:flex-end;height:44px">
+        ${hMax?`<div class="m3-chart-bar m3-max" style="height:${hMax}px;flex:1"></div>`:''}
+        ${hMin?`<div class="m3-chart-bar m3-min" style="height:${hMin}px;flex:1"></div>`:''}
+      </div>
+      <div class="m3-chart-date">${m3fFmtDate(s.date)}</div>
+    </div>`;
+  }).join('');
+  return `<div class="m3-chart">
+    <div style="display:flex;gap:12px;margin-bottom:6px">
+      <div style="display:flex;align-items:center;gap:4px;font-family:var(--font-mono);font-size:9px;color:var(--muted)"><div style="width:6px;height:6px;border-radius:1px;background:var(--teal)"></div>BPM máx</div>
+      <div style="display:flex;align-items:center;gap:4px;font-family:var(--font-mono);font-size:9px;color:var(--muted)"><div style="width:6px;height:6px;border-radius:1px;background:var(--purple)"></div>BPM mín</div>
+    </div>
+    <div class="m3-chart-bars">${bars}</div>
+  </div>`;
+}
+
+function m3fHistTable(sessions,exId){
+  if(!sessions||!sessions.length) return '<div class="m3-hist-empty">Nenhuma sessão ainda.</div>';
+  const rows=[...sessions].reverse().map((s,ri)=>{
+    const idx=sessions.length-1-ri;
+    const bpm=(s.bpmMin&&s.bpmMax)?`${s.bpmMin} – ${s.bpmMax}`:(s.bpmMax||s.bpmMin||'—');
+    const pill=s.status?`<span class="m3-pill st-${s.status}" style="font-size:8px;padding:2px 6px">${M3F_STATUS[s.status]||s.status}</span>`:'';
+    return `<tr>
+      <td class="m3hist-date">${m3fFmtDate(s.date)}</td>
+      <td><span class="m3hist-bpm">${bpm}<small> bpm</small></span></td>
+      <td>${pill}</td>
+      <td class="m3hist-note">${s.note||'—'}</td>
+      <td><button class="m3hist-del" onclick="m3fDelSession(${exId},${idx})">✕</button></td>
+    </tr>`;
+  }).join('');
+  return `<table class="m3-hist-table"><thead><tr><th>Data</th><th>BPM</th><th>Status</th><th>Nota</th><th></th></tr></thead><tbody>${rows}</tbody></table>`;
+}
+
+function m3fRenderProgress(data){
+  const total=M3F_EX.length;
+  const done=M3F_EX.filter(ex=>{
+    const d=data[ex.id]; const s=d&&d.sessions&&d.sessions.length?d.sessions[d.sessions.length-1].status:'aprendendo';
+    return s==='consolidado'||s==='dominado';
+  }).length;
+  const pct=Math.round((done/total)*100);
+  const fill=document.getElementById('m3f-prog-fill'),label=document.getElementById('m3f-pct-label');
+  if(fill) fill.style.width=pct+'%';
+  if(label) label.textContent=done+' / '+total+' consolidados';
+}
+
+function m3fRender(){
+  const data=m3fLoad();
+  const grid=document.getElementById('m3f-grid');
+  if(!grid) return;
+  grid.innerHTML='';
+  const today=new Date().toISOString().slice(0,10);
+
+  M3F_EX.forEach(ex=>{
+    const d=data[ex.id]||{};
+    const sessions=d.sessions||[];
+    const lastSess=sessions.length?sessions[sessions.length-1]:null;
+    const status=lastSess?lastSess.status:(ex.defaultStatus||'aprendendo');
+    const bpmMin=lastSess&&lastSess.bpmMin;
+    const bpmMax=lastSess&&lastSess.bpmMax;
+    let bpmText='—',bpmSub='',bpmEmpty=true;
+    if(bpmMin&&bpmMax){bpmText=bpmMin+' – '+bpmMax;bpmSub='mín → máx';bpmEmpty=false;}
+    else if(bpmMax){bpmText=bpmMax+' BPM';bpmSub='máx';bpmEmpty=false;}
+    else if(bpmMin){bpmText=bpmMin+' BPM';bpmSub='mín';bpmEmpty=false;}
+
+    const chart=m3fMiniChart(sessions);
+    const hist=m3fHistTable(sessions,ex.id);
+    const sessCount=sessions.length;
+
+    const card=document.createElement('div');
+    card.className=`m3-card st-${status}`;
+    card.id='m3f-card-'+ex.id;
+    card.innerHTML=`
+      <div class="m3-card-top" onclick="m3fToggle(${ex.id})">
+        <div class="m3-ex-num">${String(ex.id).padStart(2,'0')}</div>
+        <div class="m3-ex-info">
+          <div class="m3-ex-name">${ex.name}</div>
+          <div class="m3-ex-desc">${ex.desc}</div>
+        </div>
+        <div class="m3-card-right">
+          <div>
+            <div class="m3-bpm-val${bpmEmpty?' empty':''}">${bpmText}</div>
+            ${bpmSub?`<div class="m3-bpm-sub">${bpmSub}</div>`:''}
+          </div>
+          <span class="m3-pill st-${status}">${M3F_STATUS[status]||status}</span>
+          <span class="m3-chevron">▼</span>
+        </div>
+      </div>
+      <div class="m3-card-body">
+        <div class="m3-body-inner">
+          <div class="m3-img-col">
+            <div class="m3-img-wrap" onclick="openLightbox('${ex.img}')">
+              <embed src="${ex.img}" type="application/pdf" style="width:100%;height:320px;border:none;border-radius:6px;pointer-events:none;">
+            </div>
+            <div class="m3-img-hint">clique para ampliar</div>
+          </div>
+          <div class="m3-form-col">
+            <div style="font-family:var(--font-mono);font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px">Registrar sessão</div>
+            <div class="m3-fields">
+              <div class="m3-field"><label>Data</label><input type="date" class="m3-input" id="m3fdate-${ex.id}" value="${today}"></div>
+              <div class="m3-field"><label>BPM mínimo</label><input type="number" class="m3-input" id="m3fbmin-${ex.id}" placeholder="80" min="20" max="400"></div>
+              <div class="m3-field"><label>BPM máximo</label><input type="number" class="m3-input" id="m3fbmax-${ex.id}" placeholder="120" min="20" max="400"></div>
+              <div class="m3-field"><label>Status</label>
+                <select class="m3-select" id="m3fsel-${ex.id}">
+                  <option value="aprendendo" ${status==='aprendendo'?'selected':''}>Aprendendo</option>
+                  <option value="praticando"  ${status==='praticando'?'selected':''}>Praticando</option>
+                  <option value="consolidado" ${status==='consolidado'?'selected':''}>Consolidado</option>
+                  <option value="dominado"    ${status==='dominado'?'selected':''}>Dominado</option>
+                </select>
+              </div>
+              <div class="m3-field wide"><label>Observações</label>
+                <textarea class="m3-textarea" id="m3fnote-${ex.id}" placeholder="ex: posição 5 ok, casa 8 travando..."></textarea>
+              </div>
+            </div>
+            <div class="m3-row-btns">
+              <button class="m3-save-btn" onclick="m3fAddSession(${ex.id})">+ Registrar sessão</button>
+              <span class="m3-flash" id="m3fflash-${ex.id}">✓ Salvo</span>
+            </div>
+          </div>
+        </div>
+        <div class="m3-history">
+          <div class="m3-history-title">
+            <span>Histórico — ${sessCount} sessão${sessCount!==1?'ões':''}</span>
+            ${sessCount?`<button class="m3-history-clear" onclick="m3fClearHistory(${ex.id})">Limpar tudo</button>`:''}
+          </div>
+          ${chart}${hist}
+        </div>
+      </div>`;
+    grid.appendChild(card);
+  });
+
+  m3fRenderProgress(data);
+}
+
+function m3fToggle(id){ document.getElementById('m3f-card-'+id).classList.toggle('open'); }
+
+function m3fAddSession(id){
+  const date=document.getElementById('m3fdate-'+id).value;
+  const bpmMin=parseInt(document.getElementById('m3fbmin-'+id).value)||null;
+  const bpmMax=parseInt(document.getElementById('m3fbmax-'+id).value)||null;
+  const status=document.getElementById('m3fsel-'+id).value;
+  const note=document.getElementById('m3fnote-'+id).value.trim();
+  if(!date) return;
+  const data=m3fLoad();
+  if(!data[id]) data[id]={sessions:[]};
+  data[id].sessions.push({date,bpmMin,bpmMax,status,note,savedAt:new Date().toISOString()});
+  m3fSave(data);
+  const f=document.getElementById('m3fflash-'+id); f.style.opacity='1'; setTimeout(()=>f.style.opacity='0',1800);
+  m3fRender();
+  document.getElementById('m3f-card-'+id).classList.add('open');
+  document.getElementById('m3fbmin-'+id).value='';
+  document.getElementById('m3fbmax-'+id).value='';
+  document.getElementById('m3fnote-'+id).value='';
+}
+
+function m3fDelSession(exId,idx){
+  const data=m3fLoad();
+  if(data[exId]&&data[exId].sessions) data[exId].sessions.splice(idx,1);
+  m3fSave(data); m3fRender(); document.getElementById('m3f-card-'+exId).classList.add('open');
+}
+
+function m3fClearHistory(exId){
+  if(!confirm('Limpar histórico deste exercício?')) return;
+  const data=m3fLoad(); if(data[exId]) data[exId].sessions=[];
+  m3fSave(data); m3fRender(); document.getElementById('m3f-card-'+exId).classList.add('open');
+}
+
+m3fRender();
+
+/* ══ BACKUP ══ */
+const ALL_KEYS=[
+  'ghacks_workout_v1','ghacks_fund_v2',
+  'ghacks_mus1_v1','ghacks_m10_v1','ghacks_m15_v1',
+  'ghacks_otp_v1','ghacks_otb_v1','ghacks_m3f_v1'
+];
+
+function backupExport(){
+  const backup={};
+  ALL_KEYS.forEach(k=>{ try{const v=localStorage.getItem(k); if(v) backup[k]=JSON.parse(v);}catch(e){} });
+  backup._exportedAt=new Date().toISOString(); backup._version=2;
+  const blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='guitar-hacks-backup-'+new Date().toISOString().slice(0,10)+'.json';
+  a.click(); URL.revokeObjectURL(a.href);
+}
+
+function backupImport(input){
+  const file=input.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=function(e){
+    try{
+      const backup=JSON.parse(e.target.result);
+      let count=0;
+      ALL_KEYS.forEach(k=>{ if(backup[k]!==undefined){ localStorage.setItem(k,JSON.stringify(backup[k])); count++; } });
+      const status=document.getElementById('backup-status');
+      status.textContent=`✓ ${count} chaves restauradas`;
+      status.style.opacity='1'; setTimeout(()=>status.style.opacity='0',3000);
       if(typeof fundRender==='function') fundRender();
       if(typeof musRender==='function') musRender();
       if(typeof m10Render==='function') m10Render();
       if(typeof m15Render==='function') m15Render();
-      if(typeof m20Render==='function') m20Render();
       if(typeof render==='function') render();
-      otpRender(); otbRender();
-    } catch(err) {
-      alert('Arquivo inválido. Certifique-se de usar um backup gerado por este site.');
-    }
-    input.value = '';
+      m3fRender(); otpRender(); otbRender();
+      m4fRenderGrid(M4F5_EX,M4F5_KEY,'m4f5','m4f5-prog-fill','m4f5-pct-label');
+      m4fRenderGrid(M4F10_EX,M4F10_KEY,'m4f10','m4f10-prog-fill','m4f10-pct-label');
+    }catch(err){ alert('Arquivo inválido.'); }
+    input.value='';
   };
   reader.readAsText(file);
 }
+
+
+/* ══ MOD 4 FUNDAMENTOS ══ */
+const M4F5_KEY  = 'ghacks_m4f5_v1';
+const M4F10_KEY = 'ghacks_m4f10_v1';
+
+const M4F5_EX = [
+  {id:1, name:'Exercício 1', desc:'Cordas soltas — padrão simples P.M., 4 compassos', img:'assets/modulo4/fundamentos5/Exercicio1.pdf'},
+  {id:2, name:'Exercício 2', desc:'Cordas soltas — padrão mais denso P.M., 1 página', img:'assets/modulo4/fundamentos5/Exercicio2.pdf'},
+  {id:3, name:'Exercício 3', desc:'Cordas soltas — padrão complexo P.M., 2 páginas', img:'assets/modulo4/fundamentos5/Exercicio3.pdf'},
+];
+
+const M4F10_EX = [
+  {id:1, name:'Exercício 1', desc:'Pentatônica em várias posições, 2 páginas', img:'assets/modulo4/fundamentos10/Exercicio1.pdf'},
+];
+
+const M4F_STATUS = {aprendendo:'Aprendendo',praticando:'Praticando',consolidado:'Consolidado',dominado:'Dominado'};
+
+function m4fLoad(key){ try{return JSON.parse(localStorage.getItem(key))||{};}catch(e){return{};} }
+function m4fSave(key,d){ localStorage.setItem(key,JSON.stringify(d)); }
+
+function m4fFmtDate(iso){
+  const [y,m,d]=iso.split('-');
+  const M=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  return d+' '+M[+m-1];
+}
+
+function m4fMiniChart(sessions){
+  if(!sessions||sessions.length<2) return '';
+  const last=sessions.slice(-10);
+  const allVals=last.flatMap(s=>[s.bpmMin||0,s.bpmMax||0]).filter(Boolean);
+  if(!allVals.length) return '';
+  const maxV=Math.max(...allVals),minV=Math.min(...allVals),range=maxV-minV||1;
+  const bars=last.map(s=>{
+    const hMax=s.bpmMax?Math.max(5,Math.round(((s.bpmMax-minV)/range)*44)+5):0;
+    const hMin=s.bpmMin?Math.max(3,Math.round(((s.bpmMin-minV)/range)*44)+3):0;
+    return `<div class="m4f-chart-bar-wrap">
+      <div class="m4f-chart-val">${s.bpmMax||''}</div>
+      <div style="display:flex;gap:2px;align-items:flex-end;height:44px">
+        ${hMax?`<div class="m4f-chart-bar m4-max" style="height:${hMax}px;flex:1"></div>`:''}
+        ${hMin?`<div class="m4f-chart-bar m4-min" style="height:${hMin}px;flex:1"></div>`:''}
+      </div>
+      <div class="m4f-chart-date">${m4fFmtDate(s.date)}</div>
+    </div>`;
+  }).join('');
+  return `<div class="m4f-chart">
+    <div style="display:flex;gap:12px;margin-bottom:6px">
+      <div style="display:flex;align-items:center;gap:4px;font-family:var(--font-mono);font-size:9px;color:var(--muted)"><div style="width:6px;height:6px;border-radius:1px;background:#f5c842"></div>BPM máx</div>
+      <div style="display:flex;align-items:center;gap:4px;font-family:var(--font-mono);font-size:9px;color:var(--muted)"><div style="width:6px;height:6px;border-radius:1px;background:var(--purple)"></div>BPM mín</div>
+    </div>
+    <div class="m4f-chart-bars">${bars}</div>
+  </div>`;
+}
+
+function m4fHistTable(sessions, exId, storageKey){
+  if(!sessions||!sessions.length) return '<div class="m4f-hist-empty">Nenhuma sessão ainda.</div>';
+  const rows=[...sessions].reverse().map((s,ri)=>{
+    const idx=sessions.length-1-ri;
+    const bpm=(s.bpmMin&&s.bpmMax)?`${s.bpmMin} – ${s.bpmMax}`:(s.bpmMax||s.bpmMin||'—');
+    const pill=s.status?`<span class="m4f-pill st-${s.status}" style="font-size:8px;padding:2px 6px">${M4F_STATUS[s.status]||s.status}</span>`:'';
+    return `<tr>
+      <td class="m4fhist-date">${m4fFmtDate(s.date)}</td>
+      <td><span class="m4fhist-bpm">${bpm}<small> bpm</small></span></td>
+      <td>${pill}</td>
+      <td class="m4fhist-note">${s.note||'—'}</td>
+      <td><button class="m4fhist-del" onclick="m4fDelSession('${storageKey}',${exId},${idx})">✕</button></td>
+    </tr>`;
+  }).join('');
+  return `<table class="m4f-hist-table"><thead><tr><th>Data</th><th>BPM</th><th>Status</th><th>Nota</th><th></th></tr></thead><tbody>${rows}</tbody></table>`;
+}
+
+function m4fBuildCard(ex, data, storageKey, ns){
+  const d=data[ex.id]||{};
+  const sessions=d.sessions||[];
+  const lastSess=sessions.length?sessions[sessions.length-1]:null;
+  const status=lastSess?lastSess.status:(ex.defaultStatus||'aprendendo');
+  const bpmMin=lastSess&&lastSess.bpmMin;
+  const bpmMax=lastSess&&lastSess.bpmMax;
+  let bpmText='—',bpmSub='',bpmEmpty=true;
+  if(bpmMin&&bpmMax){bpmText=bpmMin+' – '+bpmMax;bpmSub='mín → máx';bpmEmpty=false;}
+  else if(bpmMax){bpmText=bpmMax+' BPM';bpmSub='máx';bpmEmpty=false;}
+  else if(bpmMin){bpmText=bpmMin+' BPM';bpmSub='mín';bpmEmpty=false;}
+  const chart=m4fMiniChart(sessions);
+  const hist=m4fHistTable(sessions,ex.id,storageKey);
+  const sessCount=sessions.length;
+  const today=new Date().toISOString().slice(0,10);
+  const card=document.createElement('div');
+  card.className=`m4f-card st-${status}`;
+  card.id=`${ns}-card-${ex.id}`;
+  card.innerHTML=`
+    <div class="m4f-card-top" onclick="m4fToggle('${ns}',${ex.id})">
+      <div class="m4f-ex-num">${String(ex.id).padStart(2,'0')}</div>
+      <div class="m4f-ex-info">
+        <div class="m4f-ex-name">${ex.name}</div>
+        <div class="m4f-ex-desc">${ex.desc}</div>
+      </div>
+      <div class="m4f-card-right">
+        <div>
+          <div class="m4f-bpm-val${bpmEmpty?' empty':''}">${bpmText}</div>
+          ${bpmSub?`<div class="m4f-bpm-sub">${bpmSub}</div>`:''}
+        </div>
+        <span class="m4f-pill st-${status}">${M4F_STATUS[status]||status}</span>
+        <span class="m4f-chevron">▼</span>
+      </div>
+    </div>
+    <div class="m4f-card-body">
+      <div class="m4f-body-inner">
+        <div class="m4f-img-col">
+          <div class="m4f-img-wrap" onclick="openLightbox('${ex.img}')">
+            <embed src="${ex.img}" type="application/pdf" style="width:100%;height:320px;border:none;border-radius:6px;pointer-events:none;">
+          </div>
+          <div class="m4f-img-hint">clique para ampliar</div>
+        </div>
+        <div class="m4f-form-col">
+          <div style="font-family:var(--font-mono);font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px">Registrar sessão</div>
+          <div class="m4f-fields">
+            <div class="m4f-field"><label>Data</label><input type="date" class="m4f-input" id="${ns}date-${ex.id}" value="${today}"></div>
+            <div class="m4f-field"><label>BPM mínimo</label><input type="number" class="m4f-input" id="${ns}bmin-${ex.id}" placeholder="80" min="20" max="400"></div>
+            <div class="m4f-field"><label>BPM máximo</label><input type="number" class="m4f-input" id="${ns}bmax-${ex.id}" placeholder="120" min="20" max="400"></div>
+            <div class="m4f-field"><label>Status</label>
+              <select class="m4f-select" id="${ns}sel-${ex.id}">
+                <option value="aprendendo" ${status==='aprendendo'?'selected':''}>Aprendendo</option>
+                <option value="praticando"  ${status==='praticando'?'selected':''}>Praticando</option>
+                <option value="consolidado" ${status==='consolidado'?'selected':''}>Consolidado</option>
+                <option value="dominado"    ${status==='dominado'?'selected':''}>Dominado</option>
+              </select>
+            </div>
+            <div class="m4f-field wide"><label>Observações</label>
+              <textarea class="m4f-textarea" id="${ns}note-${ex.id}" placeholder="ex: posição difícil, queda de tempo..."></textarea>
+            </div>
+          </div>
+          <div class="m4f-row-btns">
+            <button class="m4f-save-btn" onclick="m4fAddSession('${storageKey}','${ns}',${ex.id})">+ Registrar sessão</button>
+            <span class="m4f-flash" id="${ns}flash-${ex.id}">✓ Salvo</span>
+          </div>
+        </div>
+      </div>
+      <div class="m4f-history">
+        <div class="m4f-history-title">
+          <span>Histórico — ${sessCount} sessão${sessCount!==1?'ões':''}</span>
+          ${sessCount?`<button class="m4f-history-clear" onclick="m4fClearHistory('${storageKey}','${ns}',${ex.id})">Limpar tudo</button>`:''}
+        </div>
+        ${chart}${hist}
+      </div>
+    </div>`;
+  return card;
+}
+
+function m4fRenderGrid(exercises, storageKey, ns, progFillId, progLabelId){
+  const data=m4fLoad(storageKey);
+  const grid=document.getElementById(ns+'-grid');
+  if(!grid) return;
+  grid.innerHTML='';
+  exercises.forEach(ex=>grid.appendChild(m4fBuildCard(ex,data,storageKey,ns)));
+  const total=exercises.length;
+  const done=exercises.filter(ex=>{
+    const d=data[ex.id]; const sessions=d?d.sessions||[]:[];
+    const last=sessions.length?sessions[sessions.length-1]:null;
+    return last&&(last.status==='consolidado'||last.status==='dominado');
+  }).length;
+  const pct=Math.round((done/total)*100);
+  const fill=document.getElementById(progFillId),label=document.getElementById(progLabelId);
+  if(fill) fill.style.width=pct+'%';
+  if(label) label.textContent=done+' / '+total+' consolidados';
+}
+
+function m4fToggle(ns,id){ document.getElementById(`${ns}-card-${id}`).classList.toggle('open'); }
+
+function m4fAddSession(storageKey, ns, id){
+  const date   = document.getElementById(`${ns}date-${id}`).value;
+  const bpmMin = parseInt(document.getElementById(`${ns}bmin-${id}`).value)||null;
+  const bpmMax = parseInt(document.getElementById(`${ns}bmax-${id}`).value)||null;
+  const status = document.getElementById(`${ns}sel-${id}`).value;
+  const note   = document.getElementById(`${ns}note-${id}`).value.trim();
+  if(!date) return;
+  const data=m4fLoad(storageKey);
+  if(!data[id]) data[id]={sessions:[]};
+  data[id].sessions.push({date,bpmMin,bpmMax,status,note,savedAt:new Date().toISOString()});
+  m4fSave(storageKey,data);
+  const f=document.getElementById(`${ns}flash-${id}`); f.style.opacity='1'; setTimeout(()=>f.style.opacity='0',1800);
+  // determine which render to call
+  if(storageKey===M4F5_KEY)  m4fRenderGrid(M4F5_EX,  M4F5_KEY,  'm4f5',  'm4f5-prog-fill',  'm4f5-pct-label');
+  if(storageKey===M4F10_KEY) m4fRenderGrid(M4F10_EX, M4F10_KEY, 'm4f10', 'm4f10-prog-fill', 'm4f10-pct-label');
+  document.getElementById(`${ns}-card-${id}`).classList.add('open');
+  document.getElementById(`${ns}bmin-${id}`).value='';
+  document.getElementById(`${ns}bmax-${id}`).value='';
+  document.getElementById(`${ns}note-${id}`).value='';
+}
+
+function m4fDelSession(storageKey, exId, idx){
+  const data=m4fLoad(storageKey);
+  if(data[exId]&&data[exId].sessions) data[exId].sessions.splice(idx,1);
+  m4fSave(storageKey,data);
+  const ns=storageKey===M4F5_KEY?'m4f5':'m4f10';
+  const exercises=storageKey===M4F5_KEY?M4F5_EX:M4F10_EX;
+  const progFill=storageKey===M4F5_KEY?'m4f5-prog-fill':'m4f10-prog-fill';
+  const progLabel=storageKey===M4F5_KEY?'m4f5-pct-label':'m4f10-pct-label';
+  m4fRenderGrid(exercises,storageKey,ns,progFill,progLabel);
+  document.getElementById(`${ns}-card-${exId}`).classList.add('open');
+}
+
+function m4fClearHistory(storageKey, ns, exId){
+  if(!confirm('Limpar histórico deste exercício?')) return;
+  const data=m4fLoad(storageKey); if(data[exId]) data[exId].sessions=[];
+  m4fSave(storageKey,data);
+  const exercises=storageKey===M4F5_KEY?M4F5_EX:M4F10_EX;
+  const progFill=storageKey===M4F5_KEY?'m4f5-prog-fill':'m4f10-prog-fill';
+  const progLabel=storageKey===M4F5_KEY?'m4f5-pct-label':'m4f10-pct-label';
+  m4fRenderGrid(exercises,storageKey,ns,progFill,progLabel);
+  document.getElementById(`${ns}-card-${exId}`).classList.add('open');
+}
+
+// Initial renders
+m4fRenderGrid(M4F5_EX,  M4F5_KEY,  'm4f5',  'm4f5-prog-fill',  'm4f5-pct-label');
+m4fRenderGrid(M4F10_EX, M4F10_KEY, 'm4f10', 'm4f10-prog-fill', 'm4f10-pct-label');
 
 </script>
 
