@@ -964,9 +964,9 @@
 <nav class="site-nav">
   <div class="nav-logo">GH</div>
   <button class="nav-btn active" onclick="showPage('calendar',this)">Calendário</button>
-  <button class="nav-btn n-mod2" onclick="showPage('mod2',this)">Módulo 2</button>
-  <button class="nav-btn n-mod3" onclick="showPage('mod3',this)">Módulo 3</button>
-  <button class="nav-btn n-mod4" onclick="showPage('mod4',this)">Módulo 4</button>
+  <button class="nav-btn n-mod2" onclick="showPage('mod2',this)">1 Nota</button>
+  <button class="nav-btn n-mod3" onclick="showPage('mod3',this)">2 Notas</button>
+  <button class="nav-btn n-mod4" onclick="showPage('mod4',this)">3 Notas</button>
   <button class="nav-btn n-workout" onclick="showPage('workout',this)">Workout</button>
   <button class="nav-btn n-backup" onclick="showPage('backup',this)">Backup</button>
 </nav>
@@ -1036,161 +1036,161 @@
     <div class="day-cell empty"></div>
 
     <!-- 24 Mai (Dom) — HOJE, início -->
-    <div class="day-cell is-today">
-      <span class="day-num">24 Mai <span class="today-badge">HOJE</span></span>
+    <div class="day-cell" data-date="2026-05-24" data-label="24 Mai" data-tag="Início do programa" data-type="start">
+      <span class="day-num">24 Mai</span>
       <span class="day-tag">Início do programa</span>
     </div>
 
     <!-- Semana 2: 25–31 Mai -->
-    <div class="day-cell has-content" data-date="2026-05-25">
+    <div class="day-cell has-content" data-date="2026-05-25" data-label="25">
       <span class="day-num">25</span>
       <span class="day-tag">1 nota por corda</span>
       <span class="pill pill-notes">1N</span>
     </div>
-    <div class="day-cell has-content" data-date="2026-05-26">
+    <div class="day-cell has-content" data-date="2026-05-26" data-label="26">
       <span class="day-num">26</span>
       <span class="day-tag">2 notas por corda</span>
       <span class="pill pill-notes">2N</span>
     </div>
-    <div class="day-cell has-content" data-date="2026-05-27">
+    <div class="day-cell has-content" data-date="2026-05-27" data-label="27">
       <span class="day-num">27</span>
       <span class="day-tag">3 notas por corda</span>
       <span class="pill pill-notes">3N</span>
     </div>
-    <div class="day-cell has-content" data-date="2026-05-28">
+    <div class="day-cell has-content" data-date="2026-05-28" data-label="28">
       <span class="day-num">28</span>
       <span class="day-tag">4 notas por corda</span>
       <span class="pill pill-notes">4N</span>
     </div>
-    <div class="day-cell is-special" data-date="2026-05-29">
+    <div class="day-cell is-special" data-date="2026-05-29" data-label="29">
       <span class="day-num">29</span>
       <span class="day-tag">Aranha 10min + Extra 1 ("L") + Extra 2 (+1)</span>
       <span class="pill pill-spider">Aranha</span>
     </div>
-    <div class="day-cell has-content" data-date="2026-05-30">
+    <div class="day-cell has-content" data-date="2026-05-30" data-label="30">
       <span class="day-num">30</span>
       <span class="day-tag">1 nota por corda</span>
       <span class="pill pill-notes">1N</span>
     </div>
-    <div class="day-cell has-content" data-date="2026-05-31">
+    <div class="day-cell has-content" data-date="2026-05-31" data-label="31 Mai">
       <span class="day-num">31 Mai</span>
       <span class="day-tag">2 notas por corda</span>
       <span class="pill pill-notes">2N</span>
     </div>
 
     <!-- Semana 3: 01–07 Jun -->
-    <div class="day-cell has-content" data-date="2026-06-01">
+    <div class="day-cell has-content" data-date="2026-06-01" data-label="01 Jun">
       <span class="day-num">01 Jun</span>
       <span class="day-tag">3 notas por corda</span>
       <span class="pill pill-notes">3N</span>
     </div>
-    <div class="day-cell has-content" data-date="2026-06-02">
+    <div class="day-cell has-content" data-date="2026-06-02" data-label="02">
       <span class="day-num">02</span>
       <span class="day-tag">4 notas por corda</span>
       <span class="pill pill-notes">4N</span>
     </div>
-    <div class="day-cell is-special" data-date="2026-06-03">
+    <div class="day-cell is-special" data-date="2026-06-03" data-label="03">
       <span class="day-num">03</span>
       <span class="day-tag">Aranha 10min + Extras 3, 4 e 5</span>
       <span class="pill pill-spider">Aranha</span>
     </div>
-    <div class="day-cell is-free" data-date="2026-06-04">
+    <div class="day-cell is-free" data-date="2026-06-04" data-label="04">
       <span class="day-num">04</span>
       <span class="day-tag">Treino livre</span>
       <span class="pill pill-free">Livre</span>
     </div>
-    <div class="day-cell has-content" data-date="2026-06-05">
+    <div class="day-cell has-content" data-date="2026-06-05" data-label="05">
       <span class="day-num">05</span>
       <span class="day-tag">1 nota por corda</span>
       <span class="pill pill-notes">1N</span>
     </div>
-    <div class="day-cell has-content" data-date="2026-06-06">
+    <div class="day-cell has-content" data-date="2026-06-06" data-label="06">
       <span class="day-num">06</span>
       <span class="day-tag">2 notas por corda</span>
       <span class="pill pill-notes">2N</span>
     </div>
-    <div class="day-cell has-content" data-date="2026-06-07">
+    <div class="day-cell has-content" data-date="2026-06-07" data-label="07">
       <span class="day-num">07</span>
       <span class="day-tag">3 notas por corda</span>
       <span class="pill pill-notes">3N</span>
     </div>
 
     <!-- Semana 4: 08–14 Jun -->
-    <div class="day-cell has-content" data-date="2026-06-08">
+    <div class="day-cell has-content" data-date="2026-06-08" data-label="08">
       <span class="day-num">08</span>
       <span class="day-tag">4 notas por corda</span>
       <span class="pill pill-notes">4N</span>
     </div>
-    <div class="day-cell is-plateau" data-date="2026-06-09">
+    <div class="day-cell is-plateau" data-date="2026-06-09" data-label="09">
       <span class="day-num">09</span>
       <span class="day-tag">Out of Plateau / Out of the Box</span>
       <span class="pill pill-plateau">Plateau</span>
     </div>
-    <div class="day-cell has-content" data-date="2026-06-10">
+    <div class="day-cell has-content" data-date="2026-06-10" data-label="10">
       <span class="day-num">10</span>
       <span class="day-tag">1 nota por corda</span>
       <span class="pill pill-notes">1N</span>
     </div>
-    <div class="day-cell has-content" data-date="2026-06-11">
+    <div class="day-cell has-content" data-date="2026-06-11" data-label="11">
       <span class="day-num">11</span>
       <span class="day-tag">2 notas por corda</span>
       <span class="pill pill-notes">2N</span>
     </div>
-    <div class="day-cell has-content" data-date="2026-06-12">
+    <div class="day-cell has-content" data-date="2026-06-12" data-label="12">
       <span class="day-num">12</span>
       <span class="day-tag">3 notas por corda</span>
       <span class="pill pill-notes">3N</span>
     </div>
-    <div class="day-cell has-content" data-date="2026-06-13">
+    <div class="day-cell has-content" data-date="2026-06-13" data-label="13">
       <span class="day-num">13</span>
       <span class="day-tag">4 notas por corda</span>
       <span class="pill pill-notes">4N</span>
     </div>
-    <div class="day-cell is-extra" data-date="2026-06-14">
+    <div class="day-cell is-extra" data-date="2026-06-14" data-label="14">
       <span class="day-num">14</span>
       <span class="day-tag">Extra 1 ("L") + Extra 2 (+1)</span>
       <span class="pill pill-extra">Extras</span>
     </div>
 
     <!-- Semana 5: 15–21 Jun -->
-    <div class="day-cell has-content" data-date="2026-06-15">
+    <div class="day-cell has-content" data-date="2026-06-15" data-label="15">
       <span class="day-num">15</span>
       <span class="day-tag">1 nota por corda</span>
       <span class="pill pill-notes">1N</span>
     </div>
-    <div class="day-cell has-content" data-date="2026-06-16">
+    <div class="day-cell has-content" data-date="2026-06-16" data-label="16">
       <span class="day-num">16</span>
       <span class="day-tag">2 notas por corda</span>
       <span class="pill pill-notes">2N</span>
     </div>
-    <div class="day-cell has-content" data-date="2026-06-17">
+    <div class="day-cell has-content" data-date="2026-06-17" data-label="17">
       <span class="day-num">17</span>
       <span class="day-tag">3 notas por corda</span>
       <span class="pill pill-notes">3N</span>
     </div>
-    <div class="day-cell has-content" data-date="2026-06-18">
+    <div class="day-cell has-content" data-date="2026-06-18" data-label="18">
       <span class="day-num">18</span>
       <span class="day-tag">4 notas por corda</span>
       <span class="pill pill-notes">4N</span>
     </div>
-    <div class="day-cell is-extra" data-date="2026-06-19">
+    <div class="day-cell is-extra" data-date="2026-06-19" data-label="19">
       <span class="day-num">19</span>
       <span class="day-tag">Extras 3, 4 e 5</span>
       <span class="pill pill-extra">Extras</span>
     </div>
-    <div class="day-cell is-free" data-date="2026-06-20">
+    <div class="day-cell is-free" data-date="2026-06-20" data-label="20">
       <span class="day-num">20</span>
       <span class="day-tag">Treino livre</span>
       <span class="pill pill-free">Livre</span>
     </div>
-    <div class="day-cell is-plateau" data-date="2026-06-21">
+    <div class="day-cell is-plateau" data-date="2026-06-21" data-label="21">
       <span class="day-num">21</span>
       <span class="day-tag">Out of the Plateau</span>
       <span class="pill pill-plateau">Plateau</span>
     </div>
 
     <!-- Semana 6: 22 Jun + vazios -->
-    <div class="day-cell is-plateau" data-date="2026-06-22">
+    <div class="day-cell is-plateau" data-date="2026-06-22" data-label="22 Jun">
       <span class="day-num">22 Jun</span>
       <span class="day-tag">Out of the Plateau (extras)</span>
       <span class="pill pill-plateau">Plateau</span>
@@ -1294,7 +1294,7 @@
   <div class="fund-top-bar">
     <div>
       <div class="fund-sec-title">1º Fundamentos</div>
-      <div class="fund-sec-sub">Módulo 2 · 9 exercícios · histórico de BPM por sessão</div>
+      <div class="fund-sec-sub">1 Nota por corda · Fundamentos · 9 exercícios</div>
     </div>
   </div>
   <div class="fund-legend">
@@ -1327,7 +1327,7 @@
   <div class="mus-top-bar">
     <div>
       <div class="mus-sec-title">2º Musical 5min</div>
-      <div class="mus-sec-sub">Módulo 2 · 5 minutos · 3 exercícios</div>
+      <div class="mus-sec-sub">1 Nota por corda · Musical 1 · 5 minutos · 3 exercícios</div>
     </div>
   </div>
   <div class="mus-prog-wrap">
@@ -1348,7 +1348,7 @@
   <div class="mus2-top-bar">
     <div>
       <div class="mus2-sec-title c10">3º Musical 10min</div>
-      <div class="mus2-sec-sub">Módulo 2 · Mesmos exercícios do 5min — foco em velocidade</div>
+      <div class="mus2-sec-sub">1 Nota por corda · Musical 2 · mesmos exercícios — foco em velocidade</div>
     </div>
   </div>
   <div class="mus2-notice">⟳ <span>Mesmos exercícios do Musical 5min</span> — BPM rastreado separadamente para acompanhar a progressão de velocidade</div>
@@ -1366,7 +1366,7 @@
   <div class="mus2-top-bar">
     <div>
       <div class="mus2-sec-title c15">4º Musical 15min</div>
-      <div class="mus2-sec-sub">Módulo 2 · 6 exercícios novos</div>
+      <div class="mus2-sec-sub">1 Nota por corda · Musical 3 · 6 exercícios</div>
     </div>
   </div>
   <div class="mus2-prog-wrap">
@@ -1381,7 +1381,7 @@
   <div class="mus2-top-bar">
     <div>
       <div class="mus2-sec-title c20">5º Musical 20min</div>
-      <div class="mus2-sec-sub">Módulo 2 · Mesmos exercícios do 4º — foco em velocidade</div>
+      <div class="mus2-sec-sub">1 Nota por corda · Musical 4 · mesmos exercícios — foco em velocidade</div>
     </div>
   </div>
   <div class="mus2-notice" style="border-color:rgba(110,231,183,0.2);color:#6ee7b7;">⟳ <span>Mesmos exercícios do Musical 15min</span> — BPM rastreado separadamente para acompanhar a progressão de velocidade</div>
@@ -1397,7 +1397,7 @@
 <div class="mod-page" id="mod2-otp">
 <section class="otp-section">
   <div class="otp-title">Out of the Plateau</div>
-  <div class="otp-sub">Módulo 2 · 6º e 7º — forçar velocidade em um exercício · 5, 10 ou 15 minutos</div>
+  <div class="otp-sub">1 Nota por corda · 6º e 7º — forçar velocidade em um exercício · 5, 10 ou 15 minutos</div>
   <div class="otp-timer-card">
     <div>
       <div class="otp-timer-label">Duração da sessão</div>
@@ -1449,7 +1449,7 @@
 <div class="mod-page" id="mod2-otb">
 <section class="otb-section">
   <div class="otb-title">Out of the Box</div>
-  <div class="otb-sub">Módulo 2 · 8º — 5 minutos · improvisar e variar tudo que já viu</div>
+  <div class="otb-sub">1 Nota por corda · 8º — 5 minutos · improvisar e variar tudo que já viu</div>
   <div class="otb-layout">
     <div class="otb-timer-card">
       <div class="otb-timer-label">5 minutos — improvisar livre</div>
@@ -1512,7 +1512,7 @@
 <div class="mod-page active" id="mod3-fundamentos">
 <section class="m3-fund-section">
   <div class="m3-sec-title">Fundamentos</div>
-  <div class="m3-sec-sub">Módulo 3 · 7 exercícios</div>
+  <div class="m3-sec-sub">2 Notas por corda · Fundamentos · 7 exercícios</div>
   <div class="m3-prog-wrap">
     <div class="m3-prog-labels"><span>Progresso</span><span id="m3f-pct-label">0 / 7 consolidados</span></div>
     <div class="m3-prog-track"><div class="m3-prog-fill" id="m3f-prog-fill"></div></div>
@@ -1522,37 +1522,47 @@
 </div><!-- /mod3-fundamentos -->
 
 <div class="mod-page" id="mod3-mus5">
-<div class="m3-coming-soon">
-  <strong>Em breve</strong>
-  <p>Musical 1–5min do Módulo 3 — adicione os exercícios quando tiver o material</p>
-</div>
+<section class="m3-fund-section">
+  <div class="m3-sec-title" style="color:#7ecff5">Musical 1–5min</div>
+  <div class="m3-sec-sub">2 Notas por corda · 2 exercícios</div>
+  <div class="m3-prog-wrap">
+    <div class="m3-prog-labels"><span>Progresso</span><span id="m3m5-pct-label">0 / 2 consolidados</span></div>
+    <div class="m3-prog-track"><div class="m3-prog-fill" style="background:#7ecff5" id="m3m5-prog-fill"></div></div>
+  </div>
+  <div class="m3-grid" id="m3m5-grid"></div>
+</section>
 </div>
 
 <div class="mod-page" id="mod3-mus615">
-<div class="m3-coming-soon">
-  <strong>Em breve</strong>
-  <p>Musical 6–15min do Módulo 3 — adicione os exercícios quando tiver o material</p>
-</div>
+<section class="m3-fund-section">
+  <div class="m3-sec-title" style="color:#ff9f7a">Musical 6–15min</div>
+  <div class="m3-sec-sub">2 Notas por corda · 4 exercícios</div>
+  <div class="m3-prog-wrap">
+    <div class="m3-prog-labels"><span>Progresso</span><span id="m3m615-pct-label">0 / 4 consolidados</span></div>
+    <div class="m3-prog-track"><div class="m3-prog-fill" style="background:#ff9f7a" id="m3m615-prog-fill"></div></div>
+  </div>
+  <div class="m3-grid" id="m3m615-grid"></div>
+</section>
 </div>
 
 <div class="mod-page" id="mod3-mus2020">
 <div class="m3-coming-soon">
   <strong>Em breve</strong>
-  <p>Musical 16–20min do Módulo 3 — adicione os exercícios quando tiver o material</p>
+  <p>Musical 16–20min · 2 Notas por corda — adicione os exercícios quando tiver o material</p>
 </div>
 </div>
 
 <div class="mod-page" id="mod3-otp">
 <div class="m3-coming-soon">
   <strong>Em breve</strong>
-  <p>Out of the Plateau do Módulo 3</p>
+  <p>Out of the Plateau · 2 Notas por corda</p>
 </div>
 </div>
 
 <div class="mod-page" id="mod3-otb">
 <div class="m3-coming-soon">
   <strong>Em breve</strong>
-  <p>Out of the Box do Módulo 3</p>
+  <p>Out of the Box · 2 Notas por corda</p>
 </div>
 </div>
 
@@ -1604,19 +1614,19 @@
 </div><!-- /mod4-fundamentos -->
 
 <div class="mod-page" id="mod4-mus5">
-  <div class="m4-coming-soon"><strong>Em breve</strong><p>Musical 1–5min do Módulo 4</p></div>
+  <div class="m4-coming-soon"><strong>Em breve</strong><p>Musical 1–5min · 3 Notas por corda</p></div>
 </div>
 <div class="mod-page" id="mod4-mus615">
-  <div class="m4-coming-soon"><strong>Em breve</strong><p>Musical 6–15min do Módulo 4</p></div>
+  <div class="m4-coming-soon"><strong>Em breve</strong><p>Musical 6–15min · 3 Notas por corda</p></div>
 </div>
 <div class="mod-page" id="mod4-mus2020">
-  <div class="m4-coming-soon"><strong>Em breve</strong><p>Musical 16–20min do Módulo 4</p></div>
+  <div class="m4-coming-soon"><strong>Em breve</strong><p>Musical 16–20min · 3 Notas por corda</p></div>
 </div>
 <div class="mod-page" id="mod4-otp">
-  <div class="m4-coming-soon"><strong>Em breve</strong><p>Out of the Plateau do Módulo 4</p></div>
+  <div class="m4-coming-soon"><strong>Em breve</strong><p>Out of the Plateau · 3 Notas por corda</p></div>
 </div>
 <div class="mod-page" id="mod4-otb">
-  <div class="m4-coming-soon"><strong>Em breve</strong><p>Out of the Box do Módulo 4</p></div>
+  <div class="m4-coming-soon"><strong>Em breve</strong><p>Out of the Box · 3 Notas por corda</p></div>
 </div>
 
 </div><!-- /page-mod4 -->
@@ -1722,9 +1732,27 @@ document.getElementById('days-elapsed').textContent = elapsed;
 const pct = Math.round((elapsed / totalDays) * 100);
 document.getElementById('prog-fill').style.width = pct + '%';
 document.getElementById('prog-pct').textContent = pct + '%';
+
+// Dynamic today marker and past-day fading
 document.querySelectorAll('.day-cell[data-date]').forEach(cell => {
-  const cellDate = new Date(cell.dataset.date);
-  if (cellDate < today) cell.style.opacity = '0.45';
+  const cellDate = new Date(cell.dataset.date + 'T00:00:00');
+  const isToday = cellDate.getTime() === today.getTime();
+  const isPast  = cellDate < today;
+
+  if (isToday) {
+    cell.classList.add('is-today');
+    cell.classList.remove('has-content','is-special','is-free','is-extra','is-plateau');
+    // Add HOJE badge to day-num
+    const numEl = cell.querySelector('.day-num');
+    if (numEl) {
+      const label = cell.dataset.label || numEl.textContent.trim();
+      numEl.innerHTML = label + ' <span class="today-badge">HOJE</span>';
+    }
+    const tagEl = cell.querySelector('.day-tag');
+    if (tagEl && cell.dataset.type === 'start') tagEl.textContent = 'Início do programa';
+  } else if (isPast) {
+    cell.style.opacity = '0.45';
+  }
 });
 
 /* ── VARIAÇÕES (do PDF Dicas de Variações) ── */
@@ -3273,6 +3301,8 @@ function backupImport(input){
       m3fRender(); otpRender(); otbRender();
       m4fRenderGrid(M4F5_EX,M4F5_KEY,'m4f5','m4f5-prog-fill','m4f5-pct-label');
       m4fRenderGrid(M4F10_EX,M4F10_KEY,'m4f10','m4f10-prog-fill','m4f10-pct-label');
+      m3mRenderGrid(M3M5_EX,M3M5_KEY,'m3m5-grid','m3m5-prog-fill','m3m5-pct-label','#7ecff5');
+      m3mRenderGrid(M3M615_EX,M3M615_KEY,'m3m615-grid','m3m615-prog-fill','m3m615-pct-label','#ff9f7a');
     }catch(err){ alert('Arquivo inválido.'); }
     input.value='';
   };
@@ -3493,6 +3523,215 @@ function m4fClearHistory(storageKey, ns, exId){
 // Initial renders
 m4fRenderGrid(M4F5_EX,  M4F5_KEY,  'm4f5',  'm4f5-prog-fill',  'm4f5-pct-label');
 m4fRenderGrid(M4F10_EX, M4F10_KEY, 'm4f10', 'm4f10-prog-fill', 'm4f10-pct-label');
+
+
+/* ══ MOD3 MUSICAL 1-5MIN + 6-15MIN ══ */
+const M3M5_KEY   = 'ghacks_m3m5_v1';
+const M3M615_KEY = 'ghacks_m3m615_v1';
+
+const M3M5_EX = [
+  {id:1, name:'Exercício 1 — Arpejos Lá', desc:'Arpejo Lá Maior 7ª Maior · Maior 7ª menor · menor 7ª Maior · menor 7ª menor', img:'assets/modulo3/musical1/Exercicio1.pdf'},
+  {id:2, name:'Exercício 2 — Desenhos Pentatônicos', desc:'Desenhos 1 a 5 + Desenho 5 Oitava abaixo, 2 páginas', img:'assets/modulo3/musical1/Exercicio2.pdf'},
+];
+
+const M3M615_EX = [
+  {id:1, name:'Exercício 1 — Arpejos variados', desc:'Lá, Sol, Sí, Ré, Dó — múltiplas qualidades · 4 páginas', img:'assets/modulo3/musical2/Exercicio1.pdf'},
+  {id:2, name:'Exercício 2', desc:'Padrão corda solta intercalada — 2 páginas', img:'assets/modulo3/musical2/Exercicio2.pdf'},
+  {id:3, name:'Exercício 3', desc:'Padrão melódico em posições — 2 páginas', img:'assets/modulo3/musical2/Exercicio3.pdf'},
+  {id:4, name:'Exercício 4 — Arpejos Ré', desc:'Ré Maior 7ª Maior · menor 7ª Maior · menor meio dim · aumentado · 2 páginas', img:'assets/modulo3/musical2/Exercicio4.pdf'},
+];
+
+function m3mLoad(key){ try{return JSON.parse(localStorage.getItem(key))||{};}catch(e){return{};} }
+function m3mSave(key,d){ localStorage.setItem(key,JSON.stringify(d)); }
+
+function m3mFmtDate(iso){
+  const [y,m,d]=iso.split('-');
+  const M=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  return d+' '+M[+m-1];
+}
+
+function m3mMiniChart(sessions, color){
+  if(!sessions||sessions.length<2) return '';
+  const last=sessions.slice(-10);
+  const allVals=last.flatMap(s=>[s.bpmMin||0,s.bpmMax||0]).filter(Boolean);
+  if(!allVals.length) return '';
+  const maxV=Math.max(...allVals),minV=Math.min(...allVals),range=maxV-minV||1;
+  const bars=last.map(s=>{
+    const hMax=s.bpmMax?Math.max(5,Math.round(((s.bpmMax-minV)/range)*44)+5):0;
+    const hMin=s.bpmMin?Math.max(3,Math.round(((s.bpmMin-minV)/range)*44)+3):0;
+    return `<div class="m3-chart-bar-wrap">
+      <div class="m3-chart-val">${s.bpmMax||''}</div>
+      <div style="display:flex;gap:2px;align-items:flex-end;height:44px">
+        ${hMax?`<div class="m3-chart-bar" style="height:${hMax}px;flex:1;background:${color};opacity:0.8;border-radius:3px 3px 0 0"></div>`:''}
+        ${hMin?`<div class="m3-chart-bar m3-min" style="height:${hMin}px;flex:1"></div>`:''}
+      </div>
+      <div class="m3-chart-date">${m3mFmtDate(s.date)}</div>
+    </div>`;
+  }).join('');
+  return `<div class="m3-chart">
+    <div style="display:flex;gap:12px;margin-bottom:6px">
+      <div style="display:flex;align-items:center;gap:4px;font-family:var(--font-mono);font-size:9px;color:var(--muted)"><div style="width:6px;height:6px;border-radius:1px;background:${color}"></div>BPM máx</div>
+      <div style="display:flex;align-items:center;gap:4px;font-family:var(--font-mono);font-size:9px;color:var(--muted)"><div style="width:6px;height:6px;border-radius:1px;background:var(--purple)"></div>BPM mín</div>
+    </div>
+    <div class="m3-chart-bars">${bars}</div>
+  </div>`;
+}
+
+function m3mHistTable(sessions, exId, storageKey){
+  const STATUS={'aprendendo':'Aprendendo','praticando':'Praticando','consolidado':'Consolidado','dominado':'Dominado'};
+  if(!sessions||!sessions.length) return '<div class="m3-hist-empty">Nenhuma sessão ainda.</div>';
+  const rows=[...sessions].reverse().map((s,ri)=>{
+    const idx=sessions.length-1-ri;
+    const bpm=(s.bpmMin&&s.bpmMax)?`${s.bpmMin} – ${s.bpmMax}`:(s.bpmMax||s.bpmMin||'—');
+    const pill=s.status?`<span class="m3-pill st-${s.status}" style="font-size:8px;padding:2px 6px">${STATUS[s.status]||s.status}</span>`:'';
+    return `<tr>
+      <td class="m3hist-date">${m3mFmtDate(s.date)}</td>
+      <td><span class="m3hist-bpm">${bpm}<small> bpm</small></span></td>
+      <td>${pill}</td>
+      <td class="m3hist-note">${s.note||'—'}</td>
+      <td><button class="m3hist-del" onclick="m3mDelSession('${storageKey}',${exId},${idx})">✕</button></td>
+    </tr>`;
+  }).join('');
+  return `<table class="m3-hist-table"><thead><tr><th>Data</th><th>BPM</th><th>Status</th><th>Nota</th><th></th></tr></thead><tbody>${rows}</tbody></table>`;
+}
+
+function m3mRenderGrid(exercises, storageKey, gridId, progFillId, progLabelId, color){
+  const STATUS={'aprendendo':'Aprendendo','praticando':'Praticando','consolidado':'Consolidado','dominado':'Dominado'};
+  const data=m3mLoad(storageKey);
+  const grid=document.getElementById(gridId);
+  if(!grid) return;
+  grid.innerHTML='';
+  const today=new Date().toISOString().slice(0,10);
+
+  exercises.forEach(ex=>{
+    const d=data[ex.id]||{};
+    const sessions=d.sessions||[];
+    const lastSess=sessions.length?sessions[sessions.length-1]:null;
+    const status=lastSess?lastSess.status:'aprendendo';
+    const bpmMin=lastSess&&lastSess.bpmMin;
+    const bpmMax=lastSess&&lastSess.bpmMax;
+    let bpmText='—',bpmSub='',bpmEmpty=true;
+    if(bpmMin&&bpmMax){bpmText=bpmMin+' – '+bpmMax;bpmSub='mín → máx';bpmEmpty=false;}
+    else if(bpmMax){bpmText=bpmMax+' BPM';bpmSub='máx';bpmEmpty=false;}
+    else if(bpmMin){bpmText=bpmMin+' BPM';bpmSub='mín';bpmEmpty=false;}
+    const chart=m3mMiniChart(sessions,color);
+    const hist=m3mHistTable(sessions,ex.id,storageKey);
+    const sessCount=sessions.length;
+    const card=document.createElement('div');
+    card.className=`m3-card st-${status}`;
+    card.id=`${gridId}-card-${ex.id}`;
+    card.innerHTML=`
+      <div class="m3-card-top" onclick="document.getElementById('${gridId}-card-${ex.id}').classList.toggle('open')">
+        <div class="m3-ex-num" style="color:${status==='aprendendo'?'var(--red)':status==='dominado'?'var(--muted)':color}">${String(ex.id).padStart(2,'0')}</div>
+        <div class="m3-ex-info">
+          <div class="m3-ex-name">${ex.name}</div>
+          <div class="m3-ex-desc">${ex.desc}</div>
+        </div>
+        <div class="m3-card-right">
+          <div>
+            <div class="m3-bpm-val${bpmEmpty?' empty':''}" style="${bpmEmpty?'':'color:'+color}">${bpmText}</div>
+            ${bpmSub?`<div class="m3-bpm-sub">${bpmSub}</div>`:''}
+          </div>
+          <span class="m3-pill st-${status}">${STATUS[status]||status}</span>
+          <span class="m3-chevron">▼</span>
+        </div>
+      </div>
+      <div class="m3-card-body">
+        <div class="m3-body-inner">
+          <div class="m3-img-col">
+            <div class="m3-img-wrap" onclick="openLightbox('${ex.img}')">
+              <embed src="${ex.img}" type="application/pdf" style="width:100%;height:320px;border:none;border-radius:6px;pointer-events:none;">
+            </div>
+            <div class="m3-img-hint">clique para ampliar</div>
+          </div>
+          <div class="m3-form-col">
+            <div style="font-family:var(--font-mono);font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px">Registrar sessão</div>
+            <div class="m3-fields">
+              <div class="m3-field"><label>Data</label><input type="date" class="m3-input" id="${gridId}date-${ex.id}" value="${today}"></div>
+              <div class="m3-field"><label>BPM mínimo</label><input type="number" class="m3-input" id="${gridId}bmin-${ex.id}" placeholder="80" min="20" max="400"></div>
+              <div class="m3-field"><label>BPM máximo</label><input type="number" class="m3-input" id="${gridId}bmax-${ex.id}" placeholder="120" min="20" max="400"></div>
+              <div class="m3-field"><label>Status</label>
+                <select class="m3-select" id="${gridId}sel-${ex.id}">
+                  <option value="aprendendo" ${status==='aprendendo'?'selected':''}>Aprendendo</option>
+                  <option value="praticando"  ${status==='praticando'?'selected':''}>Praticando</option>
+                  <option value="consolidado" ${status==='consolidado'?'selected':''}>Consolidado</option>
+                  <option value="dominado"    ${status==='dominado'?'selected':''}>Dominado</option>
+                </select>
+              </div>
+              <div class="m3-field wide"><label>Observações</label>
+                <textarea class="m3-textarea" id="${gridId}note-${ex.id}" placeholder="ex: arpejo menor com 7ª travando..."></textarea>
+              </div>
+            </div>
+            <div class="m3-row-btns">
+              <button class="m3-save-btn" style="background:${color}" onclick="m3mAddSession('${storageKey}','${gridId}',${ex.id},'${progFillId}','${progLabelId}',${JSON.stringify(exercises)},'${color}')">+ Registrar sessão</button>
+              <span class="m3-flash" id="${gridId}flash-${ex.id}">✓ Salvo</span>
+            </div>
+          </div>
+        </div>
+        <div class="m3-history">
+          <div class="m3-history-title">
+            <span>Histórico — ${sessCount} sessão${sessCount!==1?'ões':''}</span>
+            ${sessCount?`<button class="m3-history-clear" onclick="m3mClearHistory('${storageKey}','${gridId}',${ex.id},'${progFillId}','${progLabelId}',${JSON.stringify(exercises)},'${color}')">Limpar tudo</button>`:''}
+          </div>
+          ${chart}${hist}
+        </div>
+      </div>`;
+    grid.appendChild(card);
+  });
+
+  // Progress
+  const total=exercises.length;
+  const done=exercises.filter(ex=>{
+    const d=data[ex.id]; const s=d&&d.sessions&&d.sessions.length?d.sessions[d.sessions.length-1].status:'';
+    return s==='consolidado'||s==='dominado';
+  }).length;
+  const pct=Math.round((done/total)*100);
+  const fill=document.getElementById(progFillId),label=document.getElementById(progLabelId);
+  if(fill) fill.style.width=pct+'%';
+  if(label) label.textContent=done+' / '+total+' consolidados';
+}
+
+function m3mAddSession(storageKey, gridId, id, progFillId, progLabelId, exercises, color){
+  const date   = document.getElementById(`${gridId}date-${id}`).value;
+  const bpmMin = parseInt(document.getElementById(`${gridId}bmin-${id}`).value)||null;
+  const bpmMax = parseInt(document.getElementById(`${gridId}bmax-${id}`).value)||null;
+  const status = document.getElementById(`${gridId}sel-${id}`).value;
+  const note   = document.getElementById(`${gridId}note-${id}`).value.trim();
+  if(!date) return;
+  const data=m3mLoad(storageKey);
+  if(!data[id]) data[id]={sessions:[]};
+  data[id].sessions.push({date,bpmMin,bpmMax,status,note,savedAt:new Date().toISOString()});
+  m3mSave(storageKey,data);
+  const f=document.getElementById(`${gridId}flash-${id}`);
+  f.style.opacity='1'; setTimeout(()=>f.style.opacity='0',1800);
+  m3mRenderGrid(exercises,storageKey,gridId,progFillId,progLabelId,color);
+  document.getElementById(`${gridId}-card-${id}`).classList.add('open');
+  [`${gridId}bmin-${id}`,`${gridId}bmax-${id}`,`${gridId}note-${id}`].forEach(i=>{const el=document.getElementById(i);if(el)el.value='';});
+}
+
+function m3mDelSession(storageKey, exId, idx){
+  const data=m3mLoad(storageKey);
+  if(data[exId]&&data[exId].sessions) data[exId].sessions.splice(idx,1);
+  m3mSave(storageKey,data);
+  if(storageKey===M3M5_KEY)   m3mRenderGrid(M3M5_EX,  M3M5_KEY,  'm3m5-grid',  'm3m5-pct-label',  'm3m5-pct-label',  '#7ecff5');
+  if(storageKey===M3M615_KEY) m3mRenderGrid(M3M615_EX,M3M615_KEY,'m3m615-grid','m3m615-prog-fill','m3m615-pct-label','#ff9f7a');
+  const gridId=storageKey===M3M5_KEY?'m3m5-grid':'m3m615-grid';
+  const card=document.getElementById(`${gridId}-card-${exId}`);
+  if(card) card.classList.add('open');
+}
+
+function m3mClearHistory(storageKey, gridId, exId, progFillId, progLabelId, exercises, color){
+  if(!confirm('Limpar histórico deste exercício?')) return;
+  const data=m3mLoad(storageKey); if(data[exId]) data[exId].sessions=[];
+  m3mSave(storageKey,data);
+  m3mRenderGrid(exercises,storageKey,gridId,progFillId,progLabelId,color);
+  const card=document.getElementById(`${gridId}-card-${exId}`);
+  if(card) card.classList.add('open');
+}
+
+// Initial renders
+m3mRenderGrid(M3M5_EX,  M3M5_KEY,  'm3m5-grid',  'm3m5-prog-fill',  'm3m5-pct-label',  '#7ecff5');
+m3mRenderGrid(M3M615_EX,M3M615_KEY,'m3m615-grid','m3m615-prog-fill','m3m615-pct-label','#ff9f7a');
 
 </script>
 
