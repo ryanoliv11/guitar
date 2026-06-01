@@ -3761,7 +3761,6 @@ function m3mClearHistory(storageKey, gridId, exId, progFillId, progLabelId, colo
 // Initial renders
 m3mRenderGrid(M3M5_EX,  M3M5_KEY,  'm3m5-grid',  'm3m5-prog-fill',  'm3m5-pct-label',  '#7ecff5');
 m3mRenderGrid(M3M615_EX,M3M615_KEY,'m3m615-grid','m3m615-prog-fill','m3m615-pct-label','#ff9f7a');
-      if(typeof m3m2020Render==='function') m3m2020Render();
 
 
 /* ══ MOD3 MUSICAL 16-20MIN ══ */
@@ -3778,7 +3777,9 @@ function m3m2020Render() {
   m3mRenderGrid(M3M2020_EX, M3M2020_KEY, 'm3m2020-grid', 'm3m2020-prog-fill', 'm3m2020-pct-label', '#f5a623');
 }
 
-m3m2020Render();
+if (typeof m3m2020Render === 'function') {
+  m3m2020Render();
+}
 
 </script>
 
