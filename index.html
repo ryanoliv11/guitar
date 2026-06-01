@@ -1313,11 +1313,7 @@
   <div class="fund-grid" id="fund-grid"></div>
 </section>
 
-<!-- Lightbox -->
-<div class="fund-lightbox" id="fund-lightbox">
-  <button class="fund-lightbox-close" onclick="closeLightbox()">✕</button>
-  <embed id="fund-lightbox-embed" src="" type="application/pdf" style="width:100%;max-width:900px;height:90vh;border-radius:8px;">
-</div>
+<!-- Lightbox moved to body -->
 
 
 <!-- ══ MUSICAL 1 ══ -->
@@ -1546,10 +1542,16 @@
 </div>
 
 <div class="mod-page" id="mod3-mus2020">
-<div class="m3-coming-soon">
-  <strong>Em breve</strong>
-  <p>Musical 16–20min · 2 Notas por corda — adicione os exercícios quando tiver o material</p>
-</div>
+<section class="m3-fund-section">
+  <div class="m3-sec-title" style="color:#f5a623">Musical 16–20min</div>
+  <div class="m3-sec-sub">2 Notas por corda · Mesmos exercícios do 6–15min — foco em velocidade</div>
+  <div class="mus2-notice" style="margin-bottom:1.5rem">⟳ <span>Mesmos 4 exercícios do Musical 6–15min</span> — BPM rastreado separadamente para acompanhar a progressão de velocidade</div>
+  <div class="m3-prog-wrap">
+    <div class="m3-prog-labels"><span>Progresso</span><span id="m3m2020-pct-label">0 / 4 consolidados</span></div>
+    <div class="m3-prog-track"><div class="m3-prog-fill" style="background:#f5a623" id="m3m2020-prog-fill"></div></div>
+  </div>
+  <div class="m3-grid" id="m3m2020-grid"></div>
+</section>
 </div>
 
 <div class="mod-page" id="mod3-otp">
@@ -1780,7 +1782,7 @@ VARIACOES.forEach(v => {
 /* ── SET DATA PADRÃO ── */
 const inpDate = document.getElementById('inp-date');
 const pad = n => String(n).padStart(2,'0');
-inpDate.value = `${today.getFullYear()}-${pad(today.getMonth()+1)}-${pad(today.getDate())}`;
+if(inpDate) inpDate.value = `${today.getFullYear()}-${pad(today.getMonth()+1)}-${pad(today.getDate())}`;
 
 /* ── TAG HELPERS ── */
 function exTag(ex) {
@@ -1807,6 +1809,7 @@ function save(data) { localStorage.setItem(KEY, JSON.stringify(data)); }
 function render() {
   const data = load();
   const tbody = document.getElementById('tracker-body');
+  if(!tbody) return;
   const empty = document.getElementById('tracker-empty');
   const chartWrap = document.getElementById('bpm-chart-wrap');
 
@@ -1904,8 +1907,12 @@ function exportCSV() {
 }
 
 /* ── ENTER no campo BPM ── */
-document.getElementById('inp-bpm').addEventListener('keydown', e => { if (e.key === 'Enter') addEntry(); });
-document.getElementById('inp-ex').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('inp-bpm').focus(); });
+(function(){
+  const bpmEl = document.getElementById('inp-bpm');
+  const exEl  = document.getElementById('inp-ex');
+  if(bpmEl) bpmEl.addEventListener('keydown', e => { if (e.key === 'Enter') addEntry(); });
+  if(exEl)  exEl.addEventListener('keydown',  e => { if (e.key === 'Enter') { const b=document.getElementById('inp-bpm'); if(b) b.focus(); } });
+})();
 
 render();
 
@@ -1947,9 +1954,7 @@ function closeLightbox() {
   document.body.style.overflow = '';
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
-document.getElementById('fund-lightbox').addEventListener('click', function(e) {
-  if (e.target === this) closeLightbox();
-});
+(function(){ const lb=document.getElementById('fund-lightbox'); if(lb) lb.addEventListener('click', function(e){ if(e.target===this) closeLightbox(); }); })();
 
 function buildMiniChart(sessions) {
   if (!sessions || sessions.length < 2) return '';
@@ -2824,10 +2829,12 @@ m20Render();
   `;
   document.body.appendChild(widget);
 
-  const display = document.getElementById('gh-timer-display');
-  const bar = document.getElementById('gh-timer-bar');
+  const display   = document.getElementById('gh-timer-display');
+  const bar       = document.getElementById('gh-timer-bar');
   const btnToggle = document.getElementById('gh-timer-toggle');
-  const btnReset = document.getElementById('gh-timer-reset');
+  const btnReset  = document.getElementById('gh-timer-reset');
+
+  if (!display || !bar || !btnToggle || !btnReset) return;
 
   function fmt(s) {
     const m = Math.floor(s/60);
@@ -3315,6 +3322,7 @@ function backupImport(input){
       m4fRenderGrid(M4F10_EX,M4F10_KEY,'m4f10','m4f10-prog-fill','m4f10-pct-label');
       m3mRenderGrid(M3M5_EX,M3M5_KEY,'m3m5-grid','m3m5-prog-fill','m3m5-pct-label','#7ecff5');
       m3mRenderGrid(M3M615_EX,M3M615_KEY,'m3m615-grid','m3m615-prog-fill','m3m615-pct-label','#ff9f7a');
+      if(typeof m3m2020Render==='function') m3m2020Render();
     }catch(err){ alert('Arquivo inválido.'); }
     input.value='';
   };
@@ -3681,7 +3689,7 @@ function m3mRenderGrid(exercises, storageKey, gridId, progFillId, progLabelId, c
               </div>
             </div>
             <div class="m3-row-btns">
-              <button class="m3-save-btn" style="background:${color}" onclick="m3mAddSession('${storageKey}','${gridId}',${ex.id},'${progFillId}','${progLabelId}',${JSON.stringify(exercises)},'${color}')">+ Registrar sessão</button>
+              <button class="m3-save-btn" style="background:${color}" onclick="m3mAddSession('${storageKey}','${gridId}',${ex.id},'${progFillId}','${progLabelId}','${color}')">+ Registrar sessão</button>
               <span class="m3-flash" id="${gridId}flash-${ex.id}">✓ Salvo</span>
             </div>
           </div>
@@ -3689,7 +3697,7 @@ function m3mRenderGrid(exercises, storageKey, gridId, progFillId, progLabelId, c
         <div class="m3-history">
           <div class="m3-history-title">
             <span>Histórico — ${sessCount} sessão${sessCount!==1?'ões':''}</span>
-            ${sessCount?`<button class="m3-history-clear" onclick="m3mClearHistory('${storageKey}','${gridId}',${ex.id},'${progFillId}','${progLabelId}',${JSON.stringify(exercises)},'${color}')">Limpar tudo</button>`:''}
+            ${sessCount?`<button class="m3-history-clear" onclick="m3mClearHistory('${storageKey}','${gridId}',${ex.id},'${progFillId}','${progLabelId}','${color}')">Limpar tudo</button>`:''}
           </div>
           ${chart}${hist}
         </div>
@@ -3709,7 +3717,8 @@ function m3mRenderGrid(exercises, storageKey, gridId, progFillId, progLabelId, c
   if(label) label.textContent=done+' / '+total+' consolidados';
 }
 
-function m3mAddSession(storageKey, gridId, id, progFillId, progLabelId, exercises, color){
+function m3mAddSession(storageKey, gridId, id, progFillId, progLabelId, color){
+  const exercises = storageKey===M3M5_KEY?M3M5_EX:storageKey===M3M615_KEY?M3M615_EX:M3M2020_EX;
   const date   = document.getElementById(`${gridId}date-${id}`).value;
   const bpmMin = parseInt(document.getElementById(`${gridId}bmin-${id}`).value)||null;
   const bpmMax = parseInt(document.getElementById(`${gridId}bmax-${id}`).value)||null;
@@ -3733,12 +3742,14 @@ function m3mDelSession(storageKey, exId, idx){
   m3mSave(storageKey,data);
   if(storageKey===M3M5_KEY)   m3mRenderGrid(M3M5_EX,  M3M5_KEY,  'm3m5-grid',  'm3m5-pct-label',  'm3m5-pct-label',  '#7ecff5');
   if(storageKey===M3M615_KEY) m3mRenderGrid(M3M615_EX,M3M615_KEY,'m3m615-grid','m3m615-prog-fill','m3m615-pct-label','#ff9f7a');
+      if(typeof m3m2020Render==='function') m3m2020Render();
   const gridId=storageKey===M3M5_KEY?'m3m5-grid':'m3m615-grid';
   const card=document.getElementById(`${gridId}-card-${exId}`);
   if(card) card.classList.add('open');
 }
 
-function m3mClearHistory(storageKey, gridId, exId, progFillId, progLabelId, exercises, color){
+function m3mClearHistory(storageKey, gridId, exId, progFillId, progLabelId, color){
+  const exercises = storageKey===M3M5_KEY?M3M5_EX:storageKey===M3M615_KEY?M3M615_EX:M3M2020_EX;
   if(!confirm('Limpar histórico deste exercício?')) return;
   const data=m3mLoad(storageKey); if(data[exId]) data[exId].sessions=[];
   m3mSave(storageKey,data);
@@ -3750,9 +3761,33 @@ function m3mClearHistory(storageKey, gridId, exId, progFillId, progLabelId, exer
 // Initial renders
 m3mRenderGrid(M3M5_EX,  M3M5_KEY,  'm3m5-grid',  'm3m5-prog-fill',  'm3m5-pct-label',  '#7ecff5');
 m3mRenderGrid(M3M615_EX,M3M615_KEY,'m3m615-grid','m3m615-prog-fill','m3m615-pct-label','#ff9f7a');
+      if(typeof m3m2020Render==='function') m3m2020Render();
+
+
+/* ══ MOD3 MUSICAL 16-20MIN ══ */
+const M3M2020_KEY = 'ghacks_m3m2020_v1';
+
+const M3M2020_EX = [
+  {id:1, name:'Exercício 1 — Arpejos variados', desc:'Lá, Sol, Sí, Ré, Dó — múltiplas qualidades · 4 páginas', img:'assets/modulo3/musical2/Exercicio1.pdf'},
+  {id:2, name:'Exercício 2', desc:'Padrão corda solta intercalada — 2 páginas', img:'assets/modulo3/musical2/Exercicio2.pdf'},
+  {id:3, name:'Exercício 3', desc:'Padrão melódico em posições — 2 páginas', img:'assets/modulo3/musical2/Exercicio3.pdf'},
+  {id:4, name:'Exercício 4 — Arpejos Ré', desc:'Ré Maior 7ª Maior · menor 7ª Maior · menor meio dim · aumentado · 2 páginas', img:'assets/modulo3/musical2/Exercicio4.pdf'},
+];
+
+function m3m2020Render() {
+  m3mRenderGrid(M3M2020_EX, M3M2020_KEY, 'm3m2020-grid', 'm3m2020-prog-fill', 'm3m2020-pct-label', '#f5a623');
+}
+
+m3m2020Render();
 
 </script>
 
 
+
+<!-- ══ LIGHTBOX GLOBAL ══ -->
+<div class="fund-lightbox" id="fund-lightbox">
+  <button class="fund-lightbox-close" onclick="closeLightbox()">✕</button>
+  <embed id="fund-lightbox-embed" src="" type="application/pdf" style="width:100%;max-width:900px;height:90vh;border-radius:8px;">
+</div>
 </body>
 </html>
